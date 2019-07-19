@@ -6,10 +6,13 @@
   "author": "Anthony Morris",
   "license": "MIT",
   "dependencies": {
+    "easy-peasy": "3.0.0-rc.4",
+    "firebase": "^6.3.1",
     "immutable": "^4.0.0-rc.12",
     "next": "^9.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-firebaseui": "^3.1.2",
     "slate": "^0.47.4",
     "slate-plain-serializer": "^0.7.6",
     "slate-react": "^0.22.4"

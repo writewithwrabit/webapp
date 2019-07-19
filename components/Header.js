@@ -10,12 +10,12 @@ const Header = () => (
       <a style={linkStyle}>Home</a>
     </Link>
 
-    <Link href="/write">
-      <a style={linkStyle}>Write</a>
-    </Link>
-
     <Link href="/about">
       <a style={linkStyle}>About Page</a>
+    </Link>
+
+    <Link href="/write">
+      <a style={linkStyle}>Write</a>
     </Link>
   </div>
 );

@@ -3,6 +3,7 @@ import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 
+import Auth from '../components/Auth';
 import withLayout from '../components/Layout';
 
 const emptyDocument = Value.fromJSON({
@@ -33,7 +34,7 @@ const Write = () => {
   }
 
   return (
-    <div>
+    <Auth>
       {remainingWords}
       <Editor
         placeholder={`Hope you're having a great day, time to write!`}
@@ -42,7 +43,7 @@ const Write = () => {
         autoFocus={true}
         autoCorrect={true}
       />
-    </div>
+    </Auth>
   );
 };
 
