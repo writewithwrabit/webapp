@@ -8,8 +8,8 @@ const layoutStyle = {
 const withLayout = Page => {
   return () => (
     <div style={layoutStyle}>
-        <Header />
-        <Page />
+      <Header />
+      <Page />
     </div>
   );
 };
