@@ -1,8 +1,11 @@
 import React from 'react';
 import App, { Container } from 'next/app';
+import dynamic from 'next/dynamic';
 
 import { StoreProvider } from 'easy-peasy';
-import store from '../store';
+import store from '../store/store';
+
+const Auth = dynamic(() => import('../components/Auth'), { ssr: false });
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -21,7 +24,9 @@ class MyApp extends App {
     return (
       <Container>
         <StoreProvider store={store}>
-          <Component {...pageProps} />
+          <Auth>
+            <Component {...pageProps} />
+          </Auth>
         </StoreProvider>
       </Container>
     );

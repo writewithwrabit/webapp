@@ -12,7 +12,6 @@
     "next": "^9.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-firebaseui": "^3.1.2",
     "slate": "^0.47.4",
     "slate-plain-serializer": "^0.7.6",
     "slate-react": "^0.22.4"

@@ -1,18 +1,25 @@
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import { useStoreState } from 'easy-peasy';
 
-const Auth = ({children}) => {
-    const user = useStoreState(state => state.user);
-    if (!user) {
-      const router = useRouter();
-      router.push('/login');
-    }
+const protectedRoutes = ['/write'];
 
-    return (
-      <div>
-        {children}
-      </div>
-    );
+const Auth = ({children}) => {
+  const user = useStoreState(state => state.user);
+
+  // Redirect to the login page if a user is not allowed
+  const isAllowed = url => {
+    if (!user.isAuthenticated && protectedRoutes.includes(url)) {
+      Router.push('/login');
+    }
+  }
+
+  isAllowed(Router.pathname);
+
+  return (
+    <div>
+      {children}
+    </div>
+  );
 };
 
 export default Auth;

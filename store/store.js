@@ -1,7 +1,9 @@
 import { createStore } from 'easy-peasy';
 
+import userModel from './user';
+
 const store = createStore({
-  user: null,
+  user: userModel,
 });
 
 export default store;
