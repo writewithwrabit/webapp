@@ -1,7 +1,7 @@
 import withLayout from '../components/Layout';
 
 const About = () => (
-    <p>This is the about page.</p>
+  <p>Made with {"<"}3 in Vancouver</p>
 );
 
 export default withLayout(About);

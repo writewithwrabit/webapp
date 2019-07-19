@@ -1,7 +1,7 @@
 import withLayout from '../components/Layout';
 
 const Index = () => (
-    <p>Hello Next.js</p>
+  <p>Insert beautiful landing page here</p>
 );
 
 export default withLayout(Index);

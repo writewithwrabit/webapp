@@ -6,9 +6,13 @@
   "author": "Anthony Morris",
   "license": "MIT",
   "dependencies": {
+    "immutable": "^4.0.0-rc.12",
     "next": "^9.0.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "slate": "^0.47.4",
+    "slate-plain-serializer": "^0.7.6",
+    "slate-react": "^0.22.4"
   },
   "scripts": {
     "dev": "next",
