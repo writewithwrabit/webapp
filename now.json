@@ -1,5 +1,5 @@
 {
-  "name": "wrabit-webapp",
+  "name": "webapp",
   "version": 2,
   "builds": [{ "src": "package.json", "use": "@now/next" }]
 }
