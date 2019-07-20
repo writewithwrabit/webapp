@@ -2,10 +2,6 @@ import Link from 'next/link';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import firebase from '../firebase';
-
-const linkStyle = {
-  marginRight: 15
-};
   
 const Header = () => {
   const user = useStoreState(state => state.user);
@@ -19,18 +15,18 @@ const Header = () => {
   return (
     <div>
       <Link href="/">
-        <a style={linkStyle}>Home</a>
+        <a className="mr-16">Home</a>
       </Link>
   
       <Link href="/about">
-        <a style={linkStyle}>About Page</a>
+        <a className="mr-16">About</a>
       </Link>
   
       {
         user.isAuthenticated
           ? (
             <Link href="/write">
-              <a style={linkStyle}>Write</a>
+              <a className="mr-16">Write</a>
             </Link>
           )
           : ''
@@ -38,10 +34,10 @@ const Header = () => {
 
       {
         user.isAuthenticated
-          ? <a style={linkStyle} onClick={logout}>Logout</a>
+          ? <a className="mr-16" onClick={logout}>Logout</a>
           : (
             <Link href="/login">
-              <a style={linkStyle}>Login</a>
+              <a className="mr-16">Login</a>
             </Link>
           )
       }
