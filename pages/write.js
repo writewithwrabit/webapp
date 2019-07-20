@@ -36,6 +36,7 @@ const Write = () => {
     <div>
       {remainingWords}
       <Editor
+        className="bg-gray-400"
         placeholder={`Hope you're having a great day, time to write!`}
         value={value}
         onChange={handleChange}
