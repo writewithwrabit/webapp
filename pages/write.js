@@ -29,7 +29,10 @@ const emptyDocument = Value.fromJSON({
   },
 });
 
+const DEFAULT_NODE = 'paragraph';
+
 const Write = () => {
+  let editor = null;
   const goalWords = 1000;
   const [value, setValue] = useState(emptyDocument);
   const [wordsWritten, setWordsWritten] = useState(0);
@@ -49,6 +52,11 @@ const Write = () => {
 
   const hasMark = type => value.activeMarks.some(mark => mark.type === type);
 
+  const onClickMark = (event, type) => {
+    event.preventDefault();
+    editor.toggleMark(type);
+  }
+
   const renderMarkButton = (type) => {
     const isActive = hasMark(type);
     const IconComponent = icons[type];
@@ -60,14 +68,71 @@ const Write = () => {
     return (
       <button
         active={isActive}
-        // onMouseDown={event => onClickMark(event, type)}
+        onMouseDown={event => onClickMark(event, type)}
       >
         <IconComponent />
       </button>
     );
   }
 
+  const renderMark = (props, editor, next) => {
+    const { children, mark, attributes } = props;
+
+    switch (mark.type) {
+      case 'bold':
+        return <strong {...attributes}>{children}</strong>;
+      case 'code':
+        return <code {...attributes}>{children}</code>;
+      case 'italic':
+        return <em {...attributes}>{children}</em>;
+      case 'underlined':
+        return <u {...attributes}>{children}</u>;
+      default:
+        return next();
+    }
+  }
+
   const hasBlock = type => value.blocks.some(block => block.type === type);
+
+  const onClickBlock = (event, type) => {
+    event.preventDefault();
+
+    const { document } = value;
+
+    // Handle everything but list buttons.
+    if (type !== 'bulleted-list' && type !== 'numbered-list') {
+      const isActive = hasBlock(type);
+      const isList = hasBlock('list-item');
+
+      if (isList) {
+        editor
+          .setBlocks(isActive ? DEFAULT_NODE : type)
+          .unwrapBlock('bulleted-list')
+          .unwrapBlock('numbered-list');
+      } else {
+        editor.setBlocks(isActive ? DEFAULT_NODE : type);
+      }
+    } else {
+      // Handle the extra wrapping required for list buttons.
+      const isList = hasBlock('list-item');
+      const isType = value.blocks.some(block => !!document.getClosest(block.key, parent => parent.type === type));
+
+      if (isList && isType) {
+        editor
+          .setBlocks(DEFAULT_NODE)
+          .unwrapBlock('bulleted-list')
+          .unwrapBlock('numbered-list');
+      } else if (isList) {
+        editor
+          .unwrapBlock(
+            type === 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
+          )
+          .wrapBlock(type);
+      } else {
+        editor.setBlocks('list-item').wrapBlock(type);
+      }
+    }
+  }
 
   const renderBlockButton = (type) => {
     let isActive = hasBlock(type);
@@ -90,11 +155,32 @@ const Write = () => {
       <button
         className="mx-2"
         active={isActive}
-        // onMouseDown={event => onClickMark(event, type)}
+        onMouseDown={event => onClickBlock(event, type)}
       >
         <IconComponent />
       </button>
     );
+  }
+
+  const renderBlock = (props, editor, next) => {
+    const { attributes, children, node } = props;
+
+    switch (node.type) {
+      case 'block-quote':
+        return <blockquote {...attributes}>{children}</blockquote>;
+      case 'bulleted-list':
+        return <ul {...attributes}>{children}</ul>;
+      case 'heading-one':
+        return <h1 {...attributes}>{children}</h1>;
+      case 'heading-two':
+        return <h2 {...attributes}>{children}</h2>;
+      case 'list-item':
+        return <li {...attributes}>{children}</li>;
+      case 'numbered-list':
+        return <ol {...attributes}>{children}</ol>;
+      default:
+        return next();
+    }
   }
 
   return (
@@ -137,12 +223,15 @@ const Write = () => {
         </div>
 
         <Editor
+          ref={(editorRef) => editor = editorRef}
           className="bg-offwhite p-8 min-h-screen"
           placeholder={`Hope you're having a great day, time to write!`}
           value={value}
           onChange={handleChange}
           autoFocus={true}
           autoCorrect={true}
+          renderMark={renderMark}
+          renderBlock={renderBlock}
         />
       </div>
     </div>
