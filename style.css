@@ -17,3 +17,12 @@ body {
   @apply border-b-4;
   @apply border-gray-200;
 }
+
+blockquote {
+  @apply border-l-4;
+  @apply border-gray-800;
+  @apply pl-10;
+  @apply pr-4;
+  @apply py-4;
+  @apply bg-gray-100;
+}

@@ -24,6 +24,34 @@ const emptyDocument = Value.fromJSON({
       {
         object: 'block',
         type: 'paragraph',
+        nodes: [
+          {
+            object: 'text',
+            text: `Ipsum Blaster luke jedi saffron bazoolium ice gun boomer. Jedi bazoolium time lord ord mantell psychic paper youngling paradox machine antilles. Obi-wan exterminate sullust tatooine rassilon. Dantooine tylium ore fodder jedi mind trick, jabba saffron jango fett validium. Jelly babies dantooine saffron jethrik frack bantha malcom endor dalek sarlacc hutt carbonite wookie tatooine. Endor jedi validium droid jar jar fodder exterminate ice gun nethersphere krypter sarlacc paradox machine. Jar jar protocol droid gorram x-wing tie fighter.
+            `,
+          },
+        ],
+      },
+      {
+        object: 'block',
+        type: 'paragraph',
+        nodes: [
+          {
+            object: 'text',
+            text: `Ipsum Blaster luke jedi saffron bazoolium ice gun boomer. Jedi bazoolium time lord ord mantell psychic paper youngling paradox machine antilles. Obi-wan exterminate sullust tatooine rassilon. Dantooine tylium ore fodder jedi mind trick, jabba saffron jango fett validium. Jelly babies dantooine saffron jethrik frack bantha malcom endor dalek sarlacc hutt carbonite wookie tatooine. Endor jedi validium droid jar jar fodder exterminate ice gun nethersphere krypter sarlacc paradox machine. Jar jar protocol droid gorram x-wing tie fighter.`,
+          },
+        ],
+      },
+      {
+        object: 'block',
+        type: 'paragraph',
+        nodes: [
+          {
+            object: 'text',
+            text: `
+            Ipsum Blaster luke jedi saffron bazoolium ice gun boomer. Jedi bazoolium time lord ord mantell psychic paper youngling paradox machine antilles. Obi-wan exterminate sullust tatooine rassilon. Dantooine tylium ore fodder jedi mind trick, jabba saffron jango fett validium. Jelly babies dantooine saffron jethrik frack bantha malcom endor dalek sarlacc hutt carbonite wookie tatooine. Endor jedi validium droid jar jar fodder exterminate ice gun nethersphere krypter sarlacc paradox machine. Jar jar protocol droid gorram x-wing tie fighter.`,
+          },
+        ],
       },
     ],
   },
