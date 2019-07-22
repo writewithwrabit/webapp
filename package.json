@@ -6,12 +6,14 @@
   "author": "Anthony Morris",
   "license": "MIT",
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "easy-peasy": "3.0.0-rc.4",
     "firebase": "^6.3.1",
     "immutable": "^4.0.0-rc.12",
     "next": "^9.0.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-icons": "^3.7.0",
     "slate": "^0.47.4",
     "slate-plain-serializer": "^0.7.6",
     "slate-react": "^0.22.4"
@@ -20,5 +22,11 @@
     "dev": "next",
     "build": "next build",
     "start": "next start"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.6.1",
+    "cssnano": "^4.1.10",
+    "postcss-easy-import": "^3.0.0",
+    "tailwindcss": "^1.0.5"
   }
 }

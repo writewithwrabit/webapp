@@ -5,6 +5,8 @@ import dynamic from 'next/dynamic';
 import { StoreProvider } from 'easy-peasy';
 import store from '../store/store';
 
+import '../style.css';
+
 const Auth = dynamic(() => import('../components/Auth'), { ssr: false });
 
 class MyApp extends App {
