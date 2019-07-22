@@ -7,12 +7,20 @@ import { FaBold, FaItalic, FaUnderline, FaHeading, FaQuoteLeft, FaListOl, FaList
 
 import withLayout from '../components/Layout';
 
+const selectableBlockTypes = [
+  'paragraph',
+  'heading-one',
+  'heading-two',
+  'heading-three',
+];
+
 const icons = {
   bold: FaBold,
   italic: FaItalic,
   underlined: FaUnderline,
   'heading-one': FaHeading,
   'heading-two': FaHeading,
+  'heading-three': FaHeading,
   'block-quote': FaQuoteLeft,
   'numbered-list': FaListOl,
   'bulleted-list': FaListUl,
@@ -27,8 +35,7 @@ const emptyDocument = Value.fromJSON({
         nodes: [
           {
             object: 'text',
-            text: `Ipsum Blaster luke jedi saffron bazoolium ice gun boomer. Jedi bazoolium time lord ord mantell psychic paper youngling paradox machine antilles. Obi-wan exterminate sullust tatooine rassilon. Dantooine tylium ore fodder jedi mind trick, jabba saffron jango fett validium. Jelly babies dantooine saffron jethrik frack bantha malcom endor dalek sarlacc hutt carbonite wookie tatooine. Endor jedi validium droid jar jar fodder exterminate ice gun nethersphere krypter sarlacc paradox machine. Jar jar protocol droid gorram x-wing tie fighter.
-            `,
+            text: `Ipsum Blaster`,
           },
         ],
       },
@@ -65,6 +72,7 @@ const Write = () => {
   const [value, setValue] = useState(emptyDocument);
   const [wordsWritten, setWordsWritten] = useState(0);
   const [wordsRemaining, setWordsRemaining] = useState(goalWords);
+  const [selectedBlockType, setBlockType] = useState('paragraph');
 
   const handleChange = ({ value }) => {
     const serializedWords = Plain.serialize(value);
@@ -191,7 +199,11 @@ const Write = () => {
   }
 
   const renderBlock = (props, editor, next) => {
-    const { attributes, children, node } = props;
+    const { attributes, children, node, isSelected } = props;
+
+    if (isSelected && selectableBlockTypes.includes(node.type)) {
+      setBlockType(node.type);
+    }
 
     switch (node.type) {
       case 'block-quote':
@@ -202,6 +214,8 @@ const Write = () => {
         return <h1 {...attributes}>{children}</h1>;
       case 'heading-two':
         return <h2 {...attributes}>{children}</h2>;
+      case 'heading-three':
+        return <h3 {...attributes}>{children}</h3>;
       case 'list-item':
         return <li {...attributes}>{children}</li>;
       case 'numbered-list':
@@ -209,6 +223,10 @@ const Write = () => {
       default:
         return next();
     }
+  }
+
+  const onSelectBlockType = (event) => {
+    onClickBlock(event, event.target.value);
   }
 
   return (
@@ -238,9 +256,16 @@ const Write = () => {
             {renderMarkButton('underlined')}
           </span>
 
-          <span className="mx-4">
-            {renderBlockButton('heading-one')}
-            {renderBlockButton('heading-two')}
+          <span className="mx-4 inline-block relative">
+            <select onChange={event => onSelectBlockType(event)} value={selectedBlockType} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+              <option value="paragraph">Paragraph</option> 
+              <option value="heading-one">Heading 1</option>
+              <option value="heading-two">Heading 2</option>
+              <option value="heading-three">Heading 3</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
           </span>
 
           <span className="mx-4">
@@ -252,7 +277,7 @@ const Write = () => {
 
         <Editor
           ref={(editorRef) => editor = editorRef}
-          className="bg-offwhite p-8 min-h-screen"
+          className="editor bg-offwhite p-8 min-h-screen"
           placeholder={`Hope you're having a great day, time to write!`}
           value={value}
           onChange={handleChange}

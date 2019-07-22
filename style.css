@@ -18,19 +18,42 @@ body {
   @apply border-gray-200;
 }
 
-blockquote {
+.editor blockquote {
   @apply border-l-4;
   @apply border-gray-800;
   @apply pl-10;
   @apply pr-4;
   @apply py-4;
   @apply bg-gray-100;
+  @apply italic;
+  @apply text-gray-800;
 }
 
-ul {
+.editor ul {
   @apply list-disc;
+  @apply pl-8;
 }
 
-ol {
+.editor ol {
   @apply list-decimal;
+  @apply pl-8;
+}
+
+.editor h1,
+.editor h2,
+.editor h3 {
+  @apply font-bold;
+  @apply mb-4;
+}
+
+.editor h1 {
+  @apply text-5xl;
+}
+
+.editor h2 {
+  @apply text-3xl;
+}
+
+.editor h3 {
+  @apply text-xl;
 }
