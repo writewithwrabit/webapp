@@ -26,3 +26,11 @@ blockquote {
   @apply py-4;
   @apply bg-gray-100;
 }
+
+ul {
+  @apply list-disc;
+}
+
+ol {
+  @apply list-decimal;
+}
