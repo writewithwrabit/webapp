@@ -62,14 +62,21 @@ const Login = () => {
             <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password" />
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center md:justify-between justify-center">
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
               Sign In
             </button>
-            <a className="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800" href="#">
+            <a className="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800 hidden md:block" href="#">
               Forgot your password?
             </a>
           </div>
+
+          <div className="text-center mt-3 md:hidden">
+            <a className="text-sm text-blue-500 hover:text-blue-800" href="#">
+              Forgot your password?
+            </a>
+          </div>
+            
         </form>
       </div>
 
