@@ -186,7 +186,7 @@ const Write = () => {
   return (
     <div className="min-h-screen">
       <div className="py-6 px-10 z-10">
-        <div className="bg-green-400 py-2 rounded-lg text-white font-extrabold text-l text-center w-1/6">
+        <div className="bg-green-400 py-2 rounded-lg text-white font-extrabold text-center w-1/6">
           <div>
             {wordsWritten}
           </div>
@@ -197,7 +197,7 @@ const Write = () => {
       </div>
 
       <div className="fixed bottom-0 container">
-        <div className="p-4 text-right text-gray-500 text-lg">
+        <div className="p-4 text-right text-gray-500 text-2xl text-pink-600">
             {wordsRemaining} words to go!
           </div>
       </div>

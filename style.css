@@ -7,3 +7,13 @@
 body {
   @apply bg-gray-100;
 }
+
+.nav a:hover {
+  @apply cursor-pointer;
+}
+
+.nav-item:hover {
+  @apply text-gray-800;
+  @apply border-b-4;
+  @apply border-gray-200;
+}
