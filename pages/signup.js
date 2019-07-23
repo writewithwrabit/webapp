@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import firebase from '../firebase';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const Signup = () => {

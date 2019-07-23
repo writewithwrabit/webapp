@@ -2,14 +2,13 @@ import { useState } from 'react';
 import firebase from '../firebase';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 
 import withLayout from '../components/Layout';
 
 const Login = () => {
   const router = useRouter();
   const user = useStoreState(state => state.user);
-  const signInUser = useStoreActions(actions => actions.user.signInUser);
 
   if (user.isAuthenticated) {
     router.push('/write');
@@ -17,13 +16,6 @@ const Login = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  firebase.auth().onAuthStateChanged((firebaseUser) => {
-    if (!user.isAuthenticated && firebaseUser) {
-      signInUser(firebaseUser);
-      router.push('/write');
-    }
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
