@@ -1,19 +1,29 @@
-import Router from 'next/router';
-import { useStoreState } from 'easy-peasy';
+import { useRouter } from 'next/router';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import firebase from '../firebase';
 
 const protectedRoutes = ['/write'];
 
 const Auth = ({children}) => {
+  const router = useRouter();
   const user = useStoreState(state => state.user);
+  const signInUser = useStoreActions(actions => actions.user.signInUser);
+
+  firebase.auth().onAuthStateChanged((firebaseUser) => {
+    if (!user.isAuthenticated && firebaseUser) {
+      signInUser(firebaseUser);
+      router.push('/write');
+    }
+  });
 
   // Redirect to the login page if a user is not allowed
   const isAllowed = url => {
     if (!user.isAuthenticated && protectedRoutes.includes(url)) {
-      Router.push('/login');
+      router.push('/login');
     }
   }
 
-  isAllowed(Router.pathname);
+  isAllowed(router.pathname);
 
   return (
     <div>
