@@ -22,8 +22,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center p-20">
-      <div className="mr-20 max-w-md px-20">
+    <div className="flex justify-center p-4 pt-16">
+      <div className="mr-20 max-w-md px-20 hidden md:block">
         <div className="text-4xl font-extrabold pb-8">
           wrabit
         </div>
@@ -47,6 +47,10 @@ const Signup = () => {
       </div>
 
       <div className="w-full max-w-md">
+        <div className="text-4xl text-center font-extrabold pb-8 md:hidden">
+          wrabit
+        </div>
+
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="pb-5 mb-5 border-b-2 border-gray-100 text-center">
             Create your Wrabit account now

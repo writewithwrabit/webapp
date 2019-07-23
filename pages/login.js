@@ -29,7 +29,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-20">
+    <div className="flex flex-col justify-center items-center pt-16">
       <div className="pb-10 text-5xl font-extrabold">
         wrabit
       </div>
