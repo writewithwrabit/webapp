@@ -26,6 +26,7 @@ const Login = () => {
   });
 
   const handleSubmit = (e) => {
+    console.log(e);
     e.preventDefault();
 
     firebase
@@ -52,20 +53,37 @@ const Login = () => {
             <label className="hidden" for="email">
               Email
             </label>
-            <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Email" />
+
+            <input 
+              className="shadow-inner border rounded w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline"
+              id="username"
+              placeholder="Email"
+              value={email}
+              type="email"
+              onChange={({ target }) => setEmail(target.value)} 
+            />
           </div>
 
           <div className="mb-6">
             <label className="hidden" for="password">
               Password
             </label>
-            <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password" />
+
+            <input
+              className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+              id="password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+            />
           </div>
 
           <div className="flex items-center md:justify-between justify-center">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-              Sign In
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
+              Login
             </button>
+
             <a className="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800 hidden md:block" href="#">
               Forgot your password?
             </a>
@@ -90,4 +108,4 @@ const Login = () => {
   );
 };
 
-export default withLayout(Login);
+export default Login;
