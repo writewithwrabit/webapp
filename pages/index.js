@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import withLayout from '../components/Layout';
 
 const Index = () => (
