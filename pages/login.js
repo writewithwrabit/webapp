@@ -26,7 +26,6 @@ const Login = () => {
   });
 
   const handleSubmit = (e) => {
-    console.log(e);
     e.preventDefault();
 
     firebase
@@ -40,7 +39,7 @@ const Login = () => {
   return (
     <div className="flex flex-col justify-center items-center p-20">
       <div className="pb-10 text-5xl font-extrabold">
-        🐇 wrabit
+        wrabit
       </div>
 
       <div className="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -48,7 +47,7 @@ const Login = () => {
           Welcome back!
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="hidden" for="email">
               Email
