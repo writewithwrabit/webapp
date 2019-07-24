@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useStoreState, useStoreActions } from 'easy-peasy';
 import { ApolloConsumer } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import firebase from '../firebase';
 
 const Signup = () => {
-  const user = useStoreState(state => state.user);
-  const signInUser = useStoreActions(actions => actions.user.signInUser);
-
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -27,47 +23,30 @@ const Signup = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(user => {
-        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-          console.log(idToken);
+      .then(({ user }) => {
+        const { uid: firebaseID } = user;
 
-          client.mutate({
-            mutation: gql`
-              mutation CreateUser($FirstName: String!, $LastName: String!, $Email: String!) {
-                createUser(FirstName: $firstName, LastName: $lastName, Email: $email) {
-                  id
-                }
+        client.mutate({
+          mutation: gql`
+            mutation CreateUser($firebaseID: String!, $firstName: String!, $lastName: String, $email: String!) {
+              createUser(input: { firebaseID: $firebaseID, firstName: $firstName, lastName: $lastName, email: $email }) {
+                id
               }
-            `,
-            variables: { firstName, lastName, email },
-            update: (cache, { data: { createUser } }) => {
-              const data = cache.readQuery({
-                query: gql`
-                  query GetUser {
-                    user
-                  }
-                `,
-              });
-
-              console.log(data);
-              cache.writeQuery({
-                query: gql`
-                  query GetUser {
-                    user
-                  }
-                `,
-                data: {
-                  ...data,
-                  user: data.user
-                },
-              });
             }
-          })
-
-
-
-        }).catch(function(error) {
-          console.log('sad', error);
+          `,
+          variables: { firebaseID, firstName, lastName, email },
+          update: (cache, { data: { createUser } }) => {
+            cache.writeQuery({
+              query: gql`
+                query GetUser {
+                  user
+                }
+              `,
+              data: {
+                user: createUser,
+              },
+            });
+          }
         });
       })
       .catch((error) => {
