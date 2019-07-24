@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import firebase from '../firebase';
 import Link from 'next/link';
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import { ApolloConsumer } from 'react-apollo'
+import gql from 'graphql-tag'
+
+import firebase from '../firebase';
 
 const Signup = () => {
   const user = useStoreState(state => state.user);
@@ -13,7 +16,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, client) => {
     e.preventDefault();
 
     if (password !== passwordConfirmation) {
@@ -27,6 +30,42 @@ const Signup = () => {
       .then(user => {
         firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
           console.log(idToken);
+
+          client.mutate({
+            mutation: gql`
+              mutation CreateUser($FirstName: String!, $LastName: String!, $Email: String!) {
+                createUser(FirstName: $firstName, LastName: $lastName, Email: $email) {
+                  id
+                }
+              }
+            `,
+            variables: { firstName, lastName, email },
+            update: (cache, { data: { createUser } }) => {
+              const data = cache.readQuery({
+                query: gql`
+                  query GetUser {
+                    user
+                  }
+                `,
+              });
+
+              console.log(data);
+              cache.writeQuery({
+                query: gql`
+                  query GetUser {
+                    user
+                  }
+                `,
+                data: {
+                  ...data,
+                  user: data.user
+                },
+              });
+            }
+          })
+
+
+
         }).catch(function(error) {
           console.log('sad', error);
         });
@@ -37,7 +76,10 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex justify-center p-4 pt-16">
+    <ApolloConsumer>
+      {
+        client => (
+          <div className="flex justify-center p-4 pt-16">
       <div className="mr-20 max-w-md px-20 hidden md:block">
         <div className="text-4xl font-extrabold pb-8">
           wrabit
@@ -71,9 +113,9 @@ const Signup = () => {
             Create your Wrabit account now
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={event => handleSubmit(event, client)}>
             <div className="mb-4">
-              <label className="hidden" for="email">
+              <label className="hidden" htmlFor="email">
                 Email
               </label>
 
@@ -88,7 +130,7 @@ const Signup = () => {
             </div>
 
             <div className="mb-4">
-              <label className="hidden" for="first-name">
+              <label className="hidden" htmlFor="first-name">
                 First Name
               </label>
 
@@ -103,7 +145,7 @@ const Signup = () => {
             </div>
 
             <div className="mb-4">
-              <label className="hidden" for="last-name">
+              <label className="hidden" htmlFor="last-name">
                 Last Name
               </label>
 
@@ -118,7 +160,7 @@ const Signup = () => {
             </div>
 
             <div className="mb-4">
-              <label className="hidden" for="password">
+              <label className="hidden" htmlFor="password">
                 Password
               </label>
 
@@ -133,7 +175,7 @@ const Signup = () => {
             </div>
 
             <div className="mb-6">
-              <label className="hidden" for="confirm-password">
+              <label className="hidden" htmlFor="confirm-password">
                 Confirm Password
               </label>
 
@@ -148,7 +190,11 @@ const Signup = () => {
             </div>
 
             <div className="flex items-center justify-center">
-              <button className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
+              <button
+                className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+                onClick={event => handleSubmit(event, client)}
+              >
                 Sign Up
               </button>
             </div>
@@ -165,6 +211,9 @@ const Signup = () => {
         </div>
       </div>
     </div>
+        )
+      }
+    </ApolloConsumer>
   );
 };
 
