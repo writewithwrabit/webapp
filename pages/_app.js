@@ -2,11 +2,13 @@ import React from 'react';
 import * as Sentry from '@sentry/browser';
 import App, { Container } from 'next/app';
 import dynamic from 'next/dynamic';
+import { ApolloProvider } from 'react-apollo'
+import { StoreProvider } from 'easy-peasy';
+
+import withApollo from '../lib/apollo/withApollo';
+import store from '../store/store';
 
 Sentry.init({dsn: "https://b0529282a1ce4acd9e9f47d2e631ccd4@sentry.io/1511977"});
-
-import { StoreProvider } from 'easy-peasy';
-import store from '../store/store';
 
 import '../style.css';
 
@@ -36,18 +38,20 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, apolloClient } = this.props;
 
     return (
       <Container>
-        <StoreProvider store={store}>
-          <Auth>
-            <Component {...pageProps} />
-          </Auth>
-        </StoreProvider>
+        <ApolloProvider client={apolloClient}>
+          <StoreProvider store={store}>
+            <Auth>
+              <Component {...pageProps} />
+            </Auth>
+          </StoreProvider>
+        </ApolloProvider>
       </Container>
     );
   }
 }
 
-export default MyApp;
+export default withApollo(MyApp);
