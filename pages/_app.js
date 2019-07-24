@@ -23,6 +23,18 @@ class MyApp extends App {
     return { pageProps };
   }
 
+  componentDidCatch (error, errorInfo) {
+    Sentry.withScope(scope => {
+      Object.keys(errorInfo).forEach(key => {
+        scope.setExtra(key, errorInfo[key])
+      });
+
+      Sentry.captureException(error);
+    });
+
+    super.componentDidCatch(error, errorInfo);
+  }
+
   render() {
     const { Component, pageProps } = this.props;
 
