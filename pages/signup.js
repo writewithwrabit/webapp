@@ -8,14 +8,29 @@ const Signup = () => {
   const signInUser = useStoreActions(actions => actions.user.signInUser);
 
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (password !== passwordConfirmation) {
+      console.log('Password does not match password confirmation!');
+      return;
+    }
+
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(user => {
+        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+          console.log(idToken);
+        }).catch(function(error) {
+          console.log('sad', error);
+        });
+      })
       .catch((error) => {
         console.log(error.code, error.message);
     });
@@ -66,8 +81,8 @@ const Signup = () => {
                 className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
                 id="email"
                 placeholder="Email" 
-                value={email}
                 type="email"
+                value={email}
                 onChange={({ target }) => setEmail(target.value)} 
               />
             </div>
@@ -77,7 +92,14 @@ const Signup = () => {
                 First Name
               </label>
 
-              <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline" id="first-name" type="text" placeholder="First Name" />
+              <input
+                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                id="first-name"
+                type="text"
+                placeholder="First Name"
+                value={firstName}
+                onChange={({ target }) => setFirstName(target.value)} 
+              />
             </div>
 
             <div className="mb-4">
@@ -85,29 +107,43 @@ const Signup = () => {
                 Last Name
               </label>
 
-              <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline" id="last-name" type="text" placeholder="Last Name" />
+              <input
+                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+                id="last-name"
+                type="text"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={({ target }) => setLastName(target.value)} 
+              />
             </div>
 
             <div className="mb-4">
-              <label className="hidden" for="confirm-password">
-                Confirm Password
-              </label>
-
-              <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline" id="confirm-password" type="password" placeholder="Confirm Password" />
-            </div>
-
-            <div className="mb-6">
               <label className="hidden" for="password">
                 Password
               </label>
 
               <input
-                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                 id="password"
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={({ target }) => setPassword(target.value)}
+              />
+            </div>
+
+            <div className="mb-6">
+              <label className="hidden" for="confirm-password">
+                Confirm Password
+              </label>
+
+              <input
+                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+                id="confirm-password"
+                type="password"
+                placeholder="Confirm Password"
+                value={passwordConfirmation}
+                onChange={({ target }) => setPasswordConfirmation(target.value)}
               />
             </div>
 
