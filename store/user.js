@@ -5,7 +5,7 @@ const userModel = {
   firebaseData: null,
   signInUser: action((state, payload) => {
     state.isAuthenticated = true;
-    state.firebaseData = payload;
+    state.firebaseData = payload;    
   }),
   signOutUser: action(state => {
     state.isAuthenticated = false;

@@ -1,28 +1,64 @@
 import { useState } from 'react';
-import firebase from '../firebase';
 import Link from 'next/link';
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { ApolloConsumer } from 'react-apollo'
+import gql from 'graphql-tag'
+
+import firebase from '../firebase';
 
 const Signup = () => {
-  const user = useStoreState(state => state.user);
-  const signInUser = useStoreActions(actions => actions.user.signInUser);
-
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, client) => {
     e.preventDefault();
+
+    if (password !== passwordConfirmation) {
+      console.log('Password does not match password confirmation!');
+      return;
+    }
 
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(({ user }) => {
+        const { uid: firebaseID } = user;
+
+        client.mutate({
+          mutation: gql`
+            mutation CreateUser($firebaseID: String!, $firstName: String!, $lastName: String, $email: String!) {
+              createUser(input: { firebaseID: $firebaseID, firstName: $firstName, lastName: $lastName, email: $email }) {
+                id
+              }
+            }
+          `,
+          variables: { firebaseID, firstName, lastName, email },
+          update: (cache, { data: { createUser } }) => {
+            cache.writeQuery({
+              query: gql`
+                query GetUser {
+                  user
+                }
+              `,
+              data: {
+                user: createUser,
+              },
+            });
+          }
+        });
+      })
       .catch((error) => {
         console.log(error.code, error.message);
     });
   };
 
   return (
-    <div className="flex justify-center p-4 pt-16">
+    <ApolloConsumer>
+      {
+        client => (
+          <div className="flex justify-center p-4 pt-16">
       <div className="mr-20 max-w-md px-20 hidden md:block">
         <div className="text-4xl font-extrabold pb-8">
           wrabit
@@ -56,9 +92,9 @@ const Signup = () => {
             Create your Wrabit account now
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={event => handleSubmit(event, client)}>
             <div className="mb-4">
-              <label className="hidden" for="email">
+              <label className="hidden" htmlFor="email">
                 Email
               </label>
 
@@ -66,43 +102,49 @@ const Signup = () => {
                 className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
                 id="email"
                 placeholder="Email" 
-                value={email}
                 type="email"
+                value={email}
                 onChange={({ target }) => setEmail(target.value)} 
               />
             </div>
 
             <div className="mb-4">
-              <label className="hidden" for="first-name">
+              <label className="hidden" htmlFor="first-name">
                 First Name
               </label>
 
-              <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline" id="first-name" type="text" placeholder="First Name" />
+              <input
+                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                id="first-name"
+                type="text"
+                placeholder="First Name"
+                value={firstName}
+                onChange={({ target }) => setFirstName(target.value)} 
+              />
             </div>
 
             <div className="mb-4">
-              <label className="hidden" for="last-name">
+              <label className="hidden" htmlFor="last-name">
                 Last Name
-              </label>
-
-              <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline" id="last-name" type="text" placeholder="Last Name" />
-            </div>
-
-            <div className="mb-4">
-              <label className="hidden" for="confirm-password">
-                Confirm Password
-              </label>
-
-              <input className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline" id="confirm-password" type="password" placeholder="Confirm Password" />
-            </div>
-
-            <div className="mb-6">
-              <label className="hidden" for="password">
-                Password
               </label>
 
               <input
                 className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+                id="last-name"
+                type="text"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={({ target }) => setLastName(target.value)} 
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="hidden" htmlFor="password">
+                Password
+              </label>
+
+              <input
+                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
                 id="password"
                 type="password"
                 placeholder="Password"
@@ -111,8 +153,27 @@ const Signup = () => {
               />
             </div>
 
+            <div className="mb-6">
+              <label className="hidden" htmlFor="confirm-password">
+                Confirm Password
+              </label>
+
+              <input
+                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+                id="confirm-password"
+                type="password"
+                placeholder="Confirm Password"
+                value={passwordConfirmation}
+                onChange={({ target }) => setPasswordConfirmation(target.value)}
+              />
+            </div>
+
             <div className="flex items-center justify-center">
-              <button className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
+              <button
+                className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+                onClick={event => handleSubmit(event, client)}
+              >
                 Sign Up
               </button>
             </div>
@@ -129,6 +190,9 @@ const Signup = () => {
         </div>
       </div>
     </div>
+        )
+      }
+    </ApolloConsumer>
   );
 };
 
