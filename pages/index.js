@@ -1,7 +1,13 @@
 import withLayout from '../components/Layout';
 
 const Index = () => (
-  <p>Insert beautiful landing page here</p>
+  <div>
+    Welcome to Wrabit!
+
+    <button onClick={signUp}>
+      Sign Up
+    </button>
+  </div>
 );
 
 export default withLayout(Index);
