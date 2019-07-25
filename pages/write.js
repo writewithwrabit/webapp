@@ -1,26 +1,23 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 
-import { FaBold, FaItalic, FaUnderline, FaHeading, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
+import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
 
 import withLayout from '../components/Layout';
 
-const selectableBlockTypes = [
-  'paragraph',
-  'heading-one',
-  'heading-two',
-  'heading-three',
-];
+const selectableBlockTypes = {
+  paragraph: 'Paragraph',
+  'heading-one': 'Heading 1',
+  'heading-two': 'Heading 2',
+  'heading-three': 'Heading 3',
+};
 
 const icons = {
   bold: FaBold,
   italic: FaItalic,
   underlined: FaUnderline,
-  'heading-one': FaHeading,
-  'heading-two': FaHeading,
-  'heading-three': FaHeading,
   'block-quote': FaQuoteLeft,
   'numbered-list': FaListOl,
   'bulleted-list': FaListUl,
@@ -68,17 +65,22 @@ const DEFAULT_NODE = 'paragraph';
 
 const Write = () => {
   let editor = null;
+  const blockSelectorDropdown = useRef();
+
   const [value, setValue] = useState(emptyDocument); 
   
   const goalWords = 1000;
   const [wordsWritten, setWordsWritten] = useState(0);
   const [wordsRemaining, setWordsRemaining] = useState(goalWords);
   const percentWordsRemaining = ((wordsWritten / goalWords) * 100).toFixed(2);
-
   const progressBarStyles = {
     width: `${percentWordsRemaining}%`,
   };
 
+  const [blockSelectorState, setBlockSelectorState] = useState(false);
+  const blockSelectorStyles = {
+    display: blockSelectorState ? 'block' : 'none',
+  };
   const [selectedBlockType, setBlockType] = useState('paragraph');
 
   const handleChange = ({ value }) => {
@@ -110,6 +112,7 @@ const Write = () => {
     
     return (
       <button
+        className="mx-2 hover:text-white"
         active={isActive}
         onMouseDown={event => onClickMark(event, type)}
       >
@@ -196,7 +199,7 @@ const Write = () => {
 
     return (
       <button
-        className="mx-2"
+        className="mx-2 hover:text-white"
         active={isActive}
         onMouseDown={event => onClickBlock(event, type)}
       >
@@ -208,8 +211,8 @@ const Write = () => {
   const renderBlock = (props, editor, next) => {
     const { attributes, children, node, isSelected } = props;
 
-    if (isSelected && selectableBlockTypes.includes(node.type)) {
-      setBlockType(node.type);
+    if (isSelected && Object.keys(selectableBlockTypes).includes(node.type)) {
+      setBlockType(selectableBlockTypes[node.type]);
     }
 
     switch (node.type) {
@@ -232,40 +235,107 @@ const Write = () => {
     }
   }
 
-  const onSelectBlockType = (event) => {
-    onClickBlock(event, event.target.value);
+  const onClickBlockSelector = async (e, blockType) => {
+    await onClickBlock(e, blockType);
+    setBlockSelectorState(!blockSelectorState);
   }
+
+  const renderBlockTypeOption = (blockType, displayName) => {
+    return (
+      <div className="blocktype-option cursor-pointer hover:bg-gray-300 py-2 px-4" onMouseDown={(e) => onClickBlockSelector(e, blockType)}>
+        {displayName}
+      </div>
+    );
+  }
+
+  const outsideClickListener = event => {
+    const isVisible = elem => !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
+    if (!element.contains(event.target) && isVisible(element)) {
+      closeBlockSelector();
+    }
+  }
+
+  const openBlockSelector = e => {
+    e.preventDefault();
+    setBlockSelectorState(!blockSelectorState);
+  }
+
+  const handleClickOutside = e => {
+    if (blockSelectorDropdown.current.contains(e.target)) {
+      return;
+    }
+
+    setBlockSelectorState(false);
+  };
+
+  useEffect(() => {
+    if (blockSelectorState) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [blockSelectorState]);
 
   return (
     <div className="min-h-screen">
       <div className="shadow-xl">
-        <div className="bg-gray-800 p-4 rounded-t-lg text-gray-500">
-          <span className="mx-4">
-            {renderMarkButton('bold')}
-            {renderMarkButton('italic')}
-            {renderMarkButton('underlined')}
-          </span>
+        <div className="bg-gray-800 p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
+          <div >
+            <span className="mx-4 inline-block relative">
+              <span className="block-selector">
+                <div
+                  className="cursor-pointer bg-gray-400 text-gray-800 font-bold py-1 px-4 w-40 sm:w-48 rounded-lg"
+                  onMouseDown={openBlockSelector}
+                >
+                  {selectedBlockType}
+                </div>
 
-          <span className="mx-4 inline-block relative">
-            <select onChange={event => onSelectBlockType(event)} value={selectedBlockType} className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-              <option value="paragraph">Paragraph</option> 
-              <option value="heading-one">Heading 1</option>
-              <option value="heading-two">Heading 2</option>
-              <option value="heading-three">Heading 3</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-            </div>
-          </span>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800">
+                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
 
-          <span className="mx-4">
-            {renderBlockButton('block-quote')}
-            {renderBlockButton('numbered-list')}
-            {renderBlockButton('bulleted-list')}
-          </span>
+                <div
+                  ref={blockSelectorDropdown}
+                  className="bg-gray-100 shadow-lg text-gray-800 py-4 w-48 rounded-lg absolute top-0 z-10"
+                  style={blockSelectorStyles}
+                >
+                  {renderBlockTypeOption('paragraph', 'Paragraph')}
+                  {renderBlockTypeOption('heading-one', 'Heading 1')}
+                  {renderBlockTypeOption('heading-two', 'Heading 2')}
+                  {renderBlockTypeOption('heading-three', 'Heading 3')}
+                </div>
+              </span>
+            </span>
+
+            <span className="mx-4">
+              {renderMarkButton('bold')}
+              {renderMarkButton('italic')}
+              {renderMarkButton('underlined')}
+            </span>
+
+            <span className="mx-4">
+              {renderBlockButton('block-quote')}
+              {renderBlockButton('numbered-list')}
+              {renderBlockButton('bulleted-list')}
+            </span>
+          </div>
+
+          <div className="hover:text-white text-sm flex-col text-right font-extrabold leading-tight hidden sm:flex">
+            <span>
+              {wordsWritten}
+            </span>
+            <span>
+              words
+            </span>
+          </div>
         </div>
-
-        <div className="words-written w-40 -mx-40 pr-4 text-2xl text-gray-800 opacity-10 flex flex-col text-right z-10 font-extrabold sticky top-0">
+        
+        {/* 
+        <div className="words-written w-40 -mx-40 pr-4 text-2xl text-gray-800 opacity-10 flex flex-col text-right z-10 font-extrabold sticky top-0 leading-tight">
           <span>
             {wordsWritten}
           </span>
@@ -273,6 +343,7 @@ const Write = () => {
             words
           </span>
         </div>
+        */}
 
         <Editor
           ref={(editorRef) => editor = editorRef}
@@ -287,10 +358,8 @@ const Write = () => {
         />
       </div>
 
-      <div
-        className="progress-bar fixed bottom-0 container bg-gray-800 h-2"
-        style={progressBarStyles}
-      >
+      <div className="progress-bar fixed bottom-0 container my-2 px-2">
+        <div className="progress bg-gray-800 h-3 max-w-full rounded-lg" style={progressBarStyles}></div>
       </div>
     </div>
   );
