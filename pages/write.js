@@ -238,17 +238,6 @@ const Write = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="py-6 px-10 z-10">
-        {/* <div className="bg-green-400 py-2 rounded-lg text-white font-extrabold text-center w-1/6">
-          <div>
-            {wordsWritten}
-          </div>
-          <div>
-            words
-          </div>
-        </div> */}
-      </div>
-      
       <div className="shadow-xl">
         <div className="bg-gray-800 p-4 rounded-t-lg text-gray-500">
           <span className="mx-4">
@@ -273,6 +262,15 @@ const Write = () => {
             {renderBlockButton('block-quote')}
             {renderBlockButton('numbered-list')}
             {renderBlockButton('bulleted-list')}
+          </span>
+        </div>
+
+        <div className="words-written w-40 -mx-40 pr-4 text-2xl text-gray-800 opacity-10 flex flex-col text-right z-10 font-extrabold sticky top-0">
+          <span>
+            {wordsWritten}
+          </span>
+          <span>
+            words
           </span>
         </div>
 
