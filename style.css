@@ -66,17 +66,20 @@ a:hover {
   @apply text-xl;
 }
 
-.progress-bar {
+.progress-bar .progress {
   background: rgb(198,246,213);
   background: linear-gradient(90deg, rgba(198,246,213,1) 0%, rgba(47,133,90,1) 100%);
   transition: width 0.8s;
 }
 
 .words-written {
-  height: 0;
   transition: opacity 0.6s;
 }
 
 .words-written:hover {
-  opacity: 1;
+  @apply opacity-100;
+}
+
+.blocktype-option:hover {
+  @apply pl-6;
 }
