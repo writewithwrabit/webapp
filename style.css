@@ -65,3 +65,9 @@ a:hover {
 .editor h3 {
   @apply text-xl;
 }
+
+.progress-bar {
+  background: rgb(198,246,213);
+  background: linear-gradient(90deg, rgba(198,246,213,1) 0%, rgba(47,133,90,1) 100%);
+  transition: width 0.8s;
+}

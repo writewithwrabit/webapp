@@ -68,10 +68,17 @@ const DEFAULT_NODE = 'paragraph';
 
 const Write = () => {
   let editor = null;
+  const [value, setValue] = useState(emptyDocument); 
+  
   const goalWords = 1000;
-  const [value, setValue] = useState(emptyDocument);
   const [wordsWritten, setWordsWritten] = useState(0);
   const [wordsRemaining, setWordsRemaining] = useState(goalWords);
+  const percentWordsRemaining = ((wordsWritten / goalWords) * 100).toFixed(2);
+
+  const progressBarStyles = {
+    width: `${percentWordsRemaining}%`,
+  };
+
   const [selectedBlockType, setBlockType] = useState('paragraph');
 
   const handleChange = ({ value }) => {
@@ -232,20 +239,14 @@ const Write = () => {
   return (
     <div className="min-h-screen">
       <div className="py-6 px-10 z-10">
-        <div className="bg-green-400 py-2 rounded-lg text-white font-extrabold text-center w-1/6">
+        {/* <div className="bg-green-400 py-2 rounded-lg text-white font-extrabold text-center w-1/6">
           <div>
             {wordsWritten}
           </div>
           <div>
             words
           </div>
-        </div>
-      </div>
-
-      <div className="fixed bottom-0 container">
-        <div className="p-4 text-right text-gray-500 text-2xl text-pink-600">
-            {wordsRemaining} words to go!
-          </div>
+        </div> */}
       </div>
       
       <div className="shadow-xl">
@@ -286,6 +287,12 @@ const Write = () => {
           renderMark={renderMark}
           renderBlock={renderBlock}
         />
+      </div>
+
+      <div
+        className="progress-bar fixed bottom-0 container bg-gray-800 h-2"
+        style={progressBarStyles}
+      >
       </div>
     </div>
   );
