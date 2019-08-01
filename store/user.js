@@ -1,6 +1,6 @@
 import { action } from 'easy-peasy';
 
-const userModel = {
+const user = {
   isAuthenticated: false,
   firebaseData: null,
   signInUser: action((state, payload) => {
@@ -13,4 +13,4 @@ const userModel = {
   }),
 };
 
-export default userModel;
+export default user;

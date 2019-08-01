@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
 
@@ -21,55 +22,38 @@ const icons = {
   'bulleted-list': FaListUl,
 }
 
-const emptyDocument = Value.fromJSON({
+const emptyDocument = {
   document: {
     nodes: [
       {
         object: 'block',
         type: 'paragraph',
-        nodes: [
-          {
-            object: 'text',
-            text: `Ipsum Blaster`,
-          },
-        ],
-      },
-      {
-        object: 'block',
-        type: 'paragraph',
-        nodes: [
-          {
-            object: 'text',
-            text: `Ipsum Blaster luke jedi saffron bazoolium ice gun boomer. Jedi bazoolium time lord ord mantell psychic paper youngling paradox machine antilles. Obi-wan exterminate sullust tatooine rassilon. Dantooine tylium ore fodder jedi mind trick, jabba saffron jango fett validium. Jelly babies dantooine saffron jethrik frack bantha malcom endor dalek sarlacc hutt carbonite wookie tatooine. Endor jedi validium droid jar jar fodder exterminate ice gun nethersphere krypter sarlacc paradox machine. Jar jar protocol droid gorram x-wing tie fighter.`,
-          },
-        ],
-      },
-      {
-        object: 'block',
-        type: 'paragraph',
-        nodes: [
-          {
-            object: 'text',
-            text: `
-            Ipsum Blaster luke jedi saffron bazoolium ice gun boomer. Jedi bazoolium time lord ord mantell psychic paper youngling paradox machine antilles. Obi-wan exterminate sullust tatooine rassilon. Dantooine tylium ore fodder jedi mind trick, jabba saffron jango fett validium. Jelly babies dantooine saffron jethrik frack bantha malcom endor dalek sarlacc hutt carbonite wookie tatooine. Endor jedi validium droid jar jar fodder exterminate ice gun nethersphere krypter sarlacc paradox machine. Jar jar protocol droid gorram x-wing tie fighter.`,
-          },
-        ],
+        nodes: [],
       },
     ],
   },
-});
+};
 
 const DEFAULT_NODE = 'paragraph';
 
-const Editor = () => {
+const Editor = ({ entry }) => {
+  let jsonEntry;
+  try {
+    jsonEntry = JSON.parse(entry.content)
+  } catch(e) {
+    console.log('Invalid JSON passed, probably a new entry.');
+  }
+
+  const saveEntry = useStoreActions(actions => actions.editor.saveEntry);
+  const initialValue = Value.fromJSON(jsonEntry || emptyDocument);
+
   let editor = null;
   const blockSelectorDropdown = useRef();
 
-  const [value, setValue] = useState(emptyDocument); 
+  const [value, setValue] = useState(initialValue); 
   
   const goalWords = 1000;
   const [wordsWritten, setWordsWritten] = useState(0);
-  const [wordsRemaining, setWordsRemaining] = useState(goalWords);
   const percentWordsRemaining = ((wordsWritten / goalWords) * 100).toFixed(2);
   const progressBarStyles = {
     width: `${percentWordsRemaining}%`,
@@ -81,16 +65,23 @@ const Editor = () => {
   };
   const [selectedBlockType, setBlockType] = useState('paragraph');
 
-  const handleChange = ({ value }) => {
+  const handleChange = ({ value: newValue }) => {
     const serializedWords = Plain.serialize(value);
-    const splitWords = serializedWords.split(' ').length - 1;
+    const splitWords = serializedWords.split(' ');
 
     // Don't force the user to hit space before you count the first word
-    const wordCount = serializedWords && splitWords === 0 ? 1 : splitWords;
+    const wordCount = splitWords.length && !splitWords[0] ? 0 : splitWords.length;
 
-    setValue(value);
     setWordsWritten(wordCount);
-    setWordsRemaining(goalWords - wordCount);
+    setValue(newValue);
+
+    const content = JSON.stringify(newValue.toJSON(newValue));
+
+    saveEntry({
+      ...entry,
+      content,
+      wordCount,
+    });
   }
 
   const hasMark = type => value.activeMarks.some(mark => mark.type === type);
@@ -102,6 +93,9 @@ const Editor = () => {
 
   const renderMarkButton = (type) => {
     const isActive = hasMark(type);
+    const className = isActive 
+      ? 'mx-2 text-white' 
+      : 'mx-2 hover:text-white';
     const IconComponent = icons[type];
 
     if (!IconComponent) {
@@ -110,8 +104,7 @@ const Editor = () => {
     
     return (
       <button
-        className="mx-2 hover:text-white"
-        active={isActive}
+        className={className}
         onMouseDown={event => onClickMark(event, type)}
       >
         <IconComponent />
@@ -180,6 +173,9 @@ const Editor = () => {
 
   const renderBlockButton = (type) => {
     let isActive = hasBlock(type);
+    const className = isActive 
+      ? 'mx-2 text-white' 
+      : 'mx-2 hover:text-white';
     const IconComponent = icons[type];
 
     if (!IconComponent) {
@@ -197,8 +193,7 @@ const Editor = () => {
 
     return (
       <button
-        className="mx-2 hover:text-white"
-        active={isActive}
+        className={className}
         onMouseDown={event => onClickBlock(event, type)}
       >
         <IconComponent />

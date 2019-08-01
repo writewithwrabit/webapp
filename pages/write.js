@@ -18,13 +18,11 @@ const GET_ENTRY = gql`
 const Write = () => (
   <Query query={GET_ENTRY} variables={{ userID: "0T3AWCd9mkdDFPeV0SDXqj3GRvZ2" }}>
     {({ loading, error, data}) => {
-      console.log(loading, error, data);
-
       if (loading) return (<div>LOADING</div>);
       if (error) return (<div>ERROR</div>);
 
       return (
-        <Editor />
+        <Editor entry={data.latestEntry} />
       );
     }}
   </Query>
