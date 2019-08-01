@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
 
