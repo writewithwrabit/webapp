@@ -12,14 +12,14 @@ const Auth = ({children}) => {
   const user = useStoreState(state => state.user);
   const signInUser = useStoreActions(actions => actions.user.signInUser);
 
-  firebase.auth().onAuthStateChanged((firebaseUser) => {
+  firebase.auth().onAuthStateChanged(async (firebaseUser) => {
     if (!user.isAuthenticated && firebaseUser) {
       signInUser(firebaseUser);
       router.push(router.pathname);
     }
 
     // Redirect to the login page if a user is not allowed
-    if (!user.isAuthenticated && protectedRoutes.includes(router.pathname)) {
+    if (!firebaseUser && protectedRoutes.includes(router.pathname)) {
       router.push('/login');
     }
   });
