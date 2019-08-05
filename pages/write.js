@@ -1,7 +1,6 @@
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
-
-import firebase from '../firebase';
+import { useStoreState } from 'easy-peasy';
 
 import withLayout from '../components/Layout';
 
@@ -18,7 +17,7 @@ const GET_ENTRY = gql`
 `;
 
 const Write = () => {
-  const { uid: userID } = firebase.auth().currentUser;
+  const { uid: userID } = useStoreState(state => state.user).firebaseData;
 
   return (
     <Query query={GET_ENTRY} variables={{ userID }}>

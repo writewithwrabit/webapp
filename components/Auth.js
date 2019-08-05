@@ -12,18 +12,24 @@ const Auth = ({children}) => {
   firebase.auth().onAuthStateChanged((firebaseUser) => {
     if (!user.isAuthenticated && firebaseUser) {
       signInUser(firebaseUser);
-      router.push('/write');
+      router.push(router.pathname);
+    }
+
+    // Redirect to the login page if a user is not allowed
+    if (!user.isAuthenticated && protectedRoutes.includes(router.pathname)) {
+      router.push('/login');
     }
   });
 
-  // Redirect to the login page if a user is not allowed
-  const isAllowed = url => {
-    if (!user.isAuthenticated && protectedRoutes.includes(url)) {
-      router.push('/login');
-    }
+  // Display empty loading state while checking
+  // that the user is properly authenticated
+  if (!user.isAuthenticated && protectedRoutes.includes(router.pathname)) {
+    return (
+      <div className="flex justify-center items-center h-screen w-screen">
+        LOADING...
+      </div>
+    );
   }
-
-  isAllowed(router.pathname);
 
   return (
     <div>
