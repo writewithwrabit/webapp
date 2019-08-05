@@ -1,8 +1,7 @@
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
+import { useStoreState } from 'easy-peasy';
 import { DateRangePicker } from 'react-dates';
-
-import firebase from '../firebase';
 
 import withLayout from '../components/Layout';
 
@@ -18,15 +17,26 @@ const GET_ENTRIES = gql`
 
 const renderEntries = (entries) => {
   return entries.map(entry => (
-    <div className="bg-white m-10 px-10 py-5 rounded shadow-md">
-      {entry.id}
+    <div className="bg-white ml-5 mb-5 px-10 py-5 rounded shadow-md flex justify-between items-center">
+      <div>
+        <div>
+          {entry.createdAt}
+        </div>
+
+        <div>
+          {entry.wordCount} words written
+        </div>
+      </div>
+
+      <div>
+        0 day streak!
+      </div>
     </div>
   ));
 }
 
 const Entries = () => {
-  // const { uid: userID } = firebase.auth().currentUser;
-  const userID = '0T3AWCd9mkdDFPeV0SDXqj3GRvZ2';
+  const { uid: userID } = useStoreState(state => state.user).firebaseData;
 
   return (
     <Query query={GET_ENTRIES} variables={{ userID }}>
@@ -40,7 +50,7 @@ const Entries = () => {
           <div className="flex">
             <DateRangePicker />
 
-            <div>
+            <div className="w-full first-child:-mt-10">
               {entries}
             </div>
           </div>

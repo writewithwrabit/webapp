@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import firebase from '../firebase';
+
+import NavItem from './ NavItem';
   
 const Header = () => {
   const user = useStoreState(state => state.user);
@@ -13,7 +15,7 @@ const Header = () => {
   };
 
   return (
-    <div className="nav mt-4 border-b-2 border-gray-200 flex text-gray-600">
+    <div className="nav my-4 border-b-2 border-gray-200 flex text-gray-600">
       <div className="pb-4 w-1/3">
         <Link href="/">
           <a className="px-8 font-extrabold">
@@ -27,23 +29,11 @@ const Header = () => {
           user.isAuthenticated
             ? (
               <span>
-                <span className="nav-item pb-4">
-                  <Link href="/entries">
-                    <a className="px-8">Entries</a>
-                  </Link>
-                </span>
+                <NavItem url="/entries" text="Entries" />
 
-                <span className="nav-item pb-4">
-                  <Link href="/write">
-                    <a className="px-8">Write</a>
-                  </Link>
-                </span>
+                <NavItem url="/write" text="Write" />
 
-                <span className="nav-item pb-4">
-                  <Link href="/stats">
-                    <a className="px-8">Stats</a>
-                  </Link>
-                </span>
+                <NavItem url="/stats" text="Stats" />
               </span>
             )
             : ''
@@ -51,13 +41,13 @@ const Header = () => {
       </div>
 
       <div className="w-1/3  text-right">
-        <span className="nav-item pb-4 px-8">
+        <span className="nav-item pb-4">
           {
             user.isAuthenticated
-              ? <a onClick={logout}>Logout</a>
+              ? <a className="px-8" onClick={logout}>Logout</a>
               : (
                 <Link href="/login">
-                  <a>Login</a>
+                  <a className="px-8">Login</a>
                 </Link>
               )
           }

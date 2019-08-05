@@ -2,7 +2,10 @@ import { useRouter } from 'next/router';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import firebase from '../firebase';
 
-const protectedRoutes = ['/write'];
+const protectedRoutes = [
+  '/write',
+  '/entries',
+];
 
 const Auth = ({children}) => {
   const router = useRouter();
