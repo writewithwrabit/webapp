@@ -26,10 +26,24 @@ const Header = () => {
         {
           user.isAuthenticated
             ? (
-              <span className="nav-item pb-4">
-                <Link href="/write">
-                  <a className="px-8">Write</a>
-                </Link>
+              <span>
+                <span className="nav-item pb-4">
+                  <Link href="/entries">
+                    <a className="px-8">Entries</a>
+                  </Link>
+                </span>
+
+                <span className="nav-item pb-4">
+                  <Link href="/write">
+                    <a className="px-8">Write</a>
+                  </Link>
+                </span>
+
+                <span className="nav-item pb-4">
+                  <Link href="/stats">
+                    <a className="px-8">Stats</a>
+                  </Link>
+                </span>
               </span>
             )
             : ''
