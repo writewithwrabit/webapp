@@ -1,7 +1,9 @@
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { useStoreState } from 'easy-peasy';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import DayPicker, { DateUtils } from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
 import withLayout from '../components/Layout';
 
@@ -37,13 +39,52 @@ const renderEntries = (entries) => {
 
 const Entries = () => {
   const { uid: userID } = useStoreState(state => state.user).firebaseData;
-  const [startDate, setStartDate] = useState(null); 
+  const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [focusedInput, setFocusedInput] = useState(null);
+  const [enteredToDate, setEnteredToDate] = useState(null);
 
-  const handleDateChange = ({ startDate, endDate }) => {
-    setStartDate(startDate);
-    setEndDate(endDate);
+  // Date Picker config
+  let datePicker = useRef();
+  const modifiers = { start: startDate, end: enteredToDate };
+  const disabledDays = { before: startDate };
+  const selectedDays = [startDate, { from: startDate, to: enteredToDate }];
+
+  const isSelectingFirstDay = (day) => {
+    const isBeforeFirstDay = startDate && DateUtils.isDayBefore(day, startDate);
+    const isRangeSelected = startDate && endDate;
+    return !startDate || isBeforeFirstDay || isRangeSelected;
+  }
+
+  const handleDayClick = (day) => {
+    if (startDate && endDate && day >= startDate && day <= endDate) {
+      handleResetClick();
+      return;
+    }
+
+    if (isSelectingFirstDay(day)) {
+      setStartDate(day);
+      setEndDate(null);
+      setEnteredToDate(null);
+    } else {
+      setEndDate(day);
+      setEnteredToDate(day);
+    }
+  }
+
+  const handleDayMouseEnter = (day) => {
+    if (!isSelectingFirstDay(day)) {
+      setEnteredToDate(day);
+    }
+  }
+
+  const handleResetClick = () => {
+    setStartDate(null);
+    setEndDate(null);
+    setEnteredToDate(null);
+  }
+
+  const handleTodayClick = () => {
+    datePicker.showMonth(new Date());
   }
 
   return (
@@ -56,8 +97,34 @@ const Entries = () => {
 
         return (
           <div className="flex">
-            <div className="flex-none">
+            <div className="lg:flex-none">
+              <DayPicker 
+                ref={(datePickerRef) => datePicker = datePickerRef}
+                numberOfMonths={2}
+                fromMonth={startDate}
+                selectedDays={selectedDays}
+                disabledDays={disabledDays}
+                modifiers={modifiers}
+                onDayClick={handleDayClick}
+                onDayMouseEnter={handleDayMouseEnter}
+              />
 
+              <div className="flex flex-col items-center">
+                <button onClick={handleTodayClick}>Go to today</button>
+
+                {
+                  startDate && endDate
+                  && `Viewing from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`
+                }
+                {
+                  startDate && endDate
+                  && (
+                    <button className="link" onClick={handleResetClick}>
+                      Reset
+                    </button>
+                  )
+                }
+              </div>
             </div>
 
             <div className="w-full first-child:-mt-10 flex-grow">

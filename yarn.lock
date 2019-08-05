@@ -5416,6 +5416,13 @@ react-apollo@^2.5.8:
     ts-invariant "^0.4.2"
     tslib "^1.9.3"
 
+react-day-picker@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-7.3.1.tgz#949b752af6c4219c3d741dacfc3ce10dc6e2d26f"
+  integrity sha512-51GkSD0LW3uHBWCcwENMxJmniG+1jPQDtADpOu21+KYOvNHLFjlW+LdB/b/35SGJKEE502SyYqueutr4PD0czQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-dom@^0.14||^15.5.4||^16.1.1:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.6.tgz#71d6303f631e8b0097f56165ef608f051ff6e10f"
