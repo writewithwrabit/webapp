@@ -20,7 +20,8 @@ a:hover {
   @apply cursor-pointer;
 }
 
-.nav-item:hover {
+.nav-item:hover,
+.nav-item.active {
   @apply text-gray-800;
   @apply border-b-4;
   @apply border-gray-200;

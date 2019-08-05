@@ -1,7 +1,6 @@
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { useStoreState } from 'easy-peasy';
-import { DateRangePicker } from 'react-dates';
 import { useState } from 'react';
 
 import withLayout from '../components/Layout';
@@ -57,17 +56,11 @@ const Entries = () => {
 
         return (
           <div className="flex">
-            <DateRangePicker
-              startDate={startDate}
-              startDateId="start_date_id"
-              endDate={endDate}
-              endDateId="end_date_id"
-              onDatesChange={handleDateChange}
-              focusedInput={focusedInput}
-              onFocusChange={focusedInput => setFocusedInput(focusedInput)}
-            />
+            <div className="flex-none">
 
-            <div className="w-full first-child:-mt-10">
+            </div>
+
+            <div className="w-full first-child:-mt-10 flex-grow">
               {entries}
             </div>
           </div>

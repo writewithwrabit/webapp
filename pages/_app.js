@@ -5,9 +5,6 @@ import dynamic from 'next/dynamic';
 import { ApolloProvider } from 'react-apollo'
 import { StoreProvider } from 'easy-peasy';
 
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
-
 import withApollo from '../lib/apollo/withApollo';
 import store from '../store/store';
 
