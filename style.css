@@ -20,7 +20,8 @@ a:hover {
   @apply cursor-pointer;
 }
 
-.nav-item:hover {
+.nav-item:hover,
+.nav-item.active {
   @apply text-gray-800;
   @apply border-b-4;
   @apply border-gray-200;
@@ -82,4 +83,17 @@ a:hover {
 
 .blocktype-option:hover {
   @apply pl-6;
+}
+
+.DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+  background-color: #f0f8ff !important;
+  color: #4a90e2;
+}
+
+.DayPicker-Day {
+  @apply rounded !important;
+}
+
+.DayPicker-Day:focus {
+  outline: none;
 }
