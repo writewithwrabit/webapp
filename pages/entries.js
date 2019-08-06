@@ -1,44 +1,15 @@
-import gql from "graphql-tag";
-import { Query } from "react-apollo";
-import { useStoreState } from 'easy-peasy';
 import { useState, useRef } from 'react';
+import { format } from 'date-fns'
 import DayPicker, { DateUtils } from 'react-day-picker';
+import DayPickerInput from "react-day-picker/DayPickerInput";
 import 'react-day-picker/lib/style.css';
 
 import withLayout from '../components/Layout';
+import EntriesList from '../components/EntriesList';
 
-const GET_ENTRIES = gql`
-  query UserEntries($userID: ID!) {
-    entriesByUserID(userID: $userID) {
-      id
-      wordCount
-      createdAt
-    }
-  }
-`;
-
-const renderEntries = (entries) => {
-  return entries.map(entry => (
-    <div key={entry.id} className="bg-white ml-5 mb-5 px-10 py-5 rounded shadow-md flex justify-between items-center">
-      <div>
-        <div>
-          {entry.createdAt}
-        </div>
-
-        <div>
-          {entry.wordCount} words written
-        </div>
-      </div>
-
-      <div>
-        0 day streak!
-      </div>
-    </div>
-  ));
-}
+const formatFriendly = date => format(new Date(date), 'MMMM d, yyyy');
 
 const Entries = () => {
-  const { uid: userID } = useStoreState(state => state.user).firebaseData;
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [enteredToDate, setEnteredToDate] = useState(null);
@@ -88,52 +59,50 @@ const Entries = () => {
   }
 
   return (
-    <Query query={GET_ENTRIES} variables={{ userID }}>
-      {({ loading, error, data}) => {
-        if (loading) return (<div>LOADING</div>);
-        if (error) return (<div>ERROR</div>);
+    <div className="flex flex-col md:flex-row items-center md:items-start">
+      <div className="md:block lg:flex-none mb-5">
+        <DayPicker 
+          ref={(datePickerRef) => datePicker = datePickerRef}
+          numberOfMonths={2}
+          fromMonth={startDate}
+          selectedDays={selectedDays}
+          disabledDays={disabledDays}
+          modifiers={modifiers}
+          onDayClick={handleDayClick}
+          onDayMouseEnter={handleDayMouseEnter}
+        />
 
-        const entries = renderEntries(data.entriesByUserID);
+        <div className="flex flex-col items-center text-xs">
+          {
+            startDate && endDate
+              ? (
+                <div className="text-center">
+                  <div>
+                    <span className="text-blue-700 font-bold">
+                      {formatFriendly(startDate)}
+                    </span>
+                    {' '}to{' '}
+                    <span className="text-blue-700 font-bold">
+                      {formatFriendly(endDate)}
+                    </span>
+                  </div>
 
-        return (
-          <div className="flex">
-            <div className="lg:flex-none">
-              <DayPicker 
-                ref={(datePickerRef) => datePicker = datePickerRef}
-                numberOfMonths={2}
-                fromMonth={startDate}
-                selectedDays={selectedDays}
-                disabledDays={disabledDays}
-                modifiers={modifiers}
-                onDayClick={handleDayClick}
-                onDayMouseEnter={handleDayMouseEnter}
-              />
+                  <button className="text-blue-500 hover:text-blue-700" onClick={handleResetClick}>
+                    Reset
+                  </button>
+                </div>
+              )
+              : (
+                <button className="text-blue-500 hover:text-blue-700" onClick={handleTodayClick}>
+                  Show me today
+                </button>
+              )
+          }
+        </div>
+      </div>
 
-              <div className="flex flex-col items-center">
-                <button onClick={handleTodayClick}>Go to today</button>
-
-                {
-                  startDate && endDate
-                  && `Viewing from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`
-                }
-                {
-                  startDate && endDate
-                  && (
-                    <button className="link" onClick={handleResetClick}>
-                      Reset
-                    </button>
-                  )
-                }
-              </div>
-            </div>
-
-            <div className="w-full first-child:-mt-10 flex-grow">
-              {entries}
-            </div>
-          </div>
-        );
-      }}
-    </Query>
+      <EntriesList startDate={startDate} endDate={endDate} />
+    </div>
   );
 };
 
