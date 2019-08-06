@@ -34,9 +34,9 @@ const renderEntries = (entries) => {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         0 day streak!
-      </div>
+      </div> */}
     </div>
   ));
 }
