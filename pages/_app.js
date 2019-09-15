@@ -2,7 +2,7 @@ import React from 'react';
 import * as Sentry from '@sentry/browser';
 import App, { Container } from 'next/app';
 import dynamic from 'next/dynamic';
-import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider } from '@apollo/react-hooks'
 import { StoreProvider } from 'easy-peasy';
 
 import withApollo from '../lib/apollo/withApollo';

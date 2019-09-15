@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { useQuery } from '@apollo/react-hooks';
 import { useStoreState } from 'easy-peasy';
-import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import { format, startOfDay, endOfDay, subMinutes } from 'date-fns'
 
 const GET_ENTRIES = gql`
@@ -45,26 +45,23 @@ const EntriesList = ({ startDate, endDate }) => {
   const { uid: userID } = useStoreState(state => state.user).firebaseData;
   const utcStartDate = startDate ? zonedTimeToUtc(startOfDay(startDate), timezoneOffset) : null;
   const utcEndDate = endDate ? zonedTimeToUtc(endOfDay(endDate), timezoneOffset) : null;
-
-  return (
-    <Query query={GET_ENTRIES} variables={{
+  const { loading, error, data } = useQuery(GET_ENTRIES, {
+    variables: {
       userID,
       startDate: utcStartDate,
       endDate: utcEndDate,
-    }}>
-      {({ loading, error, data}) => {
-        if (loading) return (<div>LOADING</div>);
-        if (error) return (<div>ERROR</div>);
+    },
+  });
 
-        const entries = renderEntries(data.entriesByUserID);
+  if (loading) return (<div>LOADING</div>);
+  if (error) return (<div>ERROR</div>);
 
-        return (
-          <div className="w-full flex-grow">
-            {entries}
-          </div>
-        );
-      }}
-    </Query>
+  const entries = renderEntries(data.entriesByUserID);
+
+  return (
+    <div className="w-full flex-grow">
+      {entries}
+    </div>
   );
 };
 
