@@ -97,3 +97,13 @@ a:hover {
 .DayPicker-Day:focus {
   outline: none;
 }
+
+.DayPicker-Day--entry:not(.DayPicker-Day--outside) {
+  @apply bg-green-200;
+  @apply text-green-900;
+  font-weight: 700;
+}
+
+.DayPicker-Day--entry.DayPicker-Day--today {
+  color: #D0021B;
+}

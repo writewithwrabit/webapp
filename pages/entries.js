@@ -46,7 +46,25 @@ const Entries = () => {
   const modifiers = {
     start: startDate,
     end: enteredToDate,
-    entries: [],
+    // This method will compare each date
+    // reendered on the calendar and let us
+    // target it with custom CSS
+    entry: date => {
+      if (data && data.entriesByUserID) {
+        const { entriesByUserID } = data;
+
+        // Loop through each entries createdAt date and
+        // compare it to the date being rendered on the calendar
+        for (let i = 0; i < entriesByUserID.length; i++) {
+          const createdAt = new Date(entriesByUserID[i].createdAt);
+          if (createdAt.getDate() === date.getDate() && createdAt.getMonth() === date.getMonth()) {
+            return true;
+          }
+        }
+
+        return false;
+      }
+    },
   };
   const disabledDays = { before: startDate };
   const selectedDays = [startDate, { from: startDate, to: enteredToDate }];
