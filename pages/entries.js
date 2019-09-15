@@ -16,6 +16,7 @@ const GET_ENTRIES = gql`
       id
       wordCount
       createdAt
+      content
     }
   }
 `;

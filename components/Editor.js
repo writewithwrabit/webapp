@@ -326,17 +326,6 @@ const Editor = ({ entry }) => {
             </span>
           </div>
         </div>
-        
-        {/* 
-        <div className="words-written w-40 -mx-40 pr-4 text-2xl text-gray-800 opacity-10 flex flex-col text-right z-10 font-extrabold sticky top-0 leading-tight">
-          <span>
-            {wordsWritten}
-          </span>
-          <span>
-            words
-          </span>
-        </div>
-        */}
 
         <SlateEditor
           ref={(editorRef) => editor = editorRef}
