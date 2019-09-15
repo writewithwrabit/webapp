@@ -1,18 +1,4 @@
-import gql from "graphql-tag";
-import { useQuery } from '@apollo/react-hooks';
-import { useStoreState } from 'easy-peasy';
-import { zonedTimeToUtc } from 'date-fns-tz';
-import { format, startOfDay, endOfDay, subMinutes } from 'date-fns'
-
-const GET_ENTRIES = gql`
-  query UserEntries($userID: ID!, $startDate: String, $endDate: String) {
-    entriesByUserID(userID: $userID, startDate: $startDate, endDate: $endDate) {
-      id
-      wordCount
-      createdAt
-    }
-  }
-`;
+import { format, subMinutes } from 'date-fns'
 
 const timezoneOffset = new Date().getTimezoneOffset();
 
@@ -41,18 +27,7 @@ const renderEntries = (entries) => {
   ));
 }
 
-const EntriesList = ({ startDate, endDate }) => {
-  const { uid: userID } = useStoreState(state => state.user).firebaseData;
-  const utcStartDate = startDate ? zonedTimeToUtc(startOfDay(startDate), timezoneOffset) : null;
-  const utcEndDate = endDate ? zonedTimeToUtc(endOfDay(endDate), timezoneOffset) : null;
-  const { loading, error, data } = useQuery(GET_ENTRIES, {
-    variables: {
-      userID,
-      startDate: utcStartDate,
-      endDate: utcEndDate,
-    },
-  });
-
+const EntriesList = ({ data, loading, error }) => {
   if (loading) return (<div>LOADING</div>);
   if (error) return (<div>ERROR</div>);
 
