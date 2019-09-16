@@ -7,7 +7,7 @@ const protectedRoutes = [
   '/entries',
 ];
 
-const Auth = ({children}) => {
+const Auth = ({ children }) => {
   const router = useRouter();
   const user = useStoreState(state => state.user);
   const signInUser = useStoreActions(actions => actions.user.signInUser);
