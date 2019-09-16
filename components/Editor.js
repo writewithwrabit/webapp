@@ -241,13 +241,6 @@ const Editor = ({ entry }) => {
     );
   }
 
-  const outsideClickListener = event => {
-    const isVisible = elem => !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
-    if (!element.contains(event.target) && isVisible(element)) {
-      closeBlockSelector();
-    }
-  }
-
   const openBlockSelector = e => {
     e.preventDefault();
     setBlockSelectorState(!blockSelectorState);

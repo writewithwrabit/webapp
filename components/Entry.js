@@ -13,19 +13,31 @@ const formatFriendly = date => {
 const Entry = ({ entry }) => {
   const [display, setDisplay] = useState(false);
 
-  const toggleDisplay = () => setDisplay(!display);
+  const toggleDisplay = e => {
+    const entryContainerClicked = e.target.classList.contains('entry')
+      || e.target.parentNode.classList.contains('entry-details')
+      || e.target.parentNode.classList.contains('entry');
+
+    const editorClicked = e.target.classList.contains('editor') || e.target.parentNode.classList.contains('editor');
+
+    // Open the popup if it isn't open and we click an entry
+    // Close the popup if it is open and you click on something other than the editor
+    if (!display && entryContainerClicked || display && !editorClicked) {
+      setDisplay(!display);
+    }
+  };
 
   return (
     <div
       onClick={toggleDisplay}
       className="entry bg-white md:ml-5 mb-5 px-10 py-5 rounded shadow-md flex justify-between items-center"
     >
-      <div>
-        <div>
+      <div className="entry-details">
+        <div className="entry-created-at font-bold pb-2">
           {formatFriendly(entry.createdAt)}
         </div>
 
-        <div>
+        <div className="entry-word-count">
           {entry.wordCount} words written
         </div>
 
@@ -35,8 +47,8 @@ const Entry = ({ entry }) => {
             : ''
         }
       </div>
-
-      {/* <div>
+{/* 
+      <div>
         0 day streak!
       </div> */}
     </div>

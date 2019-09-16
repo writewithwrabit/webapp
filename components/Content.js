@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
+import { FaTimes } from 'react-icons/fa';
 
 const Content = ({ entry }) => {
-  console.log(entry);
   let jsonEntry;
   try {
     jsonEntry = JSON.parse(entry.content)
@@ -56,12 +56,19 @@ const Content = ({ entry }) => {
   }
 
   return (
-    <SlateEditor
-      className="editor bg-offwhite p-8 w-1/2 h-full rounded"
-      value={value}
-      renderMark={renderMark}
-      renderBlock={renderBlock}
-    />
+    <div className="relative flex justify-center w-11/12 md:w-1/2 h-full">
+      <SlateEditor
+        className="editor bg-offwhite p-8 w-full rounded overflow-y-scroll"
+        value={value}
+        renderMark={renderMark}
+        renderBlock={renderBlock}
+      />
+
+      <div className="absolute right-0 m-4">
+        <FaTimes />
+      </div>
+    </div>
+
   );
 };
 
