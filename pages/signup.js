@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { ApolloConsumer } from 'react-apollo'
+import { ApolloConsumer } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
 import firebase from '../firebase';

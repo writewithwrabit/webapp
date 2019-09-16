@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { useQuery } from '@apollo/react-hooks';
 import { useStoreState } from 'easy-peasy';
 
 import withLayout from '../components/Layout';
@@ -18,18 +18,15 @@ const GET_ENTRY = gql`
 
 const Write = () => {
   const { uid: userID } = useStoreState(state => state.user).firebaseData;
+  const { loading, error, data } = useQuery(GET_ENTRY, {
+    variables: { userID },
+  });
+
+  if (loading) return (<div>LOADING</div>);
+  if (error) return (<div>ERROR</div>);
 
   return (
-    <Query query={GET_ENTRY} variables={{ userID }}>
-      {({ loading, error, data}) => {
-        if (loading) return (<div>LOADING</div>);
-        if (error) return (<div>ERROR</div>);
-  
-        return (
-          <Editor entry={data.latestEntry} />
-        );
-      }}
-    </Query>
+    <Editor entry={data.latestEntry} />
   );
 }
 

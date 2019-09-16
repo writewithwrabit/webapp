@@ -6,6 +6,8 @@
   "author": "Anthony Morris",
   "license": "MIT",
   "dependencies": {
+    "@apollo/react-hooks": "^3.1.0",
+    "@apollo/react-ssr": "^3.1.0",
     "@sentry/browser": "^5.5.0",
     "@zeit/next-css": "^1.0.1",
     "apollo-cache-inmemory": "^1.6.2",
@@ -24,7 +26,6 @@
     "moment": "^2.18.1",
     "next": "^9.0.2",
     "react": "^0.14||^15.5.4||^16.1.1",
-    "react-apollo": "^2.5.8",
     "react-day-picker": "^7.3.1",
     "react-dom": "^0.14||^15.5.4||^16.1.1",
     "react-icons": "^3.7.0",
