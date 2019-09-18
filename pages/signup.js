@@ -6,9 +6,18 @@ import gql from 'graphql-tag'
 import firebase from '../firebase';
 
 import SignupUser from '../components/SignupUser';
+import Plans from '../components/Plans';
+import CreditCard from '../components/SignupUser';
 
 const Signup = () => {
+  const [stage, setStage] = useState('signup');
   const [user, setUser] = useState({});
+
+  const stageComponent = {
+    signup: SignupUser,
+    plans: Plans,
+    creditCard: CreditCard,
+  }
 
   const handleSubmit = (e, client) => {
     e.preventDefault();
@@ -47,11 +56,13 @@ const Signup = () => {
     });
   };
 
+  const Component = stageComponent[stage];
+
   return (
     <ApolloConsumer>
       {
         client => (
-          <SignupUser setUser={setUser} />
+          <Component setUser={setUser} setStage={setStage} />
         )
       }
     </ApolloConsumer>

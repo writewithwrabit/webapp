@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-const SignupUser = ({ setUser }) => {
+const SignupUser = ({ setUser, setStage }) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -22,6 +22,8 @@ const SignupUser = ({ setUser }) => {
       lastName,
       password,
     });
+
+    setStage('plans');
   }
 
   return (
