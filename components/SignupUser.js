@@ -29,7 +29,7 @@ const SignupUser = ({ setUser, setStage }) => {
   return (
     <div className="flex justify-center p-4 pt-16">
       <div className="mr-20 max-w-md px-20 hidden md:block">
-        <div className="text-4xl font-extrabold pb-8">
+        <div className="text-5xl font-extrabold pb-8">
           wrabit
         </div>
 

@@ -10,7 +10,7 @@ import Plans from '../components/Plans';
 import CreditCard from '../components/SignupUser';
 
 const Signup = () => {
-  const [stage, setStage] = useState('signup');
+  const [stage, setStage] = useState('plans');
   const [user, setUser] = useState({});
 
   const stageComponent = {
