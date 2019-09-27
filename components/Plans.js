@@ -1,7 +1,10 @@
-const Plans = ({ setPlan, setStage }) => {
+import { useState } from 'React';
+import Payment from './Payment';
+
+const Plans = ({ setPlan, setStage, plan }) => {
   const submitPlan = (plan) => {
     setPlan(plan);
-    setStage('payment');
+    // setStage('payment');
   }
 
   return (
@@ -31,13 +34,19 @@ const Plans = ({ setPlan, setStage }) => {
             <li>We donate $1 for every 14 day streak</li>
           </ul>
 
-          <button
-            className="text-blue-500 hover:text-blue-700 font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
-            type="button"
-            onClick={() => submitPlan('monthly')}
-          >
-            Subscribe Monthly
-          </button>
+          {
+            plan === 'monthly'
+              ? <Payment />
+              : (
+                <button
+                  className="text-blue-500 hover:text-blue-700 font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
+                  type="button"
+                  onClick={() => submitPlan('monthly')}
+                >
+                  Subscribe Monthly
+                </button>
+              )
+          }
         </div>
 
         <div className="w-full max-w-md ml-6 bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col justify-between items-center relative">
@@ -61,13 +70,19 @@ const Plans = ({ setPlan, setStage }) => {
             <li>We donate $1 for every 7 day streak</li>
           </ul>
 
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
-            type="button"
-            onClick={() => submitPlan('yearly')}
-          >
-            Subscribe Yearly
-          </button>
+          {
+            plan === 'yearly'
+              ? <Payment />
+              : (
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
+                  type="button"
+                  onClick={() => submitPlan('yearly')}
+                >
+                  Subscribe Yearly
+                </button>
+              )
+          }
         </div>
       </div>
     </div>

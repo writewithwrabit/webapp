@@ -1,22 +1,20 @@
 import { useState } from 'react';
-import Link from 'next/link';
+import Head from 'next/head';
 import { ApolloConsumer } from '@apollo/react-hooks'
 
 import firebase from '../firebase';
 
 import SignupUser from '../components/SignupUser';
 import Plans from '../components/Plans';
-import Payment from '../components/SignupUser';
 
 const Signup = () => {
-  const [stage, setStage] = useState('signup');
+  const [stage, setStage] = useState('plans');
   const [user, setUser] = useState({});
   const [plan, setPlan] = useState({});
 
   const stageComponent = {
     signup: SignupUser,
     plans: Plans,
-    payment: Payment,
   }
 
   const handleSubmit = (e, client) => {
@@ -36,13 +34,20 @@ const Signup = () => {
   const Component = stageComponent[stage];
 
   return (
-    <ApolloConsumer>
-      {
-        client => (
-          <Component client={client} setUser={setUser} setStage={setStage} setPlan={setPlan} />
-        )
-      }
-    </ApolloConsumer>
+    <div>
+      <Head>
+        {/* You must import the Stripe.js library from Stripe for compliance reasons */}
+        <script src="https://js.stripe.com/v3/"></script>
+      </Head>
+      
+      <ApolloConsumer>
+        {
+          client => (
+            <Component client={client} setUser={setUser} setStage={setStage} setPlan={setPlan} plan={plan} />
+          )
+        }
+      </ApolloConsumer>
+    </div>
   );
 };
 
