@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import gql from 'graphql-tag'
 
-const SignupUser = ({ setUser, setStage }) => {
+const SignupUser = ({ setUser, setStage, client }) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -15,6 +16,29 @@ const SignupUser = ({ setUser, setStage }) => {
       console.log('Password does not match password confirmation!');
       return;
     }
+
+    client.mutate({
+      mutation: gql`
+        mutation CreateUser($firstName: String!, $lastName: String, $email: String!) {
+          createUser(input: { firstName: $firstName, lastName: $lastName, email: $email }) {
+            id
+          }
+        }
+      `,
+      variables: { firstName, lastName, email },
+      // update: (cache, { data: { createUser } }) => {
+      //   cache.writeQuery({
+      //     query: gql`
+      //       query GetUser {
+      //         user
+      //       }
+      //     `,
+      //     data: {
+      //       user: createUser,
+      //     },
+      //   });
+      // }
+    });
 
     setUser({
       email,
