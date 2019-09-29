@@ -1,46 +1,40 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import gql from 'graphql-tag'
+import { useMutation } from '@apollo/react-hooks';
+import gql from 'graphql-tag';
 
-const SignupUser = ({ setUser, setStage, client }) => {
+const CREATE_USER = gql`
+  mutation CreateUser($firstName: String!, $lastName: String, $email: String!) {
+    createUser(input: { firstName: $firstName, lastName: $lastName, email: $email }) {
+      id
+      stripeID
+    }
+  }
+`;
+
+const SignupUser = ({ setUser, setStage }) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [createUser] = useMutation(CREATE_USER);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // TODO: Form validation!
     if (password !== passwordConfirmation) {
       console.log('Password does not match password confirmation!');
       return;
     }
 
-    client.mutate({
-      mutation: gql`
-        mutation CreateUser($firstName: String!, $lastName: String, $email: String!) {
-          createUser(input: { firstName: $firstName, lastName: $lastName, email: $email }) {
-            id
-          }
-        }
-      `,
-      variables: { firstName, lastName, email },
-      // update: (cache, { data: { createUser } }) => {
-      //   cache.writeQuery({
-      //     query: gql`
-      //       query GetUser {
-      //         user
-      //       }
-      //     `,
-      //     data: {
-      //       user: createUser,
-      //     },
-      //   });
-      // }
-    });
+    const { data } = await createUser({ variables: { firstName, lastName, email } });
+    const { createUser: createdUser } = data;
 
     setUser({
+      id: createdUser.id,
+      stripeId: createdUser.stripeID,
       email,
       firstName,
       lastName,
