@@ -1,17 +1,21 @@
-#landing .boxes {
-  background: rgb(40,230,205);
-  background: linear-gradient(315deg, rgba(40,230,205,1) 0%, rgba(38,221,245,1) 100%);
+#landing .boxes,
+#landing .icon-container {
   transform: skewY(-10deg);
   top: -20%;
 }
 
-#landing .boxes span {
+#landing .boxes {
+  background: rgb(40,230,205);
+  background: linear-gradient(315deg, rgba(40,230,205,1) 0%, rgba(38,221,245,1) 100%); 
+}
+
+#landing .box {
   position: absolute;
   top: 0;
   height: 200px;
 }
 
-#landing .boxes .icon {
+#landing .icon-container .icon {
   height: 1600px;
   top: -80px;
   right: 0;
@@ -19,7 +23,7 @@
   position: absolute;
 }
 
-#landing .boxes .icon path {
+#landing .icon-container .icon path {
   fill: rgba(255, 255, 255, 0.2);
 }
 
@@ -34,7 +38,7 @@
   top: 90%;
 }
 
-#landing .boxes .box-three {
+#landing .icon-container .box-three {
   width: 35%;
   right: 0;
   top: 80%;
@@ -44,5 +48,13 @@
 
 #landing header .content {
   margin-top: 12%;
+}
+
+#landing header a {
+  color: white;
+}
+
+#landing header a:hover {
+  color: rgba(245, 245, 245, 1);
 }
 
