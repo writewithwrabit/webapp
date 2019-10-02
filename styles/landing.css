@@ -1,0 +1,48 @@
+#landing .boxes {
+  background: rgb(40,230,205);
+  background: linear-gradient(315deg, rgba(40,230,205,1) 0%, rgba(38,221,245,1) 100%);
+  transform: skewY(-10deg);
+  top: -20%;
+}
+
+#landing .boxes span {
+  position: absolute;
+  top: 0;
+  height: 200px;
+}
+
+#landing .boxes .icon {
+  height: 1600px;
+  top: -80px;
+  right: 0;
+  transform: rotate(-25deg);
+  position: absolute;
+}
+
+#landing .boxes .icon path {
+  fill: rgba(255, 255, 255, 0.2);
+}
+
+#landing .boxes .box-one {
+  width: 30%;
+  top: 12%;
+}
+
+#landing .boxes .box-two {
+  width: 50%;
+  right: 0;
+  top: 90%;
+}
+
+#landing .boxes .box-three {
+  width: 35%;
+  right: 0;
+  top: 80%;
+  background: rgb(40,230,205);
+  background: linear-gradient(315deg, rgba(40,230,205,1) 0%, rgba(38,221,245,1) 100%);
+}
+
+#landing header .content {
+  margin-top: 12%;
+}
+
