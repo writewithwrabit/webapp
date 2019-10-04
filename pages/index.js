@@ -7,21 +7,33 @@ import '../styles/landing.css';
 import Logo from '../static/logos/full-color.svg';
 import Icon from '../static/logos/icon.svg';
 
+import Writing from '../static/writing.svg';
+import Calendar from '../static/calendar.svg';
+import Tangled from '../static/tangled.svg';
+
+import EditorOne from '../static/editor-one.svg';
+import EditorTwo from '../static/editor-two.svg';
+import EditorThree from '../static/editor-three.svg';
+
+import Sqreen from '../static/sqreen-mono-badge.svg';
+
 const Index = () => {
   const user = useStoreState(state => state.user);
 
   return (
     <div id="landing">
+      <span className="section-box bg-gray-100 absolute"></span>
+
       <header className="bg-white">
         <div>
-          <div className="boxes w-full h-full absolute">
-            <span className="box box-one bg-white"></span>
-            <span className="box box-two bg-white"></span>
+          <div className="boxes w-full absolute shadow-lg">
+            <span className="box box-one shadow-lg bg-white"></span>
+            <span className="box box-two shadow-lg bg-white"></span>
           </div>
 
-          <div className="icon-container w-full h-full absolute overflow-hidden">
+          <div className="icon-container w-full absolute overflow-hidden">
             <Icon className="icon" />
-            <span className="box box-three"></span>
+            <span className="box box-three shadow-lg"></span>
           </div>
         </div>
   
@@ -59,20 +71,73 @@ const Index = () => {
             </p>
   
             <button className="mt-16 text-xl bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Start writing
+              Start your writing journey
             </button>
           </div>
         </div>
       </header>
   
-      <section className="bg-gray-800">
-        SECTION ONE
+      <section className="platform-description relative pb-64">
+        <div className="container mx-auto">
+          <div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+
+            <div>
+              <Writing />
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <Calendar />
+            </div>
+
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+          </div>
+
+          <div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+
+            <div>
+              <Tangled />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="editor relative pb-64">
+        <span className="box bg-white absolute"></span>
+
+        <div className="container mx-auto text-center flex flex-col items-center relative">
+          <div>
+            <EditorOne />
+          </div>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
       </section>
   
-      <footer>
-        <div className="container mx-auto">
+      <footer className="relative mt-64">
+        <span className="box bg-black absolute"></span>
+
+        <div className="relative container mx-auto flex items-center flex-col">
+          <div className="w-full flex justify-between pb-20">
+            <a>About</a>
+            <a>Contact</a>
+            <a>Privacy Policy</a>
+            <a>Terms of Service</a>
+          </div>
+
           <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge">
-            <img style={{ width: 109, height: 36 }} src="https://s3-eu-west-1.amazonaws.com/sqreen-assets/badges/20171107/sqreen-mono-badge.svg" alt="Sqreen | Runtime Application Protection" />
+            <Sqreen className="sqreen" />
           </a>
         </div>
       </footer>
