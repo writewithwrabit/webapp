@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
 import { FaLongArrowAltRight } from 'react-icons/fa';
@@ -17,8 +18,30 @@ import EditorThree from '../static/editor-three.svg';
 
 import Sqreen from '../static/sqreen-mono-badge.svg';
 
+const editors = [
+  {
+    component: EditorOne,
+    viewBox: '0 0 1000 1000',
+  },
+  {
+    component: EditorTwo,
+    viewBox: '-12 2 1000 1000',
+  },
+  {
+    component: EditorThree,
+    viewBox: '-55 18 1000 1000',
+  },
+];
+
 const Index = () => {
   const user = useStoreState(state => state.user);
+  const [editorIndex, setEditorIndex] = useState(0);
+  const Editor = editors[editorIndex].component;
+  const editorViewBox = editors[editorIndex].viewBox;
+
+  setTimeout(() => {
+    setEditorIndex((editorIndex + 1) % editors.length);
+  }, 2000);
 
   return (
     <div id="landing" className="text-lg leading-relaxed">
@@ -111,17 +134,27 @@ const Index = () => {
         </div>
       </section>
 
-      <section className="editor relative pb-64">
+      <section className="editor relative pb-48">
         <span className="box bg-white absolute"></span>
 
-        <div className="container mx-auto text-center flex flex-col items-center relative">
-          <div>
-            <EditorOne />
+        <div className="container mx-auto text-center flex flex-col items-center relative px-40">
+          <div className="editor-svg">
+            <Editor viewBox={editorViewBox} />
           </div>
 
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Our editor was designed to be clean and simple. We want to stay out of your way but we have some tools to help you succeed. Format your entries, track your progress, and use a writing prompt if you feel stuck.
           </p>
+
+          <div className="flex items-center mt-10">
+            <p className="font-bold text-2xl mr-4">
+              Ready to start writing?
+            </p>
+
+            <button className="ml-4 text-xl bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Create your Wrabit account
+            </button>
+          </div>
         </div>
       </section>
   
