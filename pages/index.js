@@ -162,11 +162,18 @@ const Index = () => {
         <span className="box bg-black absolute"></span>
 
         <div className="relative container mx-auto flex items-center flex-col">
-          <div className="w-full flex justify-between pb-20">
-            <a>About</a>
-            <a>Contact</a>
-            <a>Privacy Policy</a>
-            <a>Terms of Service</a>
+          <div className="w-full flex justify-around pb-20">
+            <div className="flex flex-col">
+              <span className="font-bold">Company</span>
+              <a>About</a>
+              <a>Contact</a>
+            </div>
+
+            <div className="flex flex-col">
+              <span className="font-bold">Resources</span>
+              <a>Privacy Policy</a>
+              <a>Terms of Service</a>
+            </div>
           </div>
 
           <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge">
