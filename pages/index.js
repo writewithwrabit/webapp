@@ -21,7 +21,7 @@ const Index = () => {
   const user = useStoreState(state => state.user);
 
   return (
-    <div id="landing">
+    <div id="landing" className="text-lg leading-relaxed">
       <span className="section-box bg-gray-100 absolute"></span>
 
       <header className="bg-white">
@@ -67,7 +67,7 @@ const Index = () => {
             </h1>
             
             <p className="text-2xl mt-5">
-              Wrabit helps you build a daily writing habit, one small step at a time. Join a community of journallers as you develop your habit and contribute to mental health research. 
+              Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relatonship with yourself. 
             </p>
   
             <button className="mt-16 text-xl bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -78,10 +78,10 @@ const Index = () => {
       </header>
   
       <section className="platform-description relative pb-64">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-40">
           <div>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              We believe that journalling is for everyone. It has been shown to provide many benfits; from developing mindfulness to sparking creativity. Wrabit's simplistic editor stays out of your way and let's you focus on the writing. With nobody watching, you can proudly express your unedited self.
             </p>
 
             <div>
@@ -95,13 +95,13 @@ const Index = () => {
             </div>
 
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Building a habit is difficult. We help you succeed by starting small. On day one you aim to write a fraction of your ultimate goal. Your daily goal increases as you continue to hit your target. The more you write with Wrabit, the more we will donate towards mental health research. 
             </p>
           </div>
 
           <div>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Nearly one in five of us struggle with mental health. Although journalling will not solve all of our struggles, it can positively effect our daily life. At Wrabit, we've had our fair share of difficulties too. That's why we donate portions of your membership fees to the Brain and Behavior Research Foundation.
             </p>
 
             <div>
