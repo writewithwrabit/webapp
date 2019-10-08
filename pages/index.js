@@ -93,7 +93,7 @@ const Index = () => {
               Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relatonship with yourself. 
             </p>
   
-            <button className="mt-16 text-xl bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button className="mt-16 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Start your writing journey
             </button>
           </div>
@@ -102,30 +102,48 @@ const Index = () => {
   
       <section className="platform-description relative pb-64">
         <div className="container mx-auto px-40">
-          <div>
-            <p>
-              We believe that journalling is for everyone. It has been shown to provide many benfits; from developing mindfulness to sparking creativity. Wrabit's simplistic editor stays out of your way and let's you focus on the writing. With nobody watching, you can proudly express your unedited self.
-            </p>
+          <div className="py-10">
+            <div className="w-1/2 flex flex-col">
+              <h2 className="w-full font-bold mb-4 text-xl text-primary">
+                Express Yourself
+              </h2>
+
+              <p>
+                We believe that journalling is for everyone. It has been shown to provide many benfits; from developing mindfulness to sparking creativity. Wrabit's simplistic editor stays out of your way and let's you focus on the writing. With nobody watching, you can proudly express your unedited self.
+              </p>
+            </div>
 
             <div>
               <Writing />
             </div>
           </div>
 
-          <div>
+          <div className="py-10">
             <div>
               <Calendar />
             </div>
 
-            <p>
-            Building a habit is difficult. We help you succeed by starting small. On day one you aim to write a fraction of your ultimate goal. Your daily goal increases as you continue to hit your target. The more you write with Wrabit, the more we will donate towards mental health research. 
-            </p>
+            <div className="w-1/2 flex flex-col">
+              <h2 className="w-full font-bold mb-4 text-xl text-primary">
+                Start Small
+              </h2>
+
+              <p>
+                Building a habit is difficult. We help you succeed by starting small. On day one you aim to write a fraction of your ultimate goal. Your daily goal increases as you continue to hit your target. The more you write with Wrabit, the more we will donate towards mental health research.
+              </p>
+            </div>
           </div>
 
-          <div>
-            <p>
-              Nearly one in five of us struggle with mental health. Although journalling will not solve all of our struggles, it can positively effect our daily life. At Wrabit, we've had our fair share of difficulties too. That's why we donate portions of your membership fees to the Brain and Behavior Research Foundation.
-            </p>
+          <div className="py-10">
+            <div className="w-1/2 flex flex-col">
+              <h2 className="w-full font-bold mb-4 text-xl text-primary">
+                Fund Research
+              </h2>
+
+              <p>
+                Nearly one in five of us struggle with mental health. Although journalling will not solve all of our struggles, it can positively effect our daily life. At Wrabit, we've had our fair share of difficulties too. That's why we donate portions of your membership fees to the Brain and Behavior Research Foundation.
+              </p>
+            </div>
 
             <div>
               <Tangled />
@@ -151,7 +169,7 @@ const Index = () => {
               Ready to start writing?
             </p>
 
-            <button className="ml-4 text-xl bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button className="ml-4 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               Create your Wrabit account
             </button>
           </div>
