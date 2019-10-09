@@ -36,6 +36,12 @@
   position: absolute;
 }
 
+@media (max-width: 375px) {
+  #landing .icon-container .icon {
+    right: -180px;
+  }
+}
+
 #landing .icon-container .icon path {
   fill: rgba(255, 255, 255, 0.2);
 }

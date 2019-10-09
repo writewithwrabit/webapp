@@ -8,6 +8,7 @@ import '../styles/landing.css';
 import Logo from '../static/logos/full-color.svg';
 import Icon from '../static/logos/icon.svg';
 
+import Quill from '../static/quill.svg';
 import Writing from '../static/writing.svg';
 import Calendar from '../static/calendar.svg';
 import Tangled from '../static/tangled.svg';
@@ -62,8 +63,8 @@ const Index = () => {
         </div>
   
         <div className="container mx-auto relative">
-          <div className="py-10 flex justify-between">
-            <Logo className="w-32" />
+          <div className="pl-6 py-6 md:py-10 flex justify-between">
+            <Logo className="w-20 md:w-32" />
   
             <div className="font-bold">
               {/* {
@@ -85,8 +86,8 @@ const Index = () => {
             </div>
           </div>
   
-          <div className="w-3/5 content text-white">
-            <h1 className="text-6xl font-bold">
+          <div className="text-center md:text-left px-4 md:w-3/5 content text-white">
+            <h1 className="text-4xl md:text-6xl font-bold">
               Write your way to health
             </h1>
             
@@ -105,9 +106,13 @@ const Index = () => {
       </header>
   
       <section className="platform-description relative pb-64">
-        <div className="container mx-auto px-40">
-          <div className="py-10">
-            <div className="w-1/2 flex flex-col">
+        <div className="container mx-auto lg:px-40">
+          <div className="py-10 text-center md:text-left flex-col md:flex-row">
+            <div className="w-5/6 md:w-1/2 flex flex-col">
+              <div>
+                <Quill className="md:hidden"/>
+              </div>
+
               <h2 className="w-full font-bold mb-4 text-xl text-primary">
                 Express Yourself
               </h2>
@@ -118,16 +123,16 @@ const Index = () => {
             </div>
 
             <div>
-              <Writing />
+              <Writing className="hidden md:block"/>
             </div>
           </div>
 
-          <div className="py-10">
+          <div className="py-10 text-center md:text-left flex-col md:flex-row">
             <div>
               <Calendar />
             </div>
 
-            <div className="w-1/2 flex flex-col">
+            <div className="w-5/6 md:w-1/2 flex flex-col">
               <h2 className="w-full font-bold mb-4 text-xl text-primary">
                 Start Small
               </h2>
@@ -138,8 +143,12 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="py-10">
-            <div className="w-1/2 flex flex-col">
+          <div className="py-10 text-center md:text-left flex-col md:flex-row">
+            <div className="w-5/6 md:w-1/2 flex flex-col">
+              <div>
+                <Tangled className="md:hidden" />
+              </div>
+
               <h2 className="w-full font-bold mb-4 text-xl text-primary">
                 Fund Research
               </h2>
@@ -150,7 +159,7 @@ const Index = () => {
             </div>
 
             <div>
-              <Tangled />
+              <Tangled className="hidden md:block" />
             </div>
           </div>
         </div>
@@ -159,7 +168,7 @@ const Index = () => {
       <section className="editor relative pb-48">
         <span className="box bg-white absolute"></span>
 
-        <div className="container mx-auto text-center flex flex-col items-center relative px-40">
+        <div className="container mx-auto text-center flex flex-col items-center relative px-8 lg:px-40">
           <div className="editor-svg">
             <Editor viewBox={editorViewBox} />
           </div>
@@ -169,7 +178,7 @@ const Index = () => {
           </p>
 
           <div className="flex items-center mt-10">
-            <p className="font-bold text-2xl mr-4">
+            <p className="hidden md:block font-bold text-2xl mr-4">
               Ready to start writing?
             </p>
 
