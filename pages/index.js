@@ -2,12 +2,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
 import { FaLongArrowAltRight } from 'react-icons/fa';
+import { NextSeo } from 'next-seo';
 
 import '../styles/landing.css';
+
+import SEO from '../seo.config.js';
 
 import Logo from '../static/logos/full-color.svg';
 import Icon from '../static/logos/icon.svg';
 
+import Quill from '../static/quill.svg';
 import Writing from '../static/writing.svg';
 import Calendar from '../static/calendar.svg';
 import Tangled from '../static/tangled.svg';
@@ -16,6 +20,7 @@ import EditorOne from '../static/editor-one.svg';
 import EditorTwo from '../static/editor-two.svg';
 import EditorThree from '../static/editor-three.svg';
 
+import MagicRabbit from '../static/magic-rabbit.svg';
 import Sqreen from '../static/sqreen-mono-badge.svg';
 
 const editors = [
@@ -44,6 +49,8 @@ const Index = () => {
   }, 2000);
 
   return (
+    <>
+    <NextSeo {...SEO} />
     <div id="landing" className="text-lg leading-relaxed">
       <span className="section-box bg-gray-100 absolute"></span>
 
@@ -61,11 +68,11 @@ const Index = () => {
         </div>
   
         <div className="container mx-auto relative">
-          <div className="py-10 flex justify-between">
-            <Logo className="w-32" />
+          <div className="pl-6 py-6 md:py-10 flex justify-between">
+            <Logo className="w-20 md:w-32" />
   
             <div className="font-bold">
-              {
+              {/* {
                 user.isAuthenticated
                   ? (
                     <Link href="/write">
@@ -76,34 +83,41 @@ const Index = () => {
                     </Link>
                   )
                   : (
-                    <Link href="/login">
+                    <Link href="https://www.producthunt.com/upcoming/wrabit">
                       <a>Login</a>
                     </Link>
                   )
-              }
+              } */}
             </div>
           </div>
   
-          <div className="w-3/5 content text-white">
-            <h1 className="text-6xl font-bold">
+          <div className="text-center md:text-left px-4 md:w-3/5 content text-white">
+            <h1 className="text-4xl md:text-6xl font-bold">
               Write your way to health
             </h1>
             
             <p className="text-2xl mt-5">
-              Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relatonship with yourself. 
+              Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relationship with yourself. 
             </p>
   
             <button className="mt-16 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Start your writing journey
+              {/* Start your writing journey */}
+              <Link href="https://www.producthunt.com/upcoming/wrabit">
+                Get notified when we launch
+              </Link>
             </button>
           </div>
         </div>
       </header>
   
       <section className="platform-description relative pb-64">
-        <div className="container mx-auto px-40">
-          <div className="py-10">
-            <div className="w-1/2 flex flex-col">
+        <div className="container mx-auto lg:px-40">
+          <div className="py-10 text-center md:text-left flex-col md:flex-row">
+            <div className="w-5/6 md:w-1/2 flex flex-col">
+              <div>
+                <Quill className="md:hidden"/>
+              </div>
+
               <h2 className="w-full font-bold mb-4 text-xl text-primary">
                 Express Yourself
               </h2>
@@ -114,16 +128,16 @@ const Index = () => {
             </div>
 
             <div>
-              <Writing />
+              <Writing className="hidden md:block"/>
             </div>
           </div>
 
-          <div className="py-10">
+          <div className="py-10 text-center md:text-left flex-col md:flex-row">
             <div>
               <Calendar />
             </div>
 
-            <div className="w-1/2 flex flex-col">
+            <div className="w-5/6 md:w-1/2 flex flex-col">
               <h2 className="w-full font-bold mb-4 text-xl text-primary">
                 Start Small
               </h2>
@@ -134,8 +148,12 @@ const Index = () => {
             </div>
           </div>
 
-          <div className="py-10">
-            <div className="w-1/2 flex flex-col">
+          <div className="py-10 text-center md:text-left flex-col md:flex-row">
+            <div className="w-5/6 md:w-1/2 flex flex-col">
+              <div>
+                <Tangled className="md:hidden" />
+              </div>
+
               <h2 className="w-full font-bold mb-4 text-xl text-primary">
                 Fund Research
               </h2>
@@ -146,7 +164,7 @@ const Index = () => {
             </div>
 
             <div>
-              <Tangled />
+              <Tangled className="hidden md:block" />
             </div>
           </div>
         </div>
@@ -155,7 +173,7 @@ const Index = () => {
       <section className="editor relative pb-48">
         <span className="box bg-white absolute"></span>
 
-        <div className="container mx-auto text-center flex flex-col items-center relative px-40">
+        <div className="container mx-auto text-center flex flex-col items-center relative px-8 lg:px-40">
           <div className="editor-svg">
             <Editor viewBox={editorViewBox} />
           </div>
@@ -165,12 +183,15 @@ const Index = () => {
           </p>
 
           <div className="flex items-center mt-10">
-            <p className="font-bold text-2xl mr-4">
+            <p className="hidden md:block font-bold text-2xl mr-4">
               Ready to start writing?
             </p>
 
-            <button className="ml-4 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Create your Wrabit account
+            <button className="ml-4 text-lg bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              {/* Create your Wrabit account */}
+              <Link href="https://www.producthunt.com/upcoming/wrabit">
+                Subscribe for updates
+              </Link>
             </button>
           </div>
         </div>
@@ -180,7 +201,7 @@ const Index = () => {
         <span className="box bg-black absolute"></span>
 
         <div className="relative container mx-auto flex items-center flex-col">
-          <div className="w-full flex justify-around pb-20">
+          {/* <div className="w-full flex justify-around pb-20">
             <div className="flex flex-col">
               <span className="font-bold">Company</span>
               <a>About</a>
@@ -192,7 +213,11 @@ const Index = () => {
               <a>Privacy Policy</a>
               <a>Terms of Service</a>
             </div>
-          </div>
+          </div> */}
+
+          <MagicRabbit className="footer-image" />
+
+          {/* <Quill className="footer-image" /> */}
 
           <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge">
             <Sqreen className="sqreen" />
@@ -200,6 +225,7 @@ const Index = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 

@@ -36,6 +36,12 @@
   position: absolute;
 }
 
+@media (max-width: 375px) {
+  #landing .icon-container .icon {
+    right: -180px;
+  }
+}
+
 #landing .icon-container .icon path {
   fill: rgba(255, 255, 255, 0.2);
 }
@@ -67,11 +73,11 @@
   margin-top: 150px;
 }
 
-#landing header a {
+#landing button a {
   color: white;
 }
 
-#landing header a:hover {
+#landing button a:hover {
   color: rgba(245, 245, 245, 1);
 }
 
@@ -139,6 +145,11 @@
 
 #landing footer .sqreen:hover path {
   fill: white;
+}
+
+#landing footer .footer-image {
+  width: 400px;
+  margin-top: -180px;
 }
 
 #landing footer .box {
