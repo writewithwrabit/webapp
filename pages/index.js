@@ -2,8 +2,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
 import { FaLongArrowAltRight } from 'react-icons/fa';
+import { NextSeo } from 'next-seo';
 
 import '../styles/landing.css';
+
+import SEO from '../seo.config.js';
 
 import Logo from '../static/logos/full-color.svg';
 import Icon from '../static/logos/icon.svg';
@@ -46,6 +49,8 @@ const Index = () => {
   }, 2000);
 
   return (
+    <>
+    <NextSeo {...SEO} />
     <div id="landing" className="text-lg leading-relaxed">
       <span className="section-box bg-gray-100 absolute"></span>
 
@@ -220,6 +225,7 @@ const Index = () => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 
