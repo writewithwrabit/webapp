@@ -67,11 +67,11 @@
   margin-top: 150px;
 }
 
-#landing header a {
+#landing button a {
   color: white;
 }
 
-#landing header a:hover {
+#landing button a:hover {
   color: rgba(245, 245, 245, 1);
 }
 
@@ -139,6 +139,11 @@
 
 #landing footer .sqreen:hover path {
   fill: white;
+}
+
+#landing footer .footer-image {
+  width: 400px;
+  margin-top: -180px;
 }
 
 #landing footer .box {

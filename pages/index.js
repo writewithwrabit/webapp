@@ -16,6 +16,7 @@ import EditorOne from '../static/editor-one.svg';
 import EditorTwo from '../static/editor-two.svg';
 import EditorThree from '../static/editor-three.svg';
 
+import MagicRabbit from '../static/magic-rabbit.svg';
 import Sqreen from '../static/sqreen-mono-badge.svg';
 
 const editors = [
@@ -65,7 +66,7 @@ const Index = () => {
             <Logo className="w-32" />
   
             <div className="font-bold">
-              {
+              {/* {
                 user.isAuthenticated
                   ? (
                     <Link href="/write">
@@ -76,11 +77,11 @@ const Index = () => {
                     </Link>
                   )
                   : (
-                    <Link href="/login">
+                    <Link href="https://www.producthunt.com/upcoming/wrabit">
                       <a>Login</a>
                     </Link>
                   )
-              }
+              } */}
             </div>
           </div>
   
@@ -90,11 +91,14 @@ const Index = () => {
             </h1>
             
             <p className="text-2xl mt-5">
-              Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relatonship with yourself. 
+              Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relationship with yourself. 
             </p>
   
             <button className="mt-16 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Start your writing journey
+              {/* Start your writing journey */}
+              <Link href="https://www.producthunt.com/upcoming/wrabit">
+                Get notified when we launch
+              </Link>
             </button>
           </div>
         </div>
@@ -169,8 +173,11 @@ const Index = () => {
               Ready to start writing?
             </p>
 
-            <button className="ml-4 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Create your Wrabit account
+            <button className="ml-4 text-lg bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              {/* Create your Wrabit account */}
+              <Link href="https://www.producthunt.com/upcoming/wrabit">
+                Subscribe for updates
+              </Link>
             </button>
           </div>
         </div>
@@ -180,7 +187,7 @@ const Index = () => {
         <span className="box bg-black absolute"></span>
 
         <div className="relative container mx-auto flex items-center flex-col">
-          <div className="w-full flex justify-around pb-20">
+          {/* <div className="w-full flex justify-around pb-20">
             <div className="flex flex-col">
               <span className="font-bold">Company</span>
               <a>About</a>
@@ -192,7 +199,11 @@ const Index = () => {
               <a>Privacy Policy</a>
               <a>Terms of Service</a>
             </div>
-          </div>
+          </div> */}
+
+          <MagicRabbit className="footer-image" />
+
+          {/* <Quill className="footer-image" /> */}
 
           <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge">
             <Sqreen className="sqreen" />
