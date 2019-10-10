@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
 import { FaLongArrowAltRight } from 'react-icons/fa';
 import { NextSeo } from 'next-seo';
 
 import '../styles/landing.css';
+
+import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
 import SEO from '../seo.config.js';
 
@@ -39,6 +41,8 @@ const editors = [
 ];
 
 const Index = () => {
+  useGoogleAnalytics();
+
   const user = useStoreState(state => state.user);
   const [editorIndex, setEditorIndex] = useState(0);
   const Editor = editors[editorIndex].component;
@@ -103,7 +107,9 @@ const Index = () => {
             <button className="mt-16 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               {/* Start your writing journey */}
               <Link href="https://www.producthunt.com/upcoming/wrabit">
-                Get notified when we launch
+                <a>
+                  Get notified when we launch
+                </a>
               </Link>
             </button>
           </div>
@@ -190,7 +196,9 @@ const Index = () => {
             <button className="ml-4 text-lg bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               {/* Create your Wrabit account */}
               <Link href="https://www.producthunt.com/upcoming/wrabit">
-                Subscribe for updates
+                <a>
+                  Subscribe for updates
+                </a>
               </Link>
             </button>
           </div>

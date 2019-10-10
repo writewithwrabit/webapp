@@ -29,6 +29,7 @@ class MyDocument extends Document {
           <meta property="og:image" content="https://writewithwrabit.com/static/og.png" class="next-head" />
           <meta property="og:image:alt" content="Write With Wrabit" class="next-head" />
           <meta property="og:site_name" content="Wrabit" class="next-head" />
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143384618-3"></script>
         </Head>
         <body>
           <Main />
