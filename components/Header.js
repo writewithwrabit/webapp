@@ -2,10 +2,13 @@ import Link from 'next/link';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
 import firebase from '../firebase';
+import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
-import NavItem from './ NavItem';
+import NavItem from './NavItem';
   
 const Header = () => {
+  useGoogleAnalytics();
+
   const user = useStoreState(state => state.user);
   const signOutUser = useStoreActions(actions => actions.user.signOutUser);
 

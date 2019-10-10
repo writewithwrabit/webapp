@@ -6,6 +6,8 @@ import { NextSeo } from 'next-seo';
 
 import '../styles/landing.css';
 
+import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
+
 import SEO from '../seo.config.js';
 
 import Logo from '../static/logos/full-color.svg';
@@ -39,22 +41,7 @@ const editors = [
 ];
 
 const Index = () => {
-  // Google Analytics
-  useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments)
-      }
-
-      gtag('js', new Date());
-      gtag('config', 'UA-143384618-3', {
-        page_location: window.location.href,
-        page_path: window.location.pathname,
-        page_title: window.document.title,
-      });
-    }
-  });
+  useGoogleAnalytics();
 
   const user = useStoreState(state => state.user);
   const [editorIndex, setEditorIndex] = useState(0);
