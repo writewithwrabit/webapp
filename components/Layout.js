@@ -1,4 +1,4 @@
-import { useEffect } from 'React';
+import { useEffect } from 'react';
 
 import Header from './Header';
 
