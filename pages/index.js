@@ -107,7 +107,9 @@ const Index = () => {
             <button className="mt-16 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               {/* Start your writing journey */}
               <Link href="https://www.producthunt.com/upcoming/wrabit">
-                Get notified when we launch
+                <a>
+                  Get notified when we launch
+                </a>
               </Link>
             </button>
           </div>
@@ -194,7 +196,9 @@ const Index = () => {
             <button className="ml-4 text-lg bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               {/* Create your Wrabit account */}
               <Link href="https://www.producthunt.com/upcoming/wrabit">
-                Subscribe for updates
+                <a>
+                  Subscribe for updates
+                </a>
               </Link>
             </button>
           </div>
