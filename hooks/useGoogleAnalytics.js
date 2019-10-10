@@ -15,7 +15,7 @@ const useGoogleAnalytics = () => {
         page_title: window.document.title,
       });
     }
-  });
+  }, []);
 };
 
 export default useGoogleAnalytics;
