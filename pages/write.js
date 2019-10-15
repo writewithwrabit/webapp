@@ -29,9 +29,9 @@ const Write = () => {
 
   if (loading) return (<div>LOADING</div>);
   if (error) return (<div>ERROR</div>);
-  console.log(data);
+
   return (
-    <Editor entry={data.dailyEntry} />
+    <Editor entry={data.dailyEntry} date={date} />
   );
 }
 

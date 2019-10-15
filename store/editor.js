@@ -8,8 +8,8 @@ import init from '../lib/apollo/init';
 const apollo = init();
 
 const UPDATE_ENTRY = gql`
-  mutation UpdateEntry($id: ID!, $input: ExistingEntry!) {
-    updateEntry(id: $id, input: $input) {
+  mutation UpdateEntry($id: ID!, $input: ExistingEntry!, $date: String!) {
+    updateEntry(id: $id, input: $input, date: $date) {
       id
       content
       wordCount
@@ -18,7 +18,7 @@ const UPDATE_ENTRY = gql`
 `;
 
 const throttledSaveEntry = throttle(async (actions, payload) => {
-  const { id, content, wordCount, userID } = payload;
+  const { id, content, wordCount, userID, goalHit, date } = payload;
 
   await apollo.mutate({
     mutation: UPDATE_ENTRY,
@@ -28,7 +28,9 @@ const throttledSaveEntry = throttle(async (actions, payload) => {
         userID, 
         content,
         wordCount,
-      }
+        goalHit,
+      },
+      date,
     }
   });
 
@@ -46,9 +48,9 @@ const editor = {
     state.entry = payload;
   }),
   saveEntry: thunk((actions, payload) => {
-    const { id, content, wordCount } = payload;
+    const { id, content, wordCount, goalHit, date } = payload;
     const { uid: userID } = firebase.auth().currentUser;
-    throttledSaveEntry(actions, { id, content, wordCount, userID });
+    throttledSaveEntry(actions, { id, content, wordCount, userID, goalHit, date });
   }),
 };
 
