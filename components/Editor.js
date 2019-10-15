@@ -36,12 +36,12 @@ const emptyDocument = {
 
 const DEFAULT_NODE = 'paragraph';
 
-const Editor = ({ entry }) => {
+const Editor = ({ entry, date }) => {
   let jsonEntry;
   try {
     jsonEntry = JSON.parse(entry.content)
   } catch(e) {
-    console.log('Invalid JSON passed, probably a new entry.');
+    // TODO: Handle this error?
   }
 
   const saveEntry = useStoreActions(actions => actions.editor.saveEntry);
@@ -52,7 +52,7 @@ const Editor = ({ entry }) => {
 
   const [value, setValue] = useState(initialValue); 
   
-  const goalWords = 1000;
+  const goalWords = 500;
   const [wordsWritten, setWordsWritten] = useState(0);
   const percentWordsRemaining = ((wordsWritten / goalWords) * 100).toFixed(2);
   const progressBarStyles = {
@@ -81,6 +81,8 @@ const Editor = ({ entry }) => {
       ...entry,
       content,
       wordCount,
+      goalHit: wordCount > goalWords,
+      date,
     });
   }
 

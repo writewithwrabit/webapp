@@ -8,7 +8,7 @@ const Content = ({ entry }) => {
   try {
     jsonEntry = JSON.parse(entry.content)
   } catch(e) {
-    console.log('Invalid JSON passed, probably a new entry.');
+    // TODO: Handle this error
   }
 
   const initialValue = Value.fromJSON(jsonEntry);
