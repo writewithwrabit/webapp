@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
 
@@ -52,9 +52,9 @@ const Editor = ({ entry, date }) => {
 
   const [value, setValue] = useState(initialValue); 
   
-  const goalWords = 500;
+  const { wordGoal } = useStoreState(state => state.user);
   const [wordsWritten, setWordsWritten] = useState(0);
-  const percentWordsRemaining = ((wordsWritten / goalWords) * 100).toFixed(2);
+  const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
   const progressBarStyles = {
     width: `${percentWordsRemaining}%`,
   };
@@ -81,7 +81,7 @@ const Editor = ({ entry, date }) => {
       ...entry,
       content,
       wordCount,
-      goalHit: wordCount > goalWords,
+      goalHit: wordCount > wordGoal,
       date,
     });
   }

@@ -17,7 +17,8 @@ const GET_USER_BY_FIREBASE_ID = gql`
 
 const user = {
   id: null,
-  wordGoal: null,
+  // Default word goal in case something goes wrong
+  wordGoal: 1000,
   isAuthenticated: false,
   firebaseData: null,
   signInUser: action((state, payload) => {
