@@ -11,10 +11,13 @@ const Auth = ({ children }) => {
   const router = useRouter();
   const user = useStoreState(state => state.user);
   const signInUser = useStoreActions(actions => actions.user.signInUser);
+  const getUserData = useStoreActions(actions => actions.user.getUserData);
 
   firebase.auth().onAuthStateChanged(firebaseUser => {
     if (!user.isAuthenticated && firebaseUser) {
       signInUser(firebaseUser);
+      getUserData({ userID: firebaseUser.uid });
+
       router.push(router.pathname);
     }
 
