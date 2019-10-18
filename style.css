@@ -20,7 +20,7 @@ a:hover {
   @apply cursor-pointer;
 }
 
-.nav .nav-item a {
+.nav .nav-item > a {
   @apply text-white;
 }
 
@@ -35,7 +35,7 @@ a:hover {
 
 .nav-item:hover,
 .nav-item.active {
-  @apply border-b-4;
+  @apply border-b-2;
   @apply border-primary;
 }
 

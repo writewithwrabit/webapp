@@ -1,10 +1,22 @@
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
+import styled from '@emotion/styled';
 
 import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
+import Brand from '../static/logos/name.svg';
 import NavItem from './NavItem';
 import SettingsMenu from './SettingsMenu';
+
+const Logo = styled.a`
+  & svg {
+    width: 21%;
+  }
+
+  & path {
+    fill: white;
+  }
+`;
   
 const Header = () => {
   useGoogleAnalytics();
@@ -12,13 +24,13 @@ const Header = () => {
   const user = useStoreState(state => state.user);
 
   return (
-    <div className="border-b-2 border-primary pt-4 mb-4 bg-gray-800">
+    <div className="border-b-4 border-primary pt-4 mb-4 bg-secondary">
       <div className="container mx-auto nav flex text-white">
         <div className="pb-4 w-1/3">
           <Link href="/">
-            <a className="font-extrabold">
-              🐇wrabit
-            </a>
+            <Logo>
+              <Brand />
+            </Logo>
           </Link>
         </div>
 

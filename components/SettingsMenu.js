@@ -9,6 +9,10 @@ import firebase from '../firebase';
 const Menu = styled.div`
   top: 34px;
   right: -12px;
+  
+  & a {
+    color: #2d3748;
+  }
 `;
 
 const ArrowBox = styled.div`
@@ -39,7 +43,7 @@ const displayMenu = () => {
   };
 
   return (
-    <Menu className="bg-white absolute shadow-lg rounded flex flex-col">
+    <Menu className="bg-white absolute shadow-lg rounded flex flex-col text-gray-800">
       <ArrowBox />
       <a className="px-8 py-2" onClick={logout}>Logout</a>
 
