@@ -2,7 +2,7 @@ const PageHeader = ({
   title,
   subtitle
 }) => (
-  <div>
+  <div className="mb-8">
     <h1 className="text-4xl font-extrabold text-gray-800">
       {title}
     </h1>
