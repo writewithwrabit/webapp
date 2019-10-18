@@ -20,11 +20,23 @@ a:hover {
   @apply cursor-pointer;
 }
 
+.nav .nav-item > a {
+  @apply text-white;
+}
+
+.nav .nav-item.active a,
+.nav .nav-item a:hover {
+  @apply text-primary;
+}
+
+.nav .nav-item.active a {
+  @apply font-bold;
+}
+
 .nav-item:hover,
 .nav-item.active {
-  @apply text-gray-800;
-  @apply border-b-4;
-  @apply border-gray-200;
+  @apply border-b-2;
+  @apply border-primary;
 }
 
 .editor blockquote {

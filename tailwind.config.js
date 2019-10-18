@@ -8,6 +8,7 @@ module.exports = {
         primary: '#FA557D',
         'primary-dark': '#FF1C53',
         offwhite: '#FCFCFC',
+        secondary: '#0A0A3C',
       }
     },
   },

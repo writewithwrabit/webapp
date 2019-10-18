@@ -8,6 +8,7 @@ import { useStoreState } from 'easy-peasy';
 import { zonedTimeToUtc } from 'date-fns-tz';
 
 import withLayout from '../components/Layout';
+import PageHeader from '../components/PageHeader';
 import EntriesList from '../components/EntriesList';
 
 const GET_ENTRIES = gql`
@@ -29,6 +30,8 @@ const Entries = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [enteredToDate, setEnteredToDate] = useState(null);
+
+  const subtitle = 'View your entries as a never-ending list or by selection on the calendar.';
 
   // GraphQL Query
   const { uid: userID } = useStoreState(state => state.user).firebaseData;
@@ -109,49 +112,53 @@ const Entries = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row items-center md:items-start">
-      <div className="md:block lg:flex-none mb-5">
-        <DayPicker 
-          ref={(datePickerRef) => datePicker = datePickerRef}
-          numberOfMonths={2}
-          fromMonth={startDate}
-          selectedDays={selectedDays}
-          disabledDays={disabledDays}
-          modifiers={modifiers}
-          onDayClick={handleDayClick}
-          onDayMouseEnter={handleDayMouseEnter}
-        />
+    <div>
+      <PageHeader title="Entries" subtitle={subtitle} />
 
-        <div className="flex flex-col items-center text-xs">
-          {
-            startDate && endDate
-              ? (
-                <div className="text-center">
-                  <div>
-                    <span className="text-blue-700 font-bold">
-                      {formatFriendly(startDate)}
-                    </span>
-                    {' '}to{' '}
-                    <span className="text-blue-700 font-bold">
-                      {formatFriendly(endDate)}
-                    </span>
+      <div className="flex flex-col md:flex-row items-center md:items-start">
+        <div className="md:block lg:flex-none mb-5">
+          <DayPicker 
+            ref={(datePickerRef) => datePicker = datePickerRef}
+            numberOfMonths={2}
+            fromMonth={startDate}
+            selectedDays={selectedDays}
+            disabledDays={disabledDays}
+            modifiers={modifiers}
+            onDayClick={handleDayClick}
+            onDayMouseEnter={handleDayMouseEnter}
+          />
+
+          <div className="flex flex-col items-center text-xs">
+            {
+              startDate && endDate
+                ? (
+                  <div className="text-center">
+                    <div>
+                      <span className="text-blue-700 font-bold">
+                        {formatFriendly(startDate)}
+                      </span>
+                      {' '}to{' '}
+                      <span className="text-blue-700 font-bold">
+                        {formatFriendly(endDate)}
+                      </span>
+                    </div>
+
+                    <button className="text-blue-500 hover:text-blue-700" onClick={handleResetClick}>
+                      Reset
+                    </button>
                   </div>
-
-                  <button className="text-blue-500 hover:text-blue-700" onClick={handleResetClick}>
-                    Reset
+                )
+                : (
+                  <button className="text-blue-500 hover:text-blue-700" onClick={handleTodayClick}>
+                    Show me today
                   </button>
-                </div>
-              )
-              : (
-                <button className="text-blue-500 hover:text-blue-700" onClick={handleTodayClick}>
-                  Show me today
-                </button>
-              )
-          }
+                )
+            }
+          </div>
         </div>
-      </div>
 
-      <EntriesList data={data} loading={loading} error={error} />
+        <EntriesList data={data} loading={loading} error={error} />
+      </div>
     </div>
   );
 };

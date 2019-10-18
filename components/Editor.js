@@ -271,7 +271,7 @@ const Editor = ({ entry, date }) => {
   return (
     <div className="min-h-screen">
       <div className="shadow-xl">
-        <div className="bg-gray-800 p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
+        <div className="bg-secondary p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
           <div >
             <span className="mx-4 inline-block relative">
               <span className="block-selector">
