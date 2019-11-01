@@ -22,13 +22,13 @@ class MyDocument extends Document {
       <Html>
         <Head>
           {/* TODO: Figure out SSR/next-seo doesn't work */}
-          <meta property="og:url" content="https://writewithwrabit.com" class="next-head"/>
-          <meta property="og:type" content="website" class="next-head" />
-          <meta property="og:title" content="Write With Wrabit" class="next-head" />
-          <meta property="og:description" content="Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relationship with yourself." class="next-head" />
-          <meta property="og:image" content="https://writewithwrabit.com/static/og.png" class="next-head" />
-          <meta property="og:image:alt" content="Write With Wrabit" class="next-head" />
-          <meta property="og:site_name" content="Wrabit" class="next-head" />
+          <meta property="og:url" content="https://writewithwrabit.com" className="next-head"/>
+          <meta property="og:type" content="website" className="next-head" />
+          <meta property="og:title" content="Write With Wrabit" className="next-head" />
+          <meta property="og:description" content="Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relationship with yourself." className="next-head" />
+          <meta property="og:image" content="https://writewithwrabit.com/static/og.png" className="next-head" />
+          <meta property="og:image:alt" content="Write With Wrabit" className="next-head" />
+          <meta property="og:site_name" content="Wrabit" className="next-head" />
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143384618-3"></script>
         </Head>
         <body>
