@@ -18,6 +18,7 @@ const GET_ENTRIES = gql`
       wordCount
       createdAt
       content
+      goalHit
     }
   }
 `;

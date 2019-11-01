@@ -1,17 +1,15 @@
-import { format, subMinutes } from 'date-fns'
+import { format } from 'date-fns'
 import { useState } from 'react';
 
 import EntryPopup from '../components/EntryPopup';
 
-const timezoneOffset = new Date().getTimezoneOffset();
-
-const formatFriendly = date => {
-  const localDate = subMinutes(new Date(date), timezoneOffset);
-  return format(localDate, 'MMMM d, yyyy');
-};
-
 const Entry = ({ entry }) => {
   const [display, setDisplay] = useState(false);
+  let classes = 'entry bg-white md:ml-5 mb-5 px-10 py-5 rounded shadow-md flex justify-between items-center border-green-500';
+
+  if (entry.goalHit) {
+    classes = `${classes} border`;
+  }
 
   const toggleDisplay = e => {
     const entryContainerClicked = e.target.classList.contains('entry')
@@ -30,27 +28,28 @@ const Entry = ({ entry }) => {
   return (
     <div
       onClick={toggleDisplay}
-      className="entry bg-white md:ml-5 mb-5 px-10 py-5 rounded shadow-md flex justify-between items-center"
+      className={classes}
     >
       <div className="entry-details">
         <div className="entry-created-at font-bold pb-2">
-          {formatFriendly(entry.createdAt)}
+          {format(new Date(entry.createdAt), 'MMMM d, yyyy')}
         </div>
 
         <div className="entry-word-count">
           {entry.wordCount} words written
         </div>
 
-        {
-          entry.wordCount
-            ? <EntryPopup entry={entry} display={display} />
-            : ''
-        }
+        {entry.wordCount && <EntryPopup entry={entry} display={display} />}
       </div>
-{/* 
-      <div>
-        0 day streak!
-      </div> */}
+
+      {
+        entry.goalHit
+          && (
+            <div className="text-4xl">
+              🎉
+            </div>
+          )
+      }
     </div>
   );
 };

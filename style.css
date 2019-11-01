@@ -8,6 +8,10 @@ body {
   @apply bg-gray-100;
 }
 
+body.popup-open {
+  overflow-y: hidden;
+}
+
 a { 
   @apply text-blue-500;
 }
@@ -123,6 +127,7 @@ a:hover {
 .popup {
   background-color: rgba(0, 0, 0, 0.3);
   cursor: default;
+  z-index: 2;
 }
 
 .entry:hover {

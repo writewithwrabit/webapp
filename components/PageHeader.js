@@ -10,7 +10,7 @@ const PageHeader = ({
     {
       subtitle
         ? <p className="text-gray-700">{subtitle}</p>
-        : ''
+        : null
     }
   </div>
 );
