@@ -46,7 +46,7 @@ const Header = () => {
                   <NavItem url="/stats" text="Stats" />
                 </span>
               )
-              : ''
+              : null
           }
         </div>
 

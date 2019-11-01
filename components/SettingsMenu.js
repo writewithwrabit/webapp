@@ -64,7 +64,7 @@ const SettingsMenu = () => {
       {
         display 
           ? displayMenu()
-          : ''
+          : null
       }
     </div>
   );
