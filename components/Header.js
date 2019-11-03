@@ -24,9 +24,9 @@ const Header = () => {
   const user = useStoreState(state => state.user);
 
   return (
-    <div className="border-b-4 border-primary pt-4 mb-4 bg-secondary">
-      <div className="container mx-auto nav flex text-white">
-        <div className="pb-4 w-1/3">
+    <div className="border-b-4 border-primary py-4 mb-4 bg-secondary">
+      <div className="container mx-auto nav flex text-white items-center">
+        <div className="w-1/3">
           <Link href="/">
             <Logo>
               <Brand />
