@@ -1,3 +1,5 @@
+import numeral from 'numeral';
+
 import StatsPanel from './StatsPanel';
 
 const timezoneOffsetHours = new Date().getTimezoneOffset() / 60;
@@ -64,22 +66,32 @@ const StatsPanels = ({data, loading, error}) => {
   if (loading) return (<div>LOADING</div>);
   if (error) return (<div>ERROR</div>);
 
-  const preferredWritingTimes = transformWritingTimesToLocal(data.stats.preferredWritingTimes);
-  const preferredWritingTimeOfDay = findTimeOfDay(preferredWritingTimes[0]);
+  const {wordsWritten, longestStreak, longestEntry, preferredDayOfWeek, preferredWritingTimes} = data.stats;
+
+  const localPreferredWritingTimes = transformWritingTimesToLocal(preferredWritingTimes);
+  const preferredWritingTimeOfDay = findTimeOfDay(localPreferredWritingTimes[0]);
+
+  const formattedWordsWritten = wordsWritten > 10000
+    ? numeral(wordsWritten).format('0.0a')
+    : wordsWritten;
+
+  const formattedLongestEntry = longestEntry > 10000
+    ? numeral(longestEntry).format('0.0a')
+    : longestEntry;
 
   return (
     <div className="flex flex-wrap">
-      <StatsPanel text="words written" data={data.stats.wordsWritten || 0} />
+      <StatsPanel text="words written" data={formattedWordsWritten} />
 
       {/* <StatsPanel text="amount donated" data={data.stats.amountDonated} /> */}
 
-      <StatsPanel text="longest streak" data={data.stats.longestStreak || 0} />
+      <StatsPanel text="longest streak" data={longestStreak || 0} />
 
       <StatsPanel text="preferred writing time" data={preferredWritingTimeOfDay} />
 
-      <StatsPanel text="preferred day of the week" data={daysOfTheWeek[data.stats.preferredDayOfWeek] || 'unknown'} />
+      <StatsPanel text="preferred day of the week" data={daysOfTheWeek[preferredDayOfWeek] || 'unknown'} />
 
-      <StatsPanel text="longest entry" data={data.stats.longestEntry || 0} />
+      <StatsPanel text="longest entry" data={formattedLongestEntry || 0} />
     </div>
   );
 }
