@@ -1,30 +1,43 @@
+import {useState, useEffect} from 'react';
+import gql from "graphql-tag";
+import {useQuery} from '@apollo/react-hooks';
+
 import withLayout from '../components/Layout';
 import PageHeader from '../components/PageHeader';
 import StatsSelector from '../components/StatsSelector';
-import StatsWidget from '../components/StatsWidget';
+import StatsPanels from '../components/StatsPanels';
+
+const GET_STATS = gql`
+  query stats($global: Boolean!) {
+    stats(global: $global) {
+      wordsWritten
+      longestEntry
+      longestStreak
+      preferredDayOfWeek
+      preferredWritingTimes {
+        hour
+        count
+      }
+    }
+  }
+`;
 
 const Stats = () => {
   const subtitle = 'Find patterns and encouragement in all the pretty graphs and numbers.';
+  const [selected, setSelected] = useState('me');
+  const { loading, error, data } = useQuery(GET_STATS, {
+    variables: {
+      global: selected === 'community',
+    },
+  });
 
   return (
     <div>
       <PageHeader title="Stats" subtitle={subtitle} />
 
-      <StatsSelector />
+      <StatsSelector selected={selected} setSelected={setSelected} />
 
-      <div className="flex flex-wrap">
-        <StatsWidget text="words written" data={200} />
-
-        {/* <StatsWidget text="amount donated" data={5000} /> */}
-
-        <StatsWidget text="longest streak" data={7} />
-
-        <StatsWidget text="preferred writing time" data={"morning"} />
-
-        <StatsWidget text="favourite day of the week" data={"Monday"} />
-
-        <StatsWidget text="longest entry" data={2000} />
-      </div>
+      <StatsPanels data={data} loading={loading} error={error} />
     </div>
   );
 }

@@ -121,7 +121,7 @@ a:hover {
 }
 
 .DayPicker-Day--entry.DayPicker-Day--today {
-  color: #D0021B;
+  @apply text-primary;
 }
 
 .popup {

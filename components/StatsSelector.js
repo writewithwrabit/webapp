@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import styled from '@emotion/styled';
 
 const StyledSpan = styled.span`
@@ -14,20 +13,16 @@ const StatsPill = ({children, selected, name, onClick}) => (
   </StyledSpan>
 );
 
-const StatsSelector = () => {
-  const [selected, setSelected] = useState('me');
+const StatsSelector = ({selected, setSelected}) => (
+  <div className="bg-gray-300 w-1/5 rounded-full flex justify-between text-sm mx-auto mb-6 shadow-inner">
+    <StatsPill selected={selected} name="me" onClick={setSelected}>
+      Me
+    </StatsPill>
 
-  return (
-    <div className="bg-gray-300 w-1/5 rounded-full flex justify-between text-sm mx-auto mb-6 shadow-inner">
-      <StatsPill selected={selected} name="me" onClick={setSelected}>
-        Me
-      </StatsPill>
-
-      <StatsPill selected={selected} name="community" onClick={setSelected}>
-        Community
-      </StatsPill>
-    </div>
-  );
-}
+    <StatsPill selected={selected} name="community" onClick={setSelected}>
+      Community
+    </StatsPill>
+  </div>
+);
 
 export default StatsSelector;
