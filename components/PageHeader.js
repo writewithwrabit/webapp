@@ -8,9 +8,8 @@ const PageHeader = ({
     </h1>
 
     {
-      subtitle
-        ? <p className="text-gray-700">{subtitle}</p>
-        : null
+      subtitle &&
+      <p className="text-gray-700">{subtitle}</p>
     }
   </div>
 );

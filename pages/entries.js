@@ -117,7 +117,7 @@ const Entries = () => {
       <PageHeader title="Entries" subtitle={subtitle} />
 
       <div className="flex flex-col md:flex-row items-center md:items-start">
-        <div className="md:block lg:flex-none mb-5">
+        <div className="md:block lg:flex-shrink-0 mb-5">
           <DayPicker 
             ref={(datePickerRef) => datePicker = datePickerRef}
             numberOfMonths={2}
