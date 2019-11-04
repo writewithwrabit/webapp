@@ -5,6 +5,7 @@ import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 import { startOfDay } from 'date-fns';
 import { useStoreActions, useStoreState } from 'easy-peasy';
+import styled from '@emotion/styled';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
 
@@ -77,6 +78,10 @@ const Editor = () => {
   const progressBarStyles = {
     width: `${percentWordsRemaining}%`,
   };
+  let wordsWrittenClasses = 'text-sm flex-col text-right font-extrabold leading-tight hidden sm:flex';
+  wordsWrittenClasses = wordsWritten > wordGoal
+    ? `${wordsWrittenClasses} text-green-600 hover:text-green-400`
+    : `${wordsWrittenClasses} hover:text-white`;
 
   const [blockSelectorState, setBlockSelectorState] = useState(false);
   const blockSelectorStyles = {
@@ -331,7 +336,7 @@ const Editor = () => {
             </span>
           </div>
 
-          <div className="hover:text-white text-sm flex-col text-right font-extrabold leading-tight hidden sm:flex">
+          <div className={wordsWrittenClasses} style={{ transition: 'color 0.2s'}}>
             <span>
               {wordsWritten}
             </span>
@@ -341,9 +346,13 @@ const Editor = () => {
           </div>
         </div>
 
+        <div className="progress-bar sticky container mt-2 px-2">
+          <div className="progress bg-gray-800 h-2 max-w-full rounded-lg" style={progressBarStyles}></div>
+        </div>
+
         <SlateEditor
           ref={(editorRef) => editor = editorRef}
-          className="editor bg-offwhite p-8 min-h-screen"
+          className="editor bg-offwhite px-8 pb-8 pt-4 min-h-screen"
           placeholder={`Hope you're having a great day, time to write!`}
           value={value}
           onChange={handleChange}
@@ -352,10 +361,6 @@ const Editor = () => {
           renderMark={renderMark}
           renderBlock={renderBlock}
         />
-      </div>
-
-      <div className="progress-bar fixed bottom-0 container my-2 px-2">
-        <div className="progress bg-gray-800 h-3 max-w-full rounded-lg" style={progressBarStyles}></div>
       </div>
     </div>
   );

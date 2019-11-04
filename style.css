@@ -83,6 +83,11 @@ a:hover {
   @apply text-xl;
 }
 
+.progress-bar {
+  top: 0.5em;
+  z-index: 2;
+}
+
 .progress-bar .progress {
   background: rgb(198,246,213);
   background: linear-gradient(90deg, rgba(198,246,213,1) 0%, rgba(47,133,90,1) 100%);
