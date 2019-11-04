@@ -4,9 +4,11 @@ import { createStore } from 'easy-peasy';
 import user from './user';
 import editor from './editor';
 
-const store = createStore({
+const model = {
   user,
   editor,
-});
+};
+
+export const store = createStore(model);
 
 export default store;

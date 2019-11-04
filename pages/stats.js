@@ -8,7 +8,7 @@ import StatsPanels from '../components/StatsPanels';
 const Stats = () => {
   const subtitle = 'Find patterns and encouragement in all the pretty graphs and numbers.';
   const [selected, setSelected] = useState('me');
-
+  
   return (
     <div>
       <PageHeader title="Stats" subtitle={subtitle} />

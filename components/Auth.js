@@ -5,6 +5,7 @@ import firebase from '../firebase';
 const protectedRoutes = [
   '/write',
   '/entries',
+  '/stats',
 ];
 
 const Auth = ({ children }) => {

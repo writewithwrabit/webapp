@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { StoreProvider } from 'easy-peasy';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
 
-import store from '../store/store';
+import { store } from '../store/store';
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 
 Sentry.init({dsn: "https://b0529282a1ce4acd9e9f47d2e631ccd4@sentry.io/1511977"});
