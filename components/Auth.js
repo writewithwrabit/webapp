@@ -5,6 +5,7 @@ import firebase from '../firebase';
 const protectedRoutes = [
   '/write',
   '/entries',
+  '/stats',
 ];
 
 const Auth = ({ children }) => {
@@ -32,7 +33,7 @@ const Auth = ({ children }) => {
   if (!user.isAuthenticated && protectedRoutes.includes(router.pathname)) {
     return (
       <div className="flex justify-center items-center h-screen w-screen">
-        LOADING...
+        LOADING...	
       </div>
     );
   }

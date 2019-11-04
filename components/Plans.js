@@ -1,8 +1,6 @@
 import Payment from './Payment';
 
-const Plans = ({ setPlan, plan, user, completeSignup }) => {
-
-
+const Plans = ({ setPlan, plan, user }) => {
   return (
     <div className="flex flex-col items-center pt-16">
       <div className="text-center pb-6 text-5xl font-extrabold">
@@ -32,7 +30,7 @@ const Plans = ({ setPlan, plan, user, completeSignup }) => {
 
           {
             plan === 'monthly'
-              ? <Payment user={user} plan="plan_FsvZtUpz9xw0Tx" completeSignup={completeSignup} />
+              ? <Payment user={user} plan="plan_FsvZtUpz9xw0Tx" />
               : (
                 <button
                   className="text-blue-500 hover:text-blue-700 font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
@@ -68,7 +66,7 @@ const Plans = ({ setPlan, plan, user, completeSignup }) => {
 
           {
             plan === 'yearly'
-              ? <Payment user={user} plan="plan_FtuSSAndZnWxET" completeSignup={completeSignup} />
+              ? <Payment user={user} plan="plan_FtuSSAndZnWxET" />
               : (
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"

@@ -1,6 +1,22 @@
+import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 import numeral from 'numeral';
 
 import StatsPanel from './StatsPanel';
+
+const GET_STATS = graphql`
+  query StatsPanelsQuery($global: Boolean!) {
+    stats(global: $global) {
+      wordsWritten
+      longestEntry
+      longestStreak
+      preferredDayOfWeek
+      preferredWritingTimes {
+        hour
+        count
+      }
+    }
+  }
+`;
 
 const timezoneOffsetHours = new Date().getTimezoneOffset() / 60;
 
@@ -62,11 +78,12 @@ const transformWritingTimesToLocal = writingTimes => writingTimes.map(({hour, co
   };
 });
 
-const StatsPanels = ({data, loading, error}) => {
-  if (loading) return (<div>LOADING</div>);
-  if (error) return (<div>ERROR</div>);
+const StatsPanels = ({ selected }) => {
+  const { stats } = useLazyLoadQuery(GET_STATS, {
+    global: selected === 'community',
+  });
 
-  const {wordsWritten, longestStreak, longestEntry, preferredDayOfWeek, preferredWritingTimes} = data.stats;
+  const {wordsWritten, longestStreak, longestEntry, preferredDayOfWeek, preferredWritingTimes} = stats;
 
   const localPreferredWritingTimes = transformWritingTimesToLocal(preferredWritingTimes);
   const preferredWritingTimeOfDay = findTimeOfDay(localPreferredWritingTimes[0]);

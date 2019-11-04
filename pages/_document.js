@@ -31,6 +31,7 @@ class MyDocument extends Document {
           <meta property="og:site_name" content="Wrabit" className="next-head" />
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143384618-3"></script>
         </Head>
+
         <body>
           <Main />
           <NextScript />

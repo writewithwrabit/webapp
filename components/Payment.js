@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { Elements, StripeProvider, CardElement, injectStripe } from 'react-stripe-elements';
-import { useMutation } from '@apollo/react-hooks';
+import { graphql, commitMutation } from 'react-relay';
+import { useStoreActions } from 'easy-peasy';
 import { FaSpinner } from 'react-icons/fa';
-import gql from 'graphql-tag';
 
-const CREATE_SUBSCRIPTION = gql`
-  mutation CreateSubscription($stripeId: String!, $tokenId: String!, $subscriptionId: String!) {
-    createSubscription(input: { stripeId: $stripeId, tokenId: $tokenId, subscriptionId: $subscriptionId })
+import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+
+const environment = createRelayEnvironment();
+
+const CREATE_SUBSCRIPTION = graphql`
+  mutation PaymentQuery($input: NewSubscription!) {
+    createSubscription(input: $input)
   }
 `;
 
-const CardForm = ({ stripe, user, plan, completeSignup }) => {
+const CardForm = ({ stripe, user, plan }) => {
   const [loading, setLoading] = useState(false);
-  const [createSubscription] = useMutation(CREATE_SUBSCRIPTION);
+  const completeUserSignup = useStoreActions(actions => actions.user.completeUserSignup);
 
   const handleSubmit = () => {
     if (stripe) {
@@ -22,9 +26,18 @@ const CardForm = ({ stripe, user, plan, completeSignup }) => {
         .createToken()
         .then(async ({ token }) => {
           const { id: tokenId } = token;
-          await createSubscription({ variables: { stripeId: user.stripeId, tokenId, subscriptionId: plan } });
 
-          completeSignup();
+          commitMutation(environment, {
+            mutation: CREATE_SUBSCRIPTION,
+            variables: {
+              input: {
+                stripeId: user.stripeId,
+                tokenId,
+                subscriptionId: plan,
+              }
+            },
+            onCompleted: () => completeUserSignup({ user }),
+          });
         })
         .catch((err) => {
           console.log('Whoops, something went wrong!', err);
@@ -63,10 +76,10 @@ const CardForm = ({ stripe, user, plan, completeSignup }) => {
 
 const InjectedCardForm = injectStripe(CardForm);
 
-const Payment = ({ user, plan, completeSignup }) => (
+const Payment = ({ user, plan }) => (
   <StripeProvider apiKey="pk_test_Q6g8knGR5TznI9H5jYRccN1700q0gmHaiy">
     <Elements>
-      <InjectedCardForm user={user} plan={plan} completeSignup={completeSignup} />
+      <InjectedCardForm user={user} plan={plan} />
     </Elements>
   </StripeProvider>
 );

@@ -1,12 +1,13 @@
-import gql from "graphql-tag";
 import { action, thunk } from 'easy-peasy';
+import { graphql, fetchQuery } from 'react-relay/hooks';
 
-import init from '../lib/apollo/init';
+import completeUserSignup from './completeUserSignup';
+import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 
-const apollo = init();
+const environment = createRelayEnvironment();
 
-const GET_USER_BY_FIREBASE_ID = gql`
-  query GetUserByFirbaseID($firebaseID: String!) {
+const GET_USER_BY_FIREBASE_ID = graphql`
+  query userQuery($firebaseID: String!) {
     userByFirebaseID(firebaseID: $firebaseID) {
       id
       wordGoal
@@ -23,7 +24,7 @@ const user = {
   firebaseData: null,
   signInUser: action((state, payload) => {
     state.isAuthenticated = true;
-    state.firebaseData = payload;    
+    state.firebaseData = payload;
   }),
   signOutUser: action(state => {
     state.isAuthenticated = false;
@@ -34,16 +35,14 @@ const user = {
     state.wordGoal = wordGoal;
   }),
   getUserData: thunk(async (actions, { userID }) => {
-    const { data } = await apollo.query({
-      query: GET_USER_BY_FIREBASE_ID,
-      variables: { firebaseID: userID },
-    });
+    const data = await fetchQuery(environment, GET_USER_BY_FIREBASE_ID, { firebaseID: userID }).toPromise();
 
     actions.setUserData({
       id: data.userByFirebaseID.id,
       wordGoal: data.userByFirebaseID.wordGoal,
     })
   }),
+  completeUserSignup,
 };
 
 export default user;

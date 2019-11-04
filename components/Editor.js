@@ -1,10 +1,23 @@
+import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
 import { useState, useRef, useEffect } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
+import { startOfDay } from 'date-fns';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
+
+const GET_ENTRY = graphql`
+  query EditorQuery($userID: ID!, $date: String!) {
+    dailyEntry(userID: $userID, date: $date) {
+      id
+      content
+      wordCount
+      createdAt
+    }
+  }
+`;
 
 const selectableBlockTypes = {
   paragraph: 'Paragraph',
@@ -36,10 +49,16 @@ const emptyDocument = {
 
 const DEFAULT_NODE = 'paragraph';
 
-const Editor = ({ entry, date }) => {
+const Editor = () => {
+  const { uid: userID } = useStoreState(state => state.user).firebaseData;
+
+  const date = startOfDay(new Date());
+
+  const { dailyEntry } = useLazyLoadQuery(GET_ENTRY, { userID, date });
+
   let jsonEntry;
   try {
-    jsonEntry = JSON.parse(entry.content)
+    jsonEntry = JSON.parse(dailyEntry.content)
   } catch(e) {
     // TODO: Handle this error?
   }
@@ -78,7 +97,7 @@ const Editor = ({ entry, date }) => {
     const content = JSON.stringify(newValue.toJSON(newValue));
 
     saveEntry({
-      ...entry,
+      ...dailyEntry,
       content,
       wordCount,
       goalHit: wordCount > wordGoal,

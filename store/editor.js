@@ -1,14 +1,14 @@
 import { action, thunk } from 'easy-peasy';
-import gql from "graphql-tag";
+import { graphql, commitMutation } from 'react-relay';
 
 import firebase from '../firebase';
 import throttle from 'lodash/throttle';
-import init from '../lib/apollo/init';
+import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 
-const apollo = init();
+const environment = createRelayEnvironment();
 
-const UPDATE_ENTRY = gql`
-  mutation UpdateEntry($id: ID!, $input: ExistingEntry!, $date: String!) {
+const UPDATE_ENTRY = graphql`
+  mutation editorMutation($id: ID!, $input: ExistingEntry!, $date: String!) {
     updateEntry(id: $id, input: $input, date: $date) {
       id
       content
@@ -20,7 +20,7 @@ const UPDATE_ENTRY = gql`
 const throttledSaveEntry = throttle(async (actions, payload) => {
   const { id, content, wordCount, userID, goalHit, date } = payload;
 
-  await apollo.mutate({
+  commitMutation(environment, {
     mutation: UPDATE_ENTRY,
     variables: {
       id,
@@ -31,12 +31,10 @@ const throttledSaveEntry = throttle(async (actions, payload) => {
         goalHit,
       },
       date,
-    }
+    },
+    onCompleted: ({ updatedEntry }) => actions.savedEntry(updatedEntry),
+    onError: error => {} /* Mutation errored */,
   });
-
-  if (actions) {
-    actions.savedEntry(payload);
-  }
 }, 10000);
 
 const editor = {
