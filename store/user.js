@@ -1,4 +1,3 @@
-import gql from "graphql-tag";
 import { action, thunk } from 'easy-peasy';
 import { graphql, fetchQuery } from 'react-relay/hooks';
 

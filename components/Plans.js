@@ -1,8 +1,6 @@
 import Payment from './Payment';
 
 const Plans = ({ setPlan, plan, user, completeSignup }) => {
-
-
   return (
     <div className="flex flex-col items-center pt-16">
       <div className="text-center pb-6 text-5xl font-extrabold">

@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import { ApolloConsumer } from '@apollo/react-hooks'
-import { useMutation } from '@apollo/react-hooks';
 import { useRouter } from 'next/router';
-import gql from 'graphql-tag';
+import { graphql, commitMutation } from 'react-relay';
 
-const UPDATE_USER = gql`
-  mutation UpdateUser($id: ID!, $firebaseId: String) {
-    updateUser(input: { id: $id, firebaseID: $firebaseId }) {
+import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+
+const environment = createRelayEnvironment();
+
+const UPDATE_USER = graphql`
+  mutation signupQuery($input: UpdatedUser!) {
+    updateUser(input: $input) {
       id
       firebaseID
     }
@@ -20,7 +22,7 @@ import SignupUser from '../components/SignupUser';
 import Plans from '../components/Plans';
 
 const Signup = () => {
-  const [updateUser] = useMutation(UPDATE_USER);
+  const router = useRouter();
   const [stage, setStage] = useState('signup');
   const [user, setUser] = useState({});
   const [plan, setPlan] = useState({});
@@ -34,13 +36,20 @@ const Signup = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(user.email, user.password)
-      .then(async ({ user: firebaseUser }) => {
-        const router = useRouter();
-        const { uid: firebaseId } = firebaseUser;
+      .then(({ user: firebaseUser }) => {
+        // const router = useRouter();
+        const { uid: firebaseID } = firebaseUser;
 
-        await updateUser({ variables: { id: user.id, firebaseId }});
-
-        router.push('/write');
+        commitMutation(environment, {
+          mutation: UPDATE_USER,
+          variables: {
+            input: {
+              id: user.id,
+              firebaseID,
+            },
+          },
+          onCompleted: () => router.push('/write'),
+        });
       })
       .catch((error) => {
         console.log(error.code, error.message);
@@ -56,21 +65,14 @@ const Signup = () => {
         <script src="https://js.stripe.com/v3/"></script>
       </Head>
       
-      <ApolloConsumer>
-        {
-          client => (
-            <Component
-              client={client}
-              setUser={setUser}
-              user={user}
-              setStage={setStage}
-              setPlan={setPlan}
-              plan={plan}
-              completeSignup={completeSignup}
-            />
-          )
-        }
-      </ApolloConsumer>
+      <Component
+        setUser={setUser}
+        user={user}
+        setStage={setStage}
+        setPlan={setPlan}
+        plan={plan}
+        completeSignup={completeSignup}
+      />
     </div>
   );
 };

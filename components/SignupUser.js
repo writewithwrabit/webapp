@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { graphql, commitMutation } from 'react-relay';
 
-const CREATE_USER = gql`
-  mutation CreateUser($firstName: String!, $lastName: String, $email: String!) {
-    createUser(input: { firstName: $firstName, lastName: $lastName, email: $email }) {
+import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+
+const environment = createRelayEnvironment();
+
+const CREATE_USER = graphql`
+  mutation SignupUserQuery($input: NewUser!) {
+    createUser(input: $input) {
       id
       stripeID
     }
@@ -18,7 +21,6 @@ const SignupUser = ({ setUser, setStage }) => {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [createUser] = useMutation(CREATE_USER);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,19 +31,29 @@ const SignupUser = ({ setUser, setStage }) => {
       return;
     }
 
-    const { data } = await createUser({ variables: { firstName, lastName, email } });
-    const { createUser: createdUser } = data;
+    commitMutation(environment, {
+      mutation: CREATE_USER,
+      variables: {
+        input: {
+          firstName,
+          lastName,
+          email,
+        }
+      },
+      onCompleted: ({ createUser }) => {
+        console.log(createUser);
+        setUser({
+          id: createUser.id,
+          stripeId: createUser.stripeID,
+          email,
+          firstName,
+          lastName,
+          password,
+        });
 
-    setUser({
-      id: createdUser.id,
-      stripeId: createdUser.stripeID,
-      email,
-      firstName,
-      lastName,
-      password,
+        setStage('plans');
+      }
     });
-
-    setStage('plans');
   }
 
   return (
