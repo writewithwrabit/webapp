@@ -45,7 +45,8 @@ const DisplayMenu = () => {
   return (
     <Menu className="bg-white absolute shadow-lg rounded flex flex-col text-gray-800">
       <ArrowBox />
-      <a className="px-8 py-2" onClick={logout}>Logout</a>
+
+      <a className="px-8 py-2 text-center" onClick={logout}>Logout</a>
   
       <Link href="/settings">
         <a className="px-8 py-2">Settings</a>
