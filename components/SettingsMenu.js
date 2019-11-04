@@ -34,7 +34,7 @@ const ArrowBox = styled.div`
   }
 `;
 
-const displayMenu = () => {
+const DisplayMenu = () => {
   const signOutUser = useStoreActions(actions => actions.user.signOutUser);
 
   const logout = () => {
@@ -46,13 +46,13 @@ const displayMenu = () => {
     <Menu className="bg-white absolute shadow-lg rounded flex flex-col text-gray-800">
       <ArrowBox />
       <a className="px-8 py-2" onClick={logout}>Logout</a>
-
+  
       <Link href="/settings">
         <a className="px-8 py-2">Settings</a>
       </Link>
     </Menu>
   );
-};
+}
 
 const SettingsMenu = () => {
   const [display, setDisplay] = useState(false);
@@ -61,11 +61,7 @@ const SettingsMenu = () => {
     <div className="flex justify-end relative">
       <FaCog onClick={() => setDisplay(!display)} />
       
-      {
-        display 
-          ? displayMenu()
-          : null
-      }
+      {display && <DisplayMenu />}
     </div>
   );
 }
