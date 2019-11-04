@@ -30,11 +30,8 @@ const Auth = ({ children }) => {
   // Display empty loading state while checking
   // that the user is properly authenticated
   if (!user.isAuthenticated && protectedRoutes.includes(router.pathname)) {
-    return (
-      <div className="flex justify-center items-center h-screen w-screen">
-        LOADING...
-      </div>
-    );
+    // TODO: Display something here
+    return <div></div>;
   }
 
   return (

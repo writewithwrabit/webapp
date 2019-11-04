@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import * as Sentry from '@sentry/browser';
 import App, { Container } from 'next/app';
 import dynamic from 'next/dynamic';
-import { ApolloProvider } from '@apollo/react-hooks'
 import { StoreProvider } from 'easy-peasy';
+import { RelayEnvironmentProvider } from 'react-relay/hooks';
 
-import withApollo from '../lib/apollo/withApollo';
 import store from '../store/store';
+import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 
 Sentry.init({dsn: "https://b0529282a1ce4acd9e9f47d2e631ccd4@sentry.io/1511977"});
 
 import '../style.css';
 
 const Auth = dynamic(() => import('../components/Auth'), { ssr: false });
+
+const environment = createRelayEnvironment();
 
 class MyApp extends App {
   componentDidCatch (error, errorInfo) {
@@ -28,20 +30,20 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const { Component, pageProps } = this.props;
 
     return (
       <Container>
-        <ApolloProvider client={apolloClient}>
+        <RelayEnvironmentProvider environment={environment}>
           <StoreProvider store={store}>
             <Auth>
               <Component {...pageProps} />
             </Auth>
           </StoreProvider>
-        </ApolloProvider>
+        </RelayEnvironmentProvider>
       </Container>
     );
   }
 }
 
-export default withApollo(MyApp);
+export default MyApp;

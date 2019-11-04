@@ -1,29 +1,11 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, Suspense } from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import gql from "graphql-tag";
-import { format, startOfDay, endOfDay } from 'date-fns'
-import { useQuery } from '@apollo/react-hooks';
-import { useStoreState } from 'easy-peasy';
-import { zonedTimeToUtc } from 'date-fns-tz';
+import { format } from 'date-fns'
 
 import withLayout from '../components/Layout';
 import PageHeader from '../components/PageHeader';
 import EntriesList from '../components/EntriesList';
-
-const GET_ENTRIES = gql`
-  query UserEntries($userID: ID!, $startDate: String, $endDate: String) {
-    entriesByUserID(userID: $userID, startDate: $startDate, endDate: $endDate) {
-      id
-      wordCount
-      createdAt
-      content
-      goalHit
-    }
-  }
-`;
-
-const timezoneOffset = new Date().getTimezoneOffset();
 
 const formatFriendly = date => format(new Date(date), 'MMMM d, yyyy');
 
@@ -31,20 +13,9 @@ const Entries = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [enteredToDate, setEnteredToDate] = useState(null);
+  const [userEntries, setUserEntries] = useState([]);
 
   const subtitle = 'View your entries as a never-ending list or by selection on the calendar.';
-
-  // GraphQL Query
-  const { uid: userID } = useStoreState(state => state.user).firebaseData;
-  const utcStartDate = startDate ? zonedTimeToUtc(startOfDay(startDate), timezoneOffset) : null;
-  const utcEndDate = endDate ? zonedTimeToUtc(endOfDay(endDate), timezoneOffset) : null;
-  const { loading, error, data } = useQuery(GET_ENTRIES, {
-    variables: {
-      userID,
-      startDate: utcStartDate,
-      endDate: utcEndDate,
-    },
-  });
 
   // Date Picker config
   let datePicker = useRef();
@@ -55,20 +26,16 @@ const Entries = () => {
     // reendered on the calendar and let us
     // target it with custom CSS
     entry: date => {
-      if (data && data.entriesByUserID) {
-        const { entriesByUserID } = data;
-
         // Loop through each entries createdAt date and
         // compare it to the date being rendered on the calendar
-        for (let i = 0; i < entriesByUserID.length; i++) {
-          const createdAt = new Date(entriesByUserID[i].createdAt);
+        for (let i = 0; i < userEntries.length; i++) {
+          const createdAt = new Date(userEntries[i].createdAt);
           if (createdAt.getDate() === date.getDate() && createdAt.getMonth() === date.getMonth()) {
             return true;
           }
         }
 
         return false;
-      }
     },
   };
   const disabledDays = { before: startDate };
@@ -158,7 +125,9 @@ const Entries = () => {
           </div>
         </div>
 
-        <EntriesList data={data} loading={loading} error={error} />
+        <Suspense fallback={<div>Loading entries...</div>}>
+          <EntriesList startDate={startDate} endDate={endDate} setUserEntries={setUserEntries} />
+        </Suspense>
       </div>
     </div>
   );

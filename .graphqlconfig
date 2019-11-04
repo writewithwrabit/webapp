@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "Wrabit": {
+      "schemaPath": "schema.graphql",
+      "extensions": {
+        "endpoints": {
+          "dev": {
+            "url": "http://localhost:8080/query"
+          }
+        }
+      }
+    }
+  }
+}

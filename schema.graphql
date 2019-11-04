@@ -1,0 +1,114 @@
+type User {
+  id: ID!
+  firebaseID: String
+  stripeID: String
+  firstName: String!
+  lastName: String
+  email: String!
+  wordGoal: Int!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Entry {
+  id: ID!
+  User: User!
+  wordCount: Int!
+  content: String!
+  goalHit: Boolean!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Editor {
+  id: ID!
+  User: User!
+  showToolbar: Boolean!
+  showPrompt: Boolean!
+  showCounter: Boolean!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Streak {
+  id: ID!
+  User: User!
+  dayCount: Int!
+  lastEntryID: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type PreferredWritingTime {
+  hour: Int!
+  count: Int!
+}
+
+type Stats {
+  wordsWritten: Int!
+  longestStreak: Int!
+  longestEntry: Int!
+  preferredWritingTimes: [PreferredWritingTime]!
+  preferredDayOfWeek: Int!
+}
+
+type Query {
+  user(ID: String): User!
+  userByFirebaseID(firebaseID: String): User!
+  editors(ID: ID): [Editor!]!
+  entries(ID: ID): [Entry!]!
+  entriesByUserID(userID: ID!, startDate: String, endDate: String): [Entry!]!
+  dailyEntry(userID: ID!, date: String!): Entry!
+  stats(global: Boolean!): Stats!
+}
+
+input NewUser {
+  firstName: String!
+  lastName: String
+  email: String!
+}
+
+input UpdatedUser {
+  id: ID!
+  firebaseID: String
+  stripeID: String
+  firstName: String
+  lastName: String
+  email: String
+  wordGoal: Int
+}
+
+input NewEntry {
+  userId: String!
+  wordCount: Int!
+  content: String!
+}
+
+input ExistingEntry {
+  userID: String!
+  wordCount: Int!
+  content: String!
+  goalHit: Boolean!
+}
+
+input NewEditor {
+  userId: String!
+  showToolbar: Boolean!
+  showPrompt: Boolean!
+  showCounter: Boolean!
+}
+
+input NewSubscription {
+  stripeId: String!
+  tokenId: String!
+  subscriptionId: String!
+}
+
+type Mutation {
+  createUser(input: NewUser!): User!
+  updateUser(input: UpdatedUser!): User!
+  createEntry(input: NewEntry!): Entry!
+  updateEntry(id: ID!, input: ExistingEntry!, date: String!): Entry!
+  createEditor(input: NewEditor!): Editor!
+  createSubscription(input: NewSubscription!): String!
+}
