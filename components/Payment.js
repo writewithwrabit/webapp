@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Elements, StripeProvider, CardElement, injectStripe } from 'react-stripe-elements';
 import { graphql, commitMutation } from 'react-relay';
+import { useStoreActions } from 'easy-peasy';
 import { FaSpinner } from 'react-icons/fa';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
@@ -13,8 +14,9 @@ const CREATE_SUBSCRIPTION = graphql`
   }
 `;
 
-const CardForm = ({ stripe, user, plan, completeSignup }) => {
+const CardForm = ({ stripe, user, plan }) => {
   const [loading, setLoading] = useState(false);
+  const completeUserSignup = useStoreActions(actions => actions.user.completeUserSignup);
 
   const handleSubmit = () => {
     if (stripe) {
@@ -34,7 +36,7 @@ const CardForm = ({ stripe, user, plan, completeSignup }) => {
                 subscriptionId: plan,
               }
             },
-            onCompleted: () => completeSignup(),
+            onCompleted: () => completeUserSignup({ user }),
           });
         })
         .catch((err) => {
@@ -74,10 +76,10 @@ const CardForm = ({ stripe, user, plan, completeSignup }) => {
 
 const InjectedCardForm = injectStripe(CardForm);
 
-const Payment = ({ user, plan, completeSignup }) => (
+const Payment = ({ user, plan }) => (
   <StripeProvider apiKey="pk_test_Q6g8knGR5TznI9H5jYRccN1700q0gmHaiy">
     <Elements>
-      <InjectedCardForm user={user} plan={plan} completeSignup={completeSignup} />
+      <InjectedCardForm user={user} plan={plan} />
     </Elements>
   </StripeProvider>
 );

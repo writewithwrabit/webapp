@@ -1,6 +1,7 @@
 import { action, thunk } from 'easy-peasy';
 import { graphql, fetchQuery } from 'react-relay/hooks';
 
+import completeUserSignup from './completeUserSignup';
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 
 const environment = createRelayEnvironment();
@@ -41,6 +42,7 @@ const user = {
       wordGoal: data.userByFirebaseID.wordGoal,
     })
   }),
+  completeUserSignup,
 };
 
 export default user;

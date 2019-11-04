@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash dcba4ee4bfe520e27faa45a8f8cc4a2f
+ * @relayHash 2e8b2c0592327b332c8b9ddf2eacbb4c
  */
 
 /* eslint-disable */
@@ -18,24 +18,24 @@ export type UpdatedUser = {|
   email?: ?string,
   wordGoal?: ?number,
 |};
-export type signupQueryVariables = {|
+export type completeUserSignupQueryVariables = {|
   input: UpdatedUser
 |};
-export type signupQueryResponse = {|
+export type completeUserSignupQueryResponse = {|
   +updateUser: {|
     +id: string,
     +firebaseID: ?string,
   |}
 |};
-export type signupQuery = {|
-  variables: signupQueryVariables,
-  response: signupQueryResponse,
+export type completeUserSignupQuery = {|
+  variables: completeUserSignupQueryVariables,
+  response: completeUserSignupQueryResponse,
 |};
 */
 
 
 /*
-mutation signupQuery(
+mutation completeUserSignupQuery(
   $input: UpdatedUser!
 ) {
   updateUser(input: $input) {
@@ -91,7 +91,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "signupQuery",
+    "name": "completeUserSignupQuery",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -99,19 +99,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "signupQuery",
+    "name": "completeUserSignupQuery",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
-    "name": "signupQuery",
+    "name": "completeUserSignupQuery",
     "id": null,
-    "text": "mutation signupQuery(\n  $input: UpdatedUser!\n) {\n  updateUser(input: $input) {\n    id\n    firebaseID\n  }\n}\n",
+    "text": "mutation completeUserSignupQuery(\n  $input: UpdatedUser!\n) {\n  updateUser(input: $input) {\n    id\n    firebaseID\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'e2d7978434cafca6393163cfadacf94a';
+(node/*: any*/).hash = 'dfbc755b302abb07c197624b877e869a';
 module.exports = node;
