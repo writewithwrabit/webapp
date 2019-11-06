@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
-import Brand from '../static/logos/name.svg';
+import Brand from '../public/logos/name.svg';
 import NavItem from './NavItem';
 import SettingsMenu from './SettingsMenu';
 

@@ -8,5 +8,8 @@ module.exports = withCSS({
     });
 
     return config;
-  }
+  },
+  experimental: {
+    reactMode: 'concurrent',
+  },
 })

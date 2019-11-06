@@ -10,20 +10,20 @@ import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
 import SEO from '../seo.config.js';
 
-import Logo from '../static/logos/full-color.svg';
-import Icon from '../static/logos/icon.svg';
+import Logo from '../public/logos/full-color.svg';
+import Icon from '../public/logos/icon.svg';
 
-import Quill from '../static/quill.svg';
-import Writing from '../static/writing.svg';
-import Calendar from '../static/calendar.svg';
-import Tangled from '../static/tangled.svg';
+import Quill from '../public/quill.svg';
+import Writing from '../public/writing.svg';
+import Calendar from '../public/calendar.svg';
+import Tangled from '../public/tangled.svg';
 
-import EditorOne from '../static/editor-one.svg';
-import EditorTwo from '../static/editor-two.svg';
-import EditorThree from '../static/editor-three.svg';
+import EditorOne from '../public/editor-one.svg';
+import EditorTwo from '../public/editor-two.svg';
+import EditorThree from '../public/editor-three.svg';
 
-import MagicRabbit from '../static/magic-rabbit.svg';
-import Sqreen from '../static/sqreen-mono-badge.svg';
+import MagicRabbit from '../public/magic-rabbit.svg';
+import Sqreen from '../public/sqreen-mono-badge.svg';
 
 const editors = [
   {
