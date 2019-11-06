@@ -13,10 +13,8 @@ const StyledSpan = styled.span`
 
 const StatsPill = ({ children, selected, name, onClick }) => {
   const [preloadedQuery, setPreloadedQuery] = useState(null);
-  // const setPreloadedQuery = useStoreActions(actions => actions.pages.setPreloadedQuery);
 
   const preloadData = (global) => {
-    console.log('yooyoyoyoyoy');
     const preloadedQuery = preloadQuery(
       environment,
       GET_STATS,

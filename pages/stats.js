@@ -4,10 +4,11 @@ import dynamic from 'next/dynamic';
 import withLayout from '../components/Layout';
 import PageHeader from '../components/PageHeader';
 import StatsSelector from '../components/StatsSelector';
-const StatsPanels = dynamic(
-  () => import('../components/StatsPanels'),
-  { ssr: false }
-);
+import StatsPanels from '../components/StatsPanels';
+// const StatsPanels = dynamic(
+//   () => import('../components/StatsPanels'),
+//   { ssr: false }
+// );
 
 const Stats = () => {
   const subtitle = 'Find patterns and encouragement in all the pretty graphs and numbers.';
@@ -28,10 +29,6 @@ const Stats = () => {
       </Suspense>
     </div>
   );
-}
-
-Stats.getInitialProps = () => {
-  console.log('NO');
 }
 
 export default withLayout(Stats);

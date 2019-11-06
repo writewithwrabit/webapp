@@ -12,12 +12,10 @@ const StatsLink = () => {
   const setPreloadedQuery = useStoreActions(actions => actions.pages.setPreloadedQuery);
 
   const preloadCode = () => {
-    console.log('code, code, code');
     router.prefetch('/stats');
   }
 
   const preloadRoute = () => {
-    console.log('all, all, all');
     router.prefetch('/stats');
 
     const preloadedQuery = preloadQuery(
@@ -25,7 +23,7 @@ const StatsLink = () => {
       GET_STATS,
       { global: false },
     );
-    console.log(preloadQuery);
+
     setPreloadedQuery({ preloadedQuery });
   };
 
