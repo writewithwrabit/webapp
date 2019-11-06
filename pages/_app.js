@@ -1,6 +1,6 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import * as Sentry from '@sentry/browser';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import dynamic from 'next/dynamic';
 import { StoreProvider } from 'easy-peasy';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
@@ -33,7 +33,6 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <Container>
         <RelayEnvironmentProvider environment={environment}>
           <StoreProvider store={store}>
             <Auth>
@@ -41,7 +40,6 @@ class MyApp extends App {
             </Auth>
           </StoreProvider>
         </RelayEnvironmentProvider>
-      </Container>
     );
   }
 }
