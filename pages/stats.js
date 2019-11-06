@@ -30,4 +30,8 @@ const Stats = () => {
   );
 }
 
+Stats.getInitialProps = () => {
+  console.log('NO');
+}
+
 export default withLayout(Stats);
