@@ -1,12 +1,14 @@
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 
 import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
 import Brand from '../public/logos/name.svg';
 import NavItem from './NavItem';
 import SettingsMenu from './SettingsMenu';
+import StatsLink from './StatsLink';
 
 const Logo = styled.a`
   & svg {
@@ -43,7 +45,9 @@ const Header = () => {
 
                   <NavItem url="/write" text="Write" />
 
-                  <NavItem url="/stats" text="Stats" />
+                  {/* <NavItem url="/stats" text="Stats" /> */}
+
+                  <StatsLink />
                 </span>
               )
               : null

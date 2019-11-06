@@ -1,4 +1,8 @@
-import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
+import { useEffect } from 'react';
+import { useLazyLoadQuery, usePreloadedQuery } from 'react-relay/hooks';
+import { useStoreState } from 'easy-peasy';
+
+import GET_STATS from '../queries/GetStats';
 
 import WordsWrittenPanel from './WordsWrittenPanel';
 import LongstStreakPanel from './LongestStreakPanel';
@@ -6,27 +10,11 @@ import PreferredWritingTimePanel from './PreferredWritingTimePanel';
 import PreferredDayOfWeekPanel from './PreferredDayOfWeekPanel';
 import LongestEntryPanel from './LongestEntryPanel';
 
-const GET_STATS = graphql`
-  query StatsPanelsQuery($global: Boolean!) {
-    stats(global: $global) {
-      wordsWritten
-      longestEntry
-      longestStreak
-      preferredDayOfWeek
-      preferredWritingTimes {
-        hour
-        count
-      }
-    }
-  }
-`;
+const StatsPanels = ({ selected, statsPreloadedQuery }) => {
+  const preloadedQuery = useStoreState(state => state.pages.preloadedQuery);
+  const { stats } = usePreloadedQuery(GET_STATS, statsPreloadedQuery || preloadedQuery);
 
-const StatsPanels = ({ selected }) => {
-  const { stats } = useLazyLoadQuery(GET_STATS, {
-    global: selected === 'community',
-  });
-
-  const {wordsWritten, longestStreak, longestEntry, preferredDayOfWeek, preferredWritingTimes} = stats;
+  const { wordsWritten, longestStreak, longestEntry, preferredDayOfWeek, preferredWritingTimes } = stats;
 
   return (
     <div className="flex flex-wrap">
