@@ -8,6 +8,24 @@ import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const routes = {
+  '/': {
+    query: GET_STATS,
+    variables: {
+      global: false,
+    }
+  }, 
+  '/login': {
+    query: GET_STATS,
+    variables: {
+      global: false,
+    }
+  }, 
+  '/write': {
+    query: GET_STATS,
+    variables: {
+      global: false,
+    }
+  }, 
   '/stats': {
     query: GET_STATS,
     variables: {
