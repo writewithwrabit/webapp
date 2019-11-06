@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { preloadQuery } from 'react-relay/hooks';
 import { useStoreActions } from 'easy-peasy';
@@ -12,12 +13,12 @@ const StatsLink = () => {
 
   const preloadCode = () => {
     console.log('code, code, code');
-    // router.prefetch('/stats');
+    router.prefetch('/stats');
   }
 
   const preloadRoute = () => {
     console.log('all, all, all');
-    // router.prefetch('/stats');
+    router.prefetch('/stats');
 
     const preloadedQuery = preloadQuery(
       environment,

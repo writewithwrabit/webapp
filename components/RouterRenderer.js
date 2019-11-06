@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useStoreActions } from 'easy-peasy';
 import { preloadQuery } from 'react-relay/hooks';
+import dynamic from 'next/dynamic';
 
 import GET_STATS from '../queries/GetStats';
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
@@ -32,7 +33,7 @@ const RouterRender = ({ children }) => {
     query,
     variables,
   );
-
+  console.log(preloadedQuery);
   setPreloadedQuery({ preloadedQuery });
 
   return (
