@@ -35,7 +35,7 @@ const NavItem = ({ url, text, query, variables }) => {
     <span className={classNames}>
       <a
         className="px-8"
-        onClick={() => setTimeout(() => router.push(url), 100)}
+        onClick={() => setTimeout(() => router.push(url), 500)}
         onMouseDown={preloadRoute}
         onMouseEnter={preloadCode}
       >

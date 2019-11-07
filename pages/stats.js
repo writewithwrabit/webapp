@@ -1,7 +1,10 @@
 import { useState, Suspense } from 'react';
 import dynamic from 'next/dynamic';
 
+import GET_STATS from '../queries/GetStats';
+
 import withLayout from '../components/Layout';
+import withPreloadedQuery from '../components/PreloadedQuery';
 import PageHeader from '../components/PageHeader';
 import StatsSelector from '../components/StatsSelector';
 const StatsPanels = dynamic(
@@ -30,4 +33,11 @@ const Stats = () => {
   );
 }
 
-export default withLayout(Stats);
+export default withLayout(
+  withPreloadedQuery(Stats, {
+    query: GET_STATS,
+    variables: {
+      global: false,
+    }
+  }),
+);
