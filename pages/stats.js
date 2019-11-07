@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import withLayout from '../components/Layout';
 import PageHeader from '../components/PageHeader';
 import StatsSelector from '../components/StatsSelector';
-// import StatsPanels from '../components/StatsPanels';
 const StatsPanels = dynamic(
   () => import('../components/StatsPanels'),
   { ssr: false }

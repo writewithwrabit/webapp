@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useLazyLoadQuery, usePreloadedQuery } from 'react-relay/hooks';
+import { usePreloadedQuery } from 'react-relay/hooks';
 import { useStoreState } from 'easy-peasy';
 
 import GET_STATS from '../queries/GetStats';
@@ -10,7 +9,7 @@ import PreferredWritingTimePanel from './PreferredWritingTimePanel';
 import PreferredDayOfWeekPanel from './PreferredDayOfWeekPanel';
 import LongestEntryPanel from './LongestEntryPanel';
 
-const StatsPanels = ({ selected, statsPreloadedQuery }) => {
+const StatsPanels = ({ statsPreloadedQuery }) => {
   const preloadedQuery = useStoreState(state => state.pages.preloadedQuery);
   const { stats } = usePreloadedQuery(GET_STATS, statsPreloadedQuery || preloadedQuery);
 

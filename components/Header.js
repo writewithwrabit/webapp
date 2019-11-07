@@ -1,14 +1,35 @@
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/router';
 
 import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
+
+import GetStats from '../queries/GetStats';
 
 import Brand from '../public/logos/name.svg';
 import NavItem from './NavItem';
 import SettingsMenu from './SettingsMenu';
-import StatsLink from './StatsLink';
+
+const navItems = [
+  {
+    url: '/entries',
+    text: 'Entries',
+    query: GetStats,
+    variables: { global: false },
+  },
+  {
+    url: '/write',
+    text: 'Write',
+    query: GetStats,
+    variables: { global: false },
+  },
+  {
+    url: '/stats',
+    text: 'Stats',
+    query: GetStats,
+    variables: { global: false },
+  },
+];
 
 const Logo = styled.a`
   & svg {
@@ -39,18 +60,26 @@ const Header = () => {
         <div className="w-1/3 text-center">
           {
             user.isAuthenticated
-              ? (
+              && (
                 <span>
-                  <NavItem url="/entries" text="Entries" />
-
-                  <NavItem url="/write" text="Write" />
-
-                  {/* <NavItem url="/stats" text="Stats" /> */}
-
-                  <StatsLink />
+                  {
+                    navItems.map(({
+                      url,
+                      text,
+                      query,
+                      variables,
+                    }) => (
+                      <NavItem
+                        key={url}
+                        url={url}
+                        text={text}
+                        query={query}
+                        variables={variables}
+                      />
+                    ))
+                  }
                 </span>
               )
-              : null
           }
         </div>
 
