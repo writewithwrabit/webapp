@@ -9,7 +9,7 @@ process.on('uncaughtException', err => {
   Sentry.captureException(err)
 });
 
-class MyDocument extends Document {
+class WrabitDocument extends Document {
   static async getInitialProps (ctx) {
     const initialProps = await Document.getInitialProps(ctx);
     return {
@@ -26,7 +26,7 @@ class MyDocument extends Document {
           <meta property="og:type" content="website" className="next-head" />
           <meta property="og:title" content="Write With Wrabit" className="next-head" />
           <meta property="og:description" content="Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relationship with yourself." className="next-head" />
-          <meta property="og:image" content="https://writewithwrabit.com/static/og.png" className="next-head" />
+          <meta property="og:image" content="https://writewithwrabit.com/public/og.png" className="next-head" />
           <meta property="og:image:alt" content="Write With Wrabit" className="next-head" />
           <meta property="og:site_name" content="Wrabit" className="next-head" />
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143384618-3"></script>
@@ -41,4 +41,4 @@ class MyDocument extends Document {
   }
 }
 
-export default MyDocument;
+export default WrabitDocument;

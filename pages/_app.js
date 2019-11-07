@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import * as Sentry from '@sentry/browser';
-import App, { Container } from 'next/app';
+import App from 'next/app';
 import dynamic from 'next/dynamic';
 import { StoreProvider } from 'easy-peasy';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
@@ -16,7 +16,7 @@ const Auth = dynamic(() => import('../components/Auth'), { ssr: false });
 
 const environment = createRelayEnvironment();
 
-class MyApp extends App {
+class WrabitWebapp extends App {
   componentDidCatch (error, errorInfo) {
     Sentry.withScope(scope => {
       Object.keys(errorInfo).forEach(key => {
@@ -33,17 +33,17 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <Container>
         <RelayEnvironmentProvider environment={environment}>
           <StoreProvider store={store}>
             <Auth>
-              <Component {...pageProps} />
+              <Suspense fallback={'Loading...'}>
+                <Component {...pageProps} />
+              </Suspense>
             </Auth>
           </StoreProvider>
         </RelayEnvironmentProvider>
-      </Container>
     );
   }
 }
 
-export default MyApp;
+export default WrabitWebapp;

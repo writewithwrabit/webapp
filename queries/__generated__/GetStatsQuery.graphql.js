@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 472b42b917e2efb12f614c7b096281b2
+ * @relayHash 5444ea310bd6b6fcdc7722d4fbae2c46
  */
 
 /* eslint-disable */
@@ -9,10 +9,10 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type StatsPanelsQueryVariables = {|
+export type GetStatsQueryVariables = {|
   global: boolean
 |};
-export type StatsPanelsQueryResponse = {|
+export type GetStatsQueryResponse = {|
   +stats: {|
     +wordsWritten: number,
     +longestEntry: number,
@@ -24,15 +24,15 @@ export type StatsPanelsQueryResponse = {|
     |}>,
   |}
 |};
-export type StatsPanelsQuery = {|
-  variables: StatsPanelsQueryVariables,
-  response: StatsPanelsQueryResponse,
+export type GetStatsQuery = {|
+  variables: GetStatsQueryVariables,
+  response: GetStatsQueryResponse,
 |};
 */
 
 
 /*
-query StatsPanelsQuery(
+query GetStatsQuery(
   $global: Boolean!
 ) {
   stats(global: $global) {
@@ -133,7 +133,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "StatsPanelsQuery",
+    "name": "GetStatsQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -141,19 +141,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "StatsPanelsQuery",
+    "name": "GetStatsQuery",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "query",
-    "name": "StatsPanelsQuery",
+    "name": "GetStatsQuery",
     "id": null,
-    "text": "query StatsPanelsQuery(\n  $global: Boolean!\n) {\n  stats(global: $global) {\n    wordsWritten\n    longestEntry\n    longestStreak\n    preferredDayOfWeek\n    preferredWritingTimes {\n      hour\n      count\n    }\n  }\n}\n",
+    "text": "query GetStatsQuery(\n  $global: Boolean!\n) {\n  stats(global: $global) {\n    wordsWritten\n    longestEntry\n    longestStreak\n    preferredDayOfWeek\n    preferredWritingTimes {\n      hour\n      count\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a2779287944fdada68a2fe0be9100b9a';
+(node/*: any*/).hash = 'b86274657da24479ecf8256cfed9e1ea';
 module.exports = node;

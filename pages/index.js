@@ -10,20 +10,20 @@ import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
 import SEO from '../seo.config.js';
 
-import Logo from '../static/logos/full-color.svg';
-import Icon from '../static/logos/icon.svg';
+import Logo from '../public/logos/full-color.svg';
+import Icon from '../public/logos/icon.svg';
 
-import Quill from '../static/quill.svg';
-import Writing from '../static/writing.svg';
-import Calendar from '../static/calendar.svg';
-import Tangled from '../static/tangled.svg';
+import Quill from '../public/quill.svg';
+import Writing from '../public/writing.svg';
+import Calendar from '../public/calendar.svg';
+import Tangled from '../public/tangled.svg';
 
-import EditorOne from '../static/editor-one.svg';
-import EditorTwo from '../static/editor-two.svg';
-import EditorThree from '../static/editor-three.svg';
+import EditorOne from '../public/editor-one.svg';
+import EditorTwo from '../public/editor-two.svg';
+import EditorThree from '../public/editor-three.svg';
 
-import MagicRabbit from '../static/magic-rabbit.svg';
-import Sqreen from '../static/sqreen-mono-badge.svg';
+import MagicRabbit from '../public/magic-rabbit.svg';
+import Sqreen from '../public/sqreen-mono-badge.svg';
 
 const editors = [
   {
@@ -87,7 +87,7 @@ const Index = () => {
                     </Link>
                   )
                   : (
-                    <Link href="https://www.producthunt.com/upcoming/wrabit">
+                    <Link href="/login">
                       <a>Login</a>
                     </Link>
                   )
@@ -106,11 +106,9 @@ const Index = () => {
   
             <button className="mt-16 text-xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               {/* Start your writing journey */}
-              <Link href="https://www.producthunt.com/upcoming/wrabit">
-                <a>
-                  Get notified when we launch
-                </a>
-              </Link>
+              <a href="https://www.producthunt.com/upcoming/wrabit">
+                Get notified when we launch
+              </a>
             </button>
           </div>
         </div>
@@ -195,11 +193,9 @@ const Index = () => {
 
             <button className="ml-4 text-lg bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
               {/* Create your Wrabit account */}
-              <Link href="https://www.producthunt.com/upcoming/wrabit">
-                <a>
-                  Subscribe for updates
-                </a>
-              </Link>
+              <a href="https://www.producthunt.com/upcoming/wrabit">
+                Subscribe for updates
+              </a>
             </button>
           </div>
         </div>
