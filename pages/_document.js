@@ -9,7 +9,7 @@ process.on('uncaughtException', err => {
   Sentry.captureException(err)
 });
 
-class MyDocument extends Document {
+class WrabitDocument extends Document {
   static async getInitialProps (ctx) {
     const initialProps = await Document.getInitialProps(ctx);
     return {
@@ -41,4 +41,4 @@ class MyDocument extends Document {
   }
 }
 
-export default MyDocument;
+export default WrabitDocument;

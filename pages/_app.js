@@ -17,7 +17,7 @@ import RouterRender from '../components/RouterRenderer';
 
 const environment = createRelayEnvironment();
 
-class MyApp extends App {
+class WrabitWebapp extends App {
   componentDidCatch (error, errorInfo) {
     Sentry.withScope(scope => {
       Object.keys(errorInfo).forEach(key => {
@@ -49,4 +49,4 @@ class MyApp extends App {
   }
 }
 
-export default MyApp;
+export default WrabitWebapp;
