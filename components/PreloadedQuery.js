@@ -5,7 +5,6 @@ import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const withPreloadedQuery = (Component, { query, variables }) => {
-  console.log(Component, query, variables);
   return () => {
     const setPreloadedQuery = useStoreActions(actions => actions.pages.setPreloadedQuery);
 

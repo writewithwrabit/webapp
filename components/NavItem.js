@@ -1,3 +1,4 @@
+import { useTransition } from 'react';
 import { useRouter } from 'next/router';
 import { preloadQuery } from 'react-relay/hooks';
 import { useStoreActions } from 'easy-peasy';
@@ -8,6 +9,9 @@ const environment = createRelayEnvironment();
 const NavItem = ({ url, text, query, variables }) => {
   const router = useRouter();
   const setPreloadedQuery = useStoreActions(actions => actions.pages.setPreloadedQuery);
+  const [startTransition, isPending] = useTransition({
+    timeoutMs: 3000
+  });
 
   let classNames = 'nav-item pb-4';
 
@@ -35,7 +39,7 @@ const NavItem = ({ url, text, query, variables }) => {
     <span className={classNames}>
       <a
         className="px-8"
-        onClick={() => setTimeout(() => router.push(url), 500)}
+        onClick={() => startTransition(() => router.push(url))}
         onMouseDown={preloadRoute}
         onMouseEnter={preloadCode}
       >
