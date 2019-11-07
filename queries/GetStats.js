@@ -1,6 +1,6 @@
 import { graphql } from 'react-relay/hooks';
 
-const GET_STATS = graphql`
+const GetStats = graphql`
   query GetStatsQuery($global: Boolean!) {
     stats(global: $global) {
       wordsWritten
@@ -15,4 +15,4 @@ const GET_STATS = graphql`
   }
 `;
 
-export default GET_STATS;
+export default GetStats;

@@ -1,12 +1,17 @@
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { preloadQuery } from 'react-relay/hooks';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
-const withPreloadedQuery = (Component, { query, variables }) => {
+const withPreloadedQuery = (Component, { key, query, variables }) => {
   return () => {
     const setPreloadedQuery = useStoreActions(actions => actions.pages.setPreloadedQuery);
+    const { uid: userID } = useStoreState(state => state.user).firebaseData;
+
+    if (variables.userID) {
+      variables.userID = userID;
+    }
 
     const preloadedQuery = preloadQuery(
       environment,
@@ -14,7 +19,7 @@ const withPreloadedQuery = (Component, { query, variables }) => {
       variables,
     );
 
-    setPreloadedQuery({ preloadedQuery });
+    setPreloadedQuery({ key, preloadedQuery });
 
     return <Component />;
   }

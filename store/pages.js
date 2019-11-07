@@ -1,9 +1,13 @@
 import { action } from 'easy-peasy';
 
 const pages = {
-  preloadedQuery: null,
-  setPreloadedQuery: action((state, { preloadedQuery }) => {
-    state.preloadedQuery = preloadedQuery;
+  preloadedQueries: {
+    '/stats': null,
+    '/write': null,
+    '/entries': null,
+  },
+  setPreloadedQuery: action((state, { key, preloadedQuery }) => {
+    state.preloadedQueries[key] = preloadedQuery;
   }),
 };
 

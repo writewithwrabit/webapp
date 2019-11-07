@@ -1,24 +1,14 @@
-import { graphql, useLazyLoadQuery } from 'react-relay/hooks';
+import { usePreloadedQuery } from 'react-relay/hooks';
 import { useState, useRef, useEffect } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
-import { startOfDay } from 'date-fns';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-import styled from '@emotion/styled';
+import { startOfDay } from 'date-fns';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
 
-const GET_ENTRY = graphql`
-  query EditorQuery($userID: ID!, $date: String!) {
-    dailyEntry(userID: $userID, date: $date) {
-      id
-      content
-      wordCount
-      createdAt
-    }
-  }
-`;
+import GetEntry from '../queries/GetEntry';
 
 const selectableBlockTypes = {
   paragraph: 'Paragraph',
@@ -51,11 +41,10 @@ const emptyDocument = {
 const DEFAULT_NODE = 'paragraph';
 
 const Editor = () => {
-  const { uid: userID } = useStoreState(state => state.user).firebaseData;
+  const { '/write': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
+  const { dailyEntry } = usePreloadedQuery(GetEntry, preloadedQuery);
 
   const date = startOfDay(new Date());
-
-  const { dailyEntry } = useLazyLoadQuery(GET_ENTRY, { userID, date });
 
   let jsonEntry;
   try {

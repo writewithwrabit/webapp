@@ -1,9 +1,12 @@
 import { useState, useRef, Suspense } from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import { format } from 'date-fns'
+import { format } from 'date-fns';
+
+import GetEntries from '../queries/GetEntries';
 
 import withLayout from '../components/Layout';
+import withPreloadedQuery from '../components/PreloadedQuery';
 import PageHeader from '../components/PageHeader';
 import EntriesList from '../components/EntriesList';
 
@@ -133,4 +136,14 @@ const Entries = () => {
   );
 };
 
-export default withLayout(Entries);
+export default withLayout(
+  withPreloadedQuery(Entries, {
+    key: '/entries',
+    query: GetEntries,
+    variables: {
+      userID: 'REPLACE_ME',
+      startDate: null,
+      endDate: null,
+    }
+  }),
+);

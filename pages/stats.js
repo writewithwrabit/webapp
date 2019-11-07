@@ -35,6 +35,7 @@ const Stats = () => {
 
 export default withLayout(
   withPreloadedQuery(Stats, {
+    key: '/stats',
     query: GET_STATS,
     variables: {
       global: false,

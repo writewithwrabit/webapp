@@ -1,7 +1,7 @@
 import { usePreloadedQuery } from 'react-relay/hooks';
 import { useStoreState } from 'easy-peasy';
 
-import GET_STATS from '../queries/GetStats';
+import GetStats from '../queries/GetStats';
 
 import WordsWrittenPanel from './WordsWrittenPanel';
 import LongstStreakPanel from './LongestStreakPanel';
@@ -10,8 +10,8 @@ import PreferredDayOfWeekPanel from './PreferredDayOfWeekPanel';
 import LongestEntryPanel from './LongestEntryPanel';
 
 const StatsPanels = ({ statsPreloadedQuery }) => {
-  const preloadedQuery = useStoreState(state => state.pages.preloadedQuery);
-  const { stats } = usePreloadedQuery(GET_STATS, statsPreloadedQuery || preloadedQuery);
+  const { '/stats': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
+  const { stats } = usePreloadedQuery(GetStats, statsPreloadedQuery || preloadedQuery);
 
   const { wordsWritten, longestStreak, longestEntry, preferredDayOfWeek, preferredWritingTimes } = stats;
 

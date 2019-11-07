@@ -32,7 +32,7 @@ const NavItem = ({ url, text, query, variables }) => {
       variables,
     );
 
-    setPreloadedQuery({ preloadedQuery });
+    setPreloadedQuery({ key: url, preloadedQuery });
   };
 
   return (

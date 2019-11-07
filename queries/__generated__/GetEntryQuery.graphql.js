@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4f4044210028c628feb5c98b6a29e9f2
+ * @relayHash 875900dd200d91b0e66155f1e218bc10
  */
 
 /* eslint-disable */
@@ -9,39 +9,35 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type EntriesListQueryVariables = {|
+export type GetEntryQueryVariables = {|
   userID: string,
-  startDate?: ?string,
-  endDate?: ?string,
+  date: string,
 |};
-export type EntriesListQueryResponse = {|
-  +entriesByUserID: $ReadOnlyArray<{|
+export type GetEntryQueryResponse = {|
+  +dailyEntry: {|
     +id: string,
+    +content: string,
     +wordCount: number,
     +createdAt: string,
-    +content: string,
-    +goalHit: boolean,
-  |}>
+  |}
 |};
-export type EntriesListQuery = {|
-  variables: EntriesListQueryVariables,
-  response: EntriesListQueryResponse,
+export type GetEntryQuery = {|
+  variables: GetEntryQueryVariables,
+  response: GetEntryQueryResponse,
 |};
 */
 
 
 /*
-query EntriesListQuery(
+query GetEntryQuery(
   $userID: ID!
-  $startDate: String
-  $endDate: String
+  $date: String!
 ) {
-  entriesByUserID(userID: $userID, startDate: $startDate, endDate: $endDate) {
+  dailyEntry(userID: $userID, date: $date) {
     id
+    content
     wordCount
     createdAt
-    content
-    goalHit
   }
 }
 */
@@ -56,14 +52,8 @@ var v0 = [
   },
   {
     "kind": "LocalArgument",
-    "name": "startDate",
-    "type": "String",
-    "defaultValue": null
-  },
-  {
-    "kind": "LocalArgument",
-    "name": "endDate",
-    "type": "String",
+    "name": "date",
+    "type": "String!",
     "defaultValue": null
   }
 ],
@@ -71,18 +61,13 @@ v1 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "entriesByUserID",
+    "name": "dailyEntry",
     "storageKey": null,
     "args": [
       {
         "kind": "Variable",
-        "name": "endDate",
-        "variableName": "endDate"
-      },
-      {
-        "kind": "Variable",
-        "name": "startDate",
-        "variableName": "startDate"
+        "name": "date",
+        "variableName": "date"
       },
       {
         "kind": "Variable",
@@ -91,12 +76,19 @@ v1 = [
       }
     ],
     "concreteType": "Entry",
-    "plural": true,
+    "plural": false,
     "selections": [
       {
         "kind": "ScalarField",
         "alias": null,
         "name": "id",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "content",
         "args": null,
         "storageKey": null
       },
@@ -113,20 +105,6 @@ v1 = [
         "name": "createdAt",
         "args": null,
         "storageKey": null
-      },
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "content",
-        "args": null,
-        "storageKey": null
-      },
-      {
-        "kind": "ScalarField",
-        "alias": null,
-        "name": "goalHit",
-        "args": null,
-        "storageKey": null
       }
     ]
   }
@@ -135,7 +113,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "EntriesListQuery",
+    "name": "GetEntryQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -143,19 +121,19 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "EntriesListQuery",
+    "name": "GetEntryQuery",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
     "operationKind": "query",
-    "name": "EntriesListQuery",
+    "name": "GetEntryQuery",
     "id": null,
-    "text": "query EntriesListQuery(\n  $userID: ID!\n  $startDate: String\n  $endDate: String\n) {\n  entriesByUserID(userID: $userID, startDate: $startDate, endDate: $endDate) {\n    id\n    wordCount\n    createdAt\n    content\n    goalHit\n  }\n}\n",
+    "text": "query GetEntryQuery(\n  $userID: ID!\n  $date: String!\n) {\n  dailyEntry(userID: $userID, date: $date) {\n    id\n    content\n    wordCount\n    createdAt\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'de915b5b277c3cdb9263f1980574bfe5';
+(node/*: any*/).hash = '923404f4cd857ba73373cf0e394d3d9d';
 module.exports = node;
