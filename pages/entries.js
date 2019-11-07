@@ -2,13 +2,17 @@ import { useState, useRef, Suspense } from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { format } from 'date-fns';
+import dynamic from 'next/dynamic';
 
 import GetEntries from '../queries/GetEntries';
 
 import withLayout from '../components/Layout';
 import withPreloadedQuery from '../components/PreloadedQuery';
 import PageHeader from '../components/PageHeader';
-import EntriesList from '../components/EntriesList';
+const EntriesList = dynamic(
+  () => import('../components/EntriesList'),
+  { ssr: false }
+);
 
 const formatFriendly = date => format(new Date(date), 'MMMM d, yyyy');
 
