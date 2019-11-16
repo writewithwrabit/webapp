@@ -6,6 +6,7 @@ const protectedRoutes = [
   '/write',
   '/entries',
   '/stats',
+  '/settings',
 ];
 
 const Auth = ({ children }) => {

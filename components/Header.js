@@ -8,7 +8,7 @@ import GetStats from '../queries/GetStats';
 
 import Brand from '../public/logos/name.svg';
 import NavItem from './NavItem';
-import SettingsMenu from './SettingsMenu';
+import NavMenu from './NavMenu';
 
 const navItems = [
   {
@@ -87,7 +87,7 @@ const Header = () => {
           <span className="nav-item pb-4">
             {
               user.isAuthenticated
-                ? <SettingsMenu />
+                ? <NavMenu />
                 : (
                   <Link href="/login">
                     <a className="px-8">Login</a>

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 9f77dd25e66b38bf4c2fa5c7480e26eb
+ * @relayHash 4a91ab43b6acf5d84a6a5b380abaf8aa
  */
 
 /* eslint-disable */
@@ -15,6 +15,9 @@ export type userQueryVariables = {|
 export type userQueryResponse = {|
   +userByFirebaseID: {|
     +id: string,
+    +firstName: string,
+    +lastName: ?string,
+    +email: string,
     +wordGoal: number,
     +createdAt: string,
   |}
@@ -32,6 +35,9 @@ query userQuery(
 ) {
   userByFirebaseID(firebaseID: $firebaseID) {
     id
+    firstName
+    lastName
+    email
     wordGoal
     createdAt
   }
@@ -73,6 +79,27 @@ v1 = [
       {
         "kind": "ScalarField",
         "alias": null,
+        "name": "firstName",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "lastName",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "email",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
         "name": "wordGoal",
         "args": null,
         "storageKey": null
@@ -107,11 +134,11 @@ return {
     "operationKind": "query",
     "name": "userQuery",
     "id": null,
-    "text": "query userQuery(\n  $firebaseID: String!\n) {\n  userByFirebaseID(firebaseID: $firebaseID) {\n    id\n    wordGoal\n    createdAt\n  }\n}\n",
+    "text": "query userQuery(\n  $firebaseID: String!\n) {\n  userByFirebaseID(firebaseID: $firebaseID) {\n    id\n    firstName\n    lastName\n    email\n    wordGoal\n    createdAt\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '5b54fb2e665fe8c7347561afdbaea289';
+(node/*: any*/).hash = 'bf3bf6f8ffb9ae7733502e8032c3786a';
 module.exports = node;

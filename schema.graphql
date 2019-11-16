@@ -1,11 +1,12 @@
-type User {
+# source: http://localhost:8080/query
+# timestamp: Fri Nov 15 2019 17:50:04 GMT-0800 (PST)
+
+type Editor {
   id: ID!
-  firebaseID: String
-  stripeID: String
-  firstName: String!
-  lastName: String
-  email: String!
-  wordGoal: Int!
+  User: User!
+  showToolbar: Boolean!
+  showPrompt: Boolean!
+  showCounter: Boolean!
   createdAt: String!
   updatedAt: String!
 }
@@ -20,36 +21,56 @@ type Entry {
   updatedAt: String!
 }
 
-type Editor {
-  id: ID!
-  User: User!
+input ExistingEntry {
+  userID: String!
+  wordCount: Int!
+  content: String!
+  goalHit: Boolean!
+}
+
+type Mutation {
+  createUser(input: NewUser!): User!
+  updateUser(input: UpdatedUser!): User!
+  createEntry(input: NewEntry!): Entry!
+  updateEntry(id: ID!, input: ExistingEntry!, date: String!): Entry!
+  createEditor(input: NewEditor!): Editor!
+  createSubscription(input: NewSubscription!): String!
+}
+
+input NewEditor {
+  userId: String!
   showToolbar: Boolean!
   showPrompt: Boolean!
   showCounter: Boolean!
-  createdAt: String!
-  updatedAt: String!
 }
 
-type Streak {
+input NewEntry {
+  userId: String!
+  wordCount: Int!
+  content: String!
+}
+
+input NewSubscription {
+  stripeId: String!
+  tokenId: String!
+  subscriptionId: String!
+}
+
+input NewUser {
+  firstName: String!
+  lastName: String
+  email: String!
+}
+
+type Plan {
   id: ID!
-  User: User!
-  dayCount: Int!
-  lastEntryID: String!
-  createdAt: String!
-  updatedAt: String!
+  nickname: String!
+  product: String!
 }
 
 type PreferredWritingTime {
   hour: Int!
   count: Int!
-}
-
-type Stats {
-  wordsWritten: Int!
-  longestStreak: Int!
-  longestEntry: Int!
-  preferredWritingTimes: [PreferredWritingTime]!
-  preferredDayOfWeek: Int!
 }
 
 type Query {
@@ -62,10 +83,30 @@ type Query {
   stats(global: Boolean!): Stats!
 }
 
-input NewUser {
-  firstName: String!
-  lastName: String
-  email: String!
+type Stats {
+  wordsWritten: Int!
+  longestStreak: Int!
+  longestEntry: Int!
+  preferredWritingTimes: [PreferredWritingTime]!
+  preferredDayOfWeek: Int!
+}
+
+type Streak {
+  id: ID!
+  User: User!
+  dayCount: Int!
+  lastEntryID: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type StripeSubscription {
+  id: ID!
+  currentPeriodEnd: Int!
+  trialEnd: Int!
+  cancelAt: Int!
+  status: String!
+  plan: Plan!
 }
 
 input UpdatedUser {
@@ -78,37 +119,15 @@ input UpdatedUser {
   wordGoal: Int
 }
 
-input NewEntry {
-  userId: String!
-  wordCount: Int!
-  content: String!
-}
-
-input ExistingEntry {
-  userID: String!
-  wordCount: Int!
-  content: String!
-  goalHit: Boolean!
-}
-
-input NewEditor {
-  userId: String!
-  showToolbar: Boolean!
-  showPrompt: Boolean!
-  showCounter: Boolean!
-}
-
-input NewSubscription {
-  stripeId: String!
-  tokenId: String!
-  subscriptionId: String!
-}
-
-type Mutation {
-  createUser(input: NewUser!): User!
-  updateUser(input: UpdatedUser!): User!
-  createEntry(input: NewEntry!): Entry!
-  updateEntry(id: ID!, input: ExistingEntry!, date: String!): Entry!
-  createEditor(input: NewEditor!): Editor!
-  createSubscription(input: NewSubscription!): String!
+type User {
+  id: ID!
+  firebaseID: String
+  stripeID: String
+  firstName: String!
+  lastName: String
+  email: String!
+  wordGoal: Int!
+  createdAt: String!
+  updatedAt: String!
+  StripeSubscription: StripeSubscription
 }
