@@ -10,6 +10,9 @@ const GET_USER_BY_FIREBASE_ID = graphql`
   query userQuery($firebaseID: String!) {
     userByFirebaseID(firebaseID: $firebaseID) {
       id
+      firstName
+      lastName
+      email
       wordGoal
       createdAt
     }
@@ -18,8 +21,10 @@ const GET_USER_BY_FIREBASE_ID = graphql`
 
 const user = {
   id: null,
-  // Default word goal in case something goes wrong
   wordGoal: 1000,
+  firstName: null,
+  lastName: null,
+  email: null,
   isAuthenticated: false,
   firebaseData: null,
   signInUser: action((state, payload) => {
@@ -30,16 +35,23 @@ const user = {
     state.isAuthenticated = false;
     state.firebaseData = null;
   }),
-  setUserData: action((state, { id, wordGoal }) => {
+  setUserData: action((state, { id, wordGoal, firstName, lastName, email }) => {
     state.id = id;
     state.wordGoal = wordGoal;
+    state.firstName = firstName;
+    state.lastName = lastName;
+    state.email = email;
   }),
   getUserData: thunk(async (actions, { userID }) => {
-    const data = await fetchQuery(environment, GET_USER_BY_FIREBASE_ID, { firebaseID: userID }).toPromise();
+    const { userByFirebaseID } = await fetchQuery(environment, GET_USER_BY_FIREBASE_ID, { firebaseID: userID }).toPromise();
+    const { id, wordGoal, firstName, lastName, email } = userByFirebaseID;
 
     actions.setUserData({
-      id: data.userByFirebaseID.id,
-      wordGoal: data.userByFirebaseID.wordGoal,
+      id,
+      wordGoal,
+      firstName,
+      lastName,
+      email,
     })
   }),
   completeUserSignup,

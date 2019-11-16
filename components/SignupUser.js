@@ -41,7 +41,6 @@ const SignupUser = ({ setUser, setStage }) => {
         }
       },
       onCompleted: ({ createUser }) => {
-        console.log(createUser);
         setUser({
           id: createUser.id,
           stripeId: createUser.stripeID,

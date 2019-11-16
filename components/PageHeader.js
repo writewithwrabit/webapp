@@ -3,7 +3,7 @@ const PageHeader = ({
   subtitle
 }) => (
   <div className="mb-8">
-    <h1 className="text-4xl font-extrabold text-gray-800">
+    <h1 className="text-4xl font-extrabold text-gray-800 tracking-wide">
       {title}
     </h1>
 

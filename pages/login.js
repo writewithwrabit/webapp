@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useStoreState } from 'easy-peasy';
 
-import withLayout from '../components/Layout';
-
 const Login = () => {
   const router = useRouter();
   const user = useStoreState(state => state.user);
