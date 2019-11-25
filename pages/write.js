@@ -6,6 +6,7 @@ import GetEntry from '../queries/GetEntry';
 
 import withLayout from '../components/Layout';
 import withPreloadedQuery from '../components/PreloadedQuery';
+
 const Editor = dynamic(
   () => import('../components/Editor'),
   { ssr: false }
