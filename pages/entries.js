@@ -1,8 +1,14 @@
 import { useState, useRef, Suspense } from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import { format } from 'date-fns';
+import { format, startOfDay, endOfDay } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import dynamic from 'next/dynamic';
+import { preloadQuery } from 'react-relay/hooks';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+
+import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+const environment = createRelayEnvironment();
 
 import GetEntries from '../queries/GetEntries';
 
@@ -14,13 +20,40 @@ const EntriesList = dynamic(
   { ssr: false }
 );
 
+const timezoneOffsetHours = new Date().getTimezoneOffset();
+
 const formatFriendly = date => format(new Date(date), 'MMMM d, yyyy');
 
 const Entries = () => {
+  const setPreloadedQuery = useStoreActions(actions => actions.pages.setPreloadedQuery);
+  const user = useStoreState(state => state.user);
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [enteredToDate, setEnteredToDate] = useState(null);
   const [userEntries, setUserEntries] = useState([]);
+
+  // TODO: Make it impossible to get here without a user
+  if (user.firebaseData) {
+    // Update the preloaded query if the dates change
+    const preloadedQuery = preloadQuery(
+      environment,
+      GetEntries,
+      {
+        userID: user.firebaseData.uid,
+        startDate: startDate && format(
+          zonedTimeToUtc(startOfDay(startDate), timezoneOffsetHours),
+          'yyyy-MM-dd HH:mm:ss.000'
+        ),
+        endDate: endDate && format(
+          zonedTimeToUtc(endOfDay(endDate), timezoneOffsetHours),
+          'yyyy-MM-dd HH:mm:ss.000'
+        ),
+      },
+    );
+
+    setPreloadedQuery({ key: '/entries', preloadedQuery });
+  }
 
   const subtitle = 'View your entries as a never-ending list or by selection on the calendar.';
 
@@ -148,6 +181,6 @@ export default withLayout(
       userID: 'REPLACE_ME',
       startDate: null,
       endDate: null,
-    }
+    },
   }),
 );
