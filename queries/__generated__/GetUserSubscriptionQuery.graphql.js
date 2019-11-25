@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 6e0b810061e57d42b11a204456b97db0
+ * @relayHash 64cfc80752cd7a5362078190616acfb7
  */
 
 /* eslint-disable */
@@ -9,11 +9,12 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type SubscriptionSettingsQueryVariables = {|
+export type GetUserSubscriptionQueryVariables = {|
   firebaseID: string
 |};
-export type SubscriptionSettingsQueryResponse = {|
+export type GetUserSubscriptionQueryResponse = {|
   +userByFirebaseID: {|
+    +stripeID: ?string,
     +StripeSubscription: ?{|
       +id: string,
       +currentPeriodEnd: number,
@@ -25,21 +26,22 @@ export type SubscriptionSettingsQueryResponse = {|
         +nickname: string,
         +product: string,
       |},
-    |}
+    |},
   |}
 |};
-export type SubscriptionSettingsQuery = {|
-  variables: SubscriptionSettingsQueryVariables,
-  response: SubscriptionSettingsQueryResponse,
+export type GetUserSubscriptionQuery = {|
+  variables: GetUserSubscriptionQueryVariables,
+  response: GetUserSubscriptionQueryResponse,
 |};
 */
 
 
 /*
-query SubscriptionSettingsQuery(
+query GetUserSubscriptionQuery(
   $firebaseID: String!
 ) {
   userByFirebaseID(firebaseID: $firebaseID) {
+    stripeID
     StripeSubscription {
       id
       currentPeriodEnd
@@ -76,11 +78,18 @@ v1 = [
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "stripeID",
   "args": null,
   "storageKey": null
 },
 v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "StripeSubscription",
@@ -89,7 +98,7 @@ v3 = {
   "concreteType": "StripeSubscription",
   "plural": false,
   "selections": [
-    (v2/*: any*/),
+    (v3/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -127,7 +136,7 @@ v3 = {
       "concreteType": "Plan",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
+        (v3/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -150,7 +159,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "SubscriptionSettingsQuery",
+    "name": "GetUserSubscriptionQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -164,14 +173,15 @@ return {
         "concreteType": "User",
         "plural": false,
         "selections": [
-          (v3/*: any*/)
+          (v2/*: any*/),
+          (v4/*: any*/)
         ]
       }
     ]
   },
   "operation": {
     "kind": "Operation",
-    "name": "SubscriptionSettingsQuery",
+    "name": "GetUserSubscriptionQuery",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
@@ -183,21 +193,22 @@ return {
         "concreteType": "User",
         "plural": false,
         "selections": [
-          (v3/*: any*/),
-          (v2/*: any*/)
+          (v2/*: any*/),
+          (v4/*: any*/),
+          (v3/*: any*/)
         ]
       }
     ]
   },
   "params": {
     "operationKind": "query",
-    "name": "SubscriptionSettingsQuery",
+    "name": "GetUserSubscriptionQuery",
     "id": null,
-    "text": "query SubscriptionSettingsQuery(\n  $firebaseID: String!\n) {\n  userByFirebaseID(firebaseID: $firebaseID) {\n    StripeSubscription {\n      id\n      currentPeriodEnd\n      trialEnd\n      cancelAt\n      status\n      plan {\n        id\n        nickname\n        product\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query GetUserSubscriptionQuery(\n  $firebaseID: String!\n) {\n  userByFirebaseID(firebaseID: $firebaseID) {\n    stripeID\n    StripeSubscription {\n      id\n      currentPeriodEnd\n      trialEnd\n      cancelAt\n      status\n      plan {\n        id\n        nickname\n        product\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9ff8b82ebe396387a769f2f32ab2c617';
+(node/*: any*/).hash = '8bcd8a4ac4a3530c681bec42a0fc852c';
 module.exports = node;

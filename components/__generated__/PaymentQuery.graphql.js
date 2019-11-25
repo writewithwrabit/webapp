@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash c371391afc5d39aff4e37a86c2f7e7cc
+ * @relayHash ae3e0540358e15826a06cebb60d71a94
  */
 
 /* eslint-disable */
@@ -18,7 +18,18 @@ export type PaymentQueryVariables = {|
   input: NewSubscription
 |};
 export type PaymentQueryResponse = {|
-  +createSubscription: string
+  +createSubscription: {|
+    +id: string,
+    +currentPeriodEnd: number,
+    +trialEnd: number,
+    +cancelAt: number,
+    +status: string,
+    +plan: {|
+      +id: string,
+      +nickname: string,
+      +product: string,
+    |},
+  |}
 |};
 export type PaymentQuery = {|
   variables: PaymentQueryVariables,
@@ -31,7 +42,18 @@ export type PaymentQuery = {|
 mutation PaymentQuery(
   $input: NewSubscription!
 ) {
-  createSubscription(input: $input)
+  createSubscription(input: $input) {
+    id
+    currentPeriodEnd
+    trialEnd
+    cancelAt
+    status
+    plan {
+      id
+      nickname
+      product
+    }
+  }
 }
 */
 
@@ -44,11 +66,19 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = [
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v2 = [
   {
-    "kind": "ScalarField",
+    "kind": "LinkedField",
     "alias": null,
     "name": "createSubscription",
+    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -56,7 +86,65 @@ v1 = [
         "variableName": "input"
       }
     ],
-    "storageKey": null
+    "concreteType": "StripeSubscription",
+    "plural": false,
+    "selections": [
+      (v1/*: any*/),
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "currentPeriodEnd",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "trialEnd",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "cancelAt",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "status",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "plan",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "Plan",
+        "plural": false,
+        "selections": [
+          (v1/*: any*/),
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "nickname",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "product",
+            "args": null,
+            "storageKey": null
+          }
+        ]
+      }
+    ]
   }
 ];
 return {
@@ -67,23 +155,23 @@ return {
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "PaymentQuery",
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
     "name": "PaymentQuery",
     "id": null,
-    "text": "mutation PaymentQuery(\n  $input: NewSubscription!\n) {\n  createSubscription(input: $input)\n}\n",
+    "text": "mutation PaymentQuery(\n  $input: NewSubscription!\n) {\n  createSubscription(input: $input) {\n    id\n    currentPeriodEnd\n    trialEnd\n    cancelAt\n    status\n    plan {\n      id\n      nickname\n      product\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9a3cc14f0c733b8dd44e48890d91afe6';
+(node/*: any*/).hash = '5dde56a7dc51d9b523c42bb70d6d4c20';
 module.exports = node;

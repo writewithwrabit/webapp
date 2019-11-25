@@ -34,7 +34,8 @@ type Mutation {
   createEntry(input: NewEntry!): Entry!
   updateEntry(id: ID!, input: ExistingEntry!, date: String!): Entry!
   createEditor(input: NewEditor!): Editor!
-  createSubscription(input: NewSubscription!): String!
+  createSubscription(input: NewSubscription!): StripeSubscription!
+  cancelSubscription(id: ID!): String!
 }
 
 input NewEditor {
