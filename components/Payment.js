@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Elements, StripeProvider, CardElement, injectStripe } from 'react-stripe-elements';
 import { graphql, commitMutation } from 'react-relay';
-import { useStoreActions } from 'easy-peasy';
 import { FaSpinner } from 'react-icons/fa';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
@@ -10,13 +9,23 @@ const environment = createRelayEnvironment();
 
 const CREATE_SUBSCRIPTION = graphql`
   mutation PaymentQuery($input: NewSubscription!) {
-    createSubscription(input: $input)
+    createSubscription(input: $input) {
+      id
+      currentPeriodEnd
+      trialEnd
+      cancelAt
+      status
+      plan {
+        id
+        nickname
+        product
+      }
+    }
   }
 `;
 
-const CardForm = ({ stripe, user, plan }) => {
+const CardForm = ({ stripe, user, plan, onCompleted, trial = true }) => {
   const [loading, setLoading] = useState(false);
-  const completeUserSignup = useStoreActions(actions => actions.user.completeUserSignup);
 
   const handleSubmit = () => {
     if (stripe) {
@@ -34,9 +43,10 @@ const CardForm = ({ stripe, user, plan }) => {
                 stripeId: user.stripeId,
                 tokenId,
                 subscriptionId: plan,
+                trial: trial,
               }
             },
-            onCompleted: () => completeUserSignup({ user }),
+            onCompleted: ({ createSubscription }) => onCompleted({ user, subscription: createSubscription }),
           });
         })
         .catch((err) => {
@@ -76,10 +86,15 @@ const CardForm = ({ stripe, user, plan }) => {
 
 const InjectedCardForm = injectStripe(CardForm);
 
-const Payment = ({ user, plan }) => (
+const Payment = ({ user, plan, trial, onCompleted }) => (
   <StripeProvider apiKey="pk_test_Q6g8knGR5TznI9H5jYRccN1700q0gmHaiy">
     <Elements>
-      <InjectedCardForm user={user} plan={plan} />
+      <InjectedCardForm
+        user={user}
+        plan={plan}
+        trial={trial}
+        onCompleted={onCompleted}
+      />
     </Elements>
   </StripeProvider>
 );
