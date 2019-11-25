@@ -5,6 +5,8 @@ import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { startOfDay } from 'date-fns';
+import styled from '@emotion/styled';
+import ConfettiCanon from 'react-dom-confetti';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
 
@@ -40,6 +42,29 @@ const emptyDocument = {
 
 const DEFAULT_NODE = 'paragraph';
 
+const confettiConfig = {
+  angle: '225',
+  spread: '47',
+  startVelocity: '75',
+  elementCount: '100',
+  dragFriction: '0.10',
+  duration: '6000',
+  stagger: '2',
+  width: '10px',
+  height: '10px',
+  colors: [
+    '#fa557d',
+    '#ff1c53',
+    '#0a0a3c',
+    '#28e6cd',
+  ],
+};
+
+const StyledConfettiCanon = styled(ConfettiCanon)`
+  position: absolute !important;
+  right: 20px;
+`;
+
 const Editor = () => {
   const { '/write': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
   const { dailyEntry } = usePreloadedQuery(GetEntry, preloadedQuery);
@@ -63,10 +88,12 @@ const Editor = () => {
   
   const { wordGoal } = useStoreState(state => state.user);
   const [wordsWritten, setWordsWritten] = useState(0);
+  const [goalHit, setGoalHit] = useState(false);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
   const progressBarStyles = {
     width: `${percentWordsRemaining}%`,
   };
+
   let wordsWrittenClasses = 'text-sm flex-col text-right font-extrabold leading-tight hidden sm:flex';
   wordsWrittenClasses = wordsWritten > wordGoal
     ? `${wordsWrittenClasses} text-green-600 hover:text-green-400`
@@ -86,6 +113,7 @@ const Editor = () => {
     const wordCount = splitWords.length && !splitWords[0] ? 0 : splitWords.length;
 
     setWordsWritten(wordCount);
+    setGoalHit(wordCount > wordGoal)
     setValue(newValue);
 
     const content = JSON.stringify(newValue.toJSON(newValue));
@@ -94,7 +122,7 @@ const Editor = () => {
       ...dailyEntry,
       content,
       wordCount,
-      goalHit: wordCount > wordGoal,
+      goalHit,
       date,
     });
   }
@@ -337,6 +365,7 @@ const Editor = () => {
 
         <div className="progress-bar sticky container mt-2 px-2">
           <div className="progress bg-gray-800 h-2 max-w-full rounded-lg" style={progressBarStyles}></div>
+          <StyledConfettiCanon active={goalHit} config={confettiConfig} />
         </div>
 
         <SlateEditor
