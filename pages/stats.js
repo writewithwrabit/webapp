@@ -7,6 +7,7 @@ import withLayout from '../components/Layout';
 import withPreloadedQuery from '../components/PreloadedQuery';
 import PageHeader from '../components/PageHeader';
 import StatsSelector from '../components/StatsSelector';
+import StatsPanelsFallback from '../components/StatsPanelsFallback';
 const StatsPanels = dynamic(
   () => import('../components/StatsPanels'),
   { ssr: false }
@@ -26,7 +27,7 @@ const Stats = () => {
         setPreloadedQuery(preloadedQuery);
       }} />
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<StatsPanelsFallback />}>
         <StatsPanels selected={selected} statsPreloadedQuery={preloadedQuery} />
       </Suspense>
     </div>

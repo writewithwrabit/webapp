@@ -6,14 +6,14 @@ import GetEntry from '../queries/GetEntry';
 
 import withLayout from '../components/Layout';
 import withPreloadedQuery from '../components/PreloadedQuery';
-
+import EditorFallback from '../components/EditorFallback';
 const Editor = dynamic(
   () => import('../components/Editor'),
   { ssr: false }
 );
 
 const Write = () => (
-  <Suspense fallback={<div>Loading...</div>}>
+  <Suspense fallback={<EditorFallback />}>
     <Editor />
   </Suspense>
 );
