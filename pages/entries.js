@@ -15,6 +15,8 @@ import GetEntries from '../queries/GetEntries';
 import withLayout from '../components/Layout';
 import withPreloadedQuery from '../components/PreloadedQuery';
 import PageHeader from '../components/PageHeader';
+import EntriesListFallback from '../components/EntriesListFallback';
+
 const EntriesList = dynamic(
   () => import('../components/EntriesList'),
   { ssr: false }
@@ -165,7 +167,7 @@ const Entries = () => {
           </div>
         </div>
 
-        <Suspense fallback={<div>Loading entries...</div>}>
+        <Suspense fallback={<EntriesListFallback />}>
           <EntriesList startDate={startDate} endDate={endDate} setUserEntries={setUserEntries} />
         </Suspense>
       </div>
