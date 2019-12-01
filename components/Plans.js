@@ -70,7 +70,7 @@ const Plans = ({ setPlan, plan, user }) => {
 
           {
             plan === 'yearly'
-              ? <Payment user={user} plan="plan_FtuSSAndZnWxET" />
+              ? <Payment user={user} plan="plan_FtuSSAndZnWxET" onCompleted={completeUserSignup} />
               : (
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
