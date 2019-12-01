@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash ae3e0540358e15826a06cebb60d71a94
+ * @relayHash ebab3e90881f23a8d91d1a34a1030b4e
  */
 
 /* eslint-disable */
@@ -13,6 +13,7 @@ export type NewSubscription = {|
   stripeId: string,
   tokenId: string,
   subscriptionId: string,
+  trial: boolean,
 |};
 export type PaymentQueryVariables = {|
   input: NewSubscription
