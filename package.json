@@ -50,6 +50,6 @@
     "graphql-cli": "3.0.14",
     "postcss-easy-import": "3.0.0",
     "relay-compiler": "7.0.0",
-    "tailwindcss": "1.0.5"
+    "tailwindcss": "1.1.4"
   }
 }
