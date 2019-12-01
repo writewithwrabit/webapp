@@ -8,8 +8,8 @@ import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const UPDATE_USER = graphql`
-  mutation completeUserSignupQuery($input: UpdatedUser!) {
-    updateUser(input: $input) {
+  mutation completeUserSignupQuery($input: SignedUpUser!) {
+    completeUserSignup(input: $input) {
       id
       firebaseID
     }

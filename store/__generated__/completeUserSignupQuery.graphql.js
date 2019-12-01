@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2e8b2c0592327b332c8b9ddf2eacbb4c
+ * @relayHash 7e18a370239ea3282b87adc625e534a6
  */
 
 /* eslint-disable */
@@ -9,20 +9,15 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type UpdatedUser = {|
+export type SignedUpUser = {|
   id: string,
-  firebaseID?: ?string,
-  stripeID?: ?string,
-  firstName?: ?string,
-  lastName?: ?string,
-  email?: ?string,
-  wordGoal?: ?number,
+  firebaseID: string,
 |};
 export type completeUserSignupQueryVariables = {|
-  input: UpdatedUser
+  input: SignedUpUser
 |};
 export type completeUserSignupQueryResponse = {|
-  +updateUser: {|
+  +completeUserSignup: {|
     +id: string,
     +firebaseID: ?string,
   |}
@@ -36,9 +31,9 @@ export type completeUserSignupQuery = {|
 
 /*
 mutation completeUserSignupQuery(
-  $input: UpdatedUser!
+  $input: SignedUpUser!
 ) {
-  updateUser(input: $input) {
+  completeUserSignup(input: $input) {
     id
     firebaseID
   }
@@ -50,7 +45,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",
-    "type": "UpdatedUser!",
+    "type": "SignedUpUser!",
     "defaultValue": null
   }
 ],
@@ -58,7 +53,7 @@ v1 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "updateUser",
+    "name": "completeUserSignup",
     "storageKey": null,
     "args": [
       {
@@ -107,11 +102,11 @@ return {
     "operationKind": "mutation",
     "name": "completeUserSignupQuery",
     "id": null,
-    "text": "mutation completeUserSignupQuery(\n  $input: UpdatedUser!\n) {\n  updateUser(input: $input) {\n    id\n    firebaseID\n  }\n}\n",
+    "text": "mutation completeUserSignupQuery(\n  $input: SignedUpUser!\n) {\n  completeUserSignup(input: $input) {\n    id\n    firebaseID\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'dfbc755b302abb07c197624b877e869a';
+(node/*: any*/).hash = 'eb940fc91f91580f89b35f51d5d36ba7';
 module.exports = node;

@@ -1,5 +1,5 @@
 # source: http://localhost:8080/query
-# timestamp: Fri Nov 15 2019 17:50:04 GMT-0800 (PST)
+# timestamp: Sat Nov 30 2019 20:12:25 GMT-0800 (PST)
 
 type Editor {
   id: ID!
@@ -31,6 +31,7 @@ input ExistingEntry {
 type Mutation {
   createUser(input: NewUser!): User!
   updateUser(input: UpdatedUser!): User!
+  completeUserSignup(input: SignedUpUser!): User!
   createEntry(input: NewEntry!): Entry!
   updateEntry(id: ID!, input: ExistingEntry!, date: String!): Entry!
   createEditor(input: NewEditor!): Editor!
@@ -55,6 +56,7 @@ input NewSubscription {
   stripeId: String!
   tokenId: String!
   subscriptionId: String!
+  trial: Boolean!
 }
 
 input NewUser {
@@ -82,6 +84,11 @@ type Query {
   entriesByUserID(userID: ID!, startDate: String, endDate: String): [Entry!]!
   dailyEntry(userID: ID!, date: String!): Entry!
   stats(global: Boolean!): Stats!
+}
+
+input SignedUpUser {
+  id: ID!
+  firebaseID: String!
 }
 
 type Stats {
