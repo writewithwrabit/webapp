@@ -10,11 +10,13 @@ const daysOfTheWeek = {
   6: 'Saturday',
 };
 
-const PreferredDayOfWeekPanel = ({ preferredDayOfWeek }) => {
+const PreferredDayOfWeekPanel = ({ preferredDayOfWeek, hasWritten }) => {
+  const displayText = hasWritten ? daysOfTheWeek[preferredDayOfWeek] : 'no entries found';
+
   const data = (
     <div className="flex flex-col">
       <span className="text-5xl">🗓️</span>
-      <span>{daysOfTheWeek[preferredDayOfWeek]}</span>
+      <span>{displayText}</span>
     </div>
   );
 

@@ -50,12 +50,13 @@ const findTimeOfDay = ({ hour }) => {
   return 'not enough data';
 }
 
-const PreferredWritingTimePanel = ({ preferredWritingTimes }) => {
+const PreferredWritingTimePanel = ({ preferredWritingTimes, hasWritten }) => {
   const localPreferredWritingTimes = transformWritingTimesToLocal(preferredWritingTimes);
   const preferredWritingTimeOfDay = findTimeOfDay(localPreferredWritingTimes[0]);
+  const data = hasWritten ? preferredWritingTimeOfDay : 'no entries found';
 
   return (
-    <StatsPanel text="preferred writing time" data={preferredWritingTimeOfDay} />
+    <StatsPanel text="preferred writing time" data={data} />
   );
 }
 

@@ -14,6 +14,7 @@ const StatsPanels = ({ statsPreloadedQuery }) => {
   const { stats } = usePreloadedQuery(GetStats, statsPreloadedQuery || preloadedQuery);
 
   const { wordsWritten, longestStreak, longestEntry, preferredDayOfWeek, preferredWritingTimes } = stats;
+  const hasWritten = longestEntry > 0;
 
   return (
     <div className="flex flex-wrap">
@@ -21,9 +22,9 @@ const StatsPanels = ({ statsPreloadedQuery }) => {
 
       <LongstStreakPanel longestStreak={longestStreak} />
 
-      <PreferredWritingTimePanel preferredWritingTimes={preferredWritingTimes} />
+      <PreferredWritingTimePanel preferredWritingTimes={preferredWritingTimes} hasWritten={hasWritten} />
 
-      <PreferredDayOfWeekPanel preferredDayOfWeek={preferredDayOfWeek} />
+      <PreferredDayOfWeekPanel preferredDayOfWeek={preferredDayOfWeek} hasWritten={hasWritten} />
 
       <LongestEntryPanel longestEntry={longestEntry} />
     </div>

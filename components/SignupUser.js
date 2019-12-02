@@ -195,7 +195,7 @@ const SignupUser = ({ setUser, setStage }) => {
           <p className="text-center text-sm">
             Already have an account?&nbsp;
             <Link href="/login">
-              <a className="text-primary hover:text-primary-dark">
+              <a>
                 Login
               </a>
             </Link>
