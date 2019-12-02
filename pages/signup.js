@@ -17,7 +17,7 @@ const Signup = () => {
   const Component = stageComponent[stage];
 
   return (
-    <div>
+    <div className="text-gray-800">
       <Head>
         {/* You must import the Stripe.js library from Stripe for compliance reasons */}
         <script src="https://js.stripe.com/v3/"></script>
