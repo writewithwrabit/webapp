@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { graphql, commitMutation } from 'react-relay';
+import styled from '@emotion/styled';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
-
 const environment = createRelayEnvironment();
 
 const CREATE_USER = graphql`
@@ -14,6 +14,15 @@ const CREATE_USER = graphql`
     }
   }
 `;
+
+import Brand from '../public/logos/name.svg';
+
+const Logo = styled.a`
+  & svg {
+    width: 60%;
+  }
+`;
+
 
 const SignupUser = ({ setUser, setStage }) => {
   const [email, setEmail] = useState('');
@@ -58,23 +67,27 @@ const SignupUser = ({ setUser, setStage }) => {
   return (
     <div className="flex justify-center p-4 pt-16">
       <div className="mr-20 max-w-md px-20 hidden md:block">
-        <div className="text-5xl font-extrabold pb-8">
-          wrabit
+        <div className="pb-8">
+          <Link href="/">
+            <Logo>
+              <Brand />
+            </Logo>
+          </Link>
         </div>
 
         <div className="text-sm">
           <div className="pb-5">
-            <p className="font-bold pb-2 -ml-6">✍️ Build your habit</p>
+            <p className="font-bold pb-2 -ml-6 text-secondary">✍️ Build your habit</p>
             <p>Build your writing habit by one day at a time. Set a daily goal and work your way up to it.</p>
           </div>
 
           <div className="pb-5">
-            <p className="font-bold pb-2 -ml-6">🧠 Support mental health</p>
+            <p className="font-bold pb-2 -ml-6 text-secondary">🧠 Support mental health</p>
             <p>For every 7 day streak you maintain, we donate a dollar to mental health research.</p>
           </div>
 
           <div className="pb-5">
-            <p className="font-bold pb-2 -ml-6">🗓️ Free for 30 days</p>
+            <p className="font-bold pb-2 -ml-6 text-secondary">🗓️ Free for 30 days</p>
             <p>See if you like us, risk free. After 30 days, subscribe monthly for the price of a coffee.</p>
           </div>
         </div>
@@ -168,7 +181,7 @@ const SignupUser = ({ setUser, setStage }) => {
 
             <div className="flex items-center justify-center">
               <button
-                className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-primary w-full hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
                 onClick={event => handleSubmit(event)}
               >
@@ -182,7 +195,9 @@ const SignupUser = ({ setUser, setStage }) => {
           <p className="text-center text-sm">
             Already have an account?&nbsp;
             <Link href="/login">
-              <a>Login</a>
+              <a className="text-primary hover:text-primary-dark">
+                Login
+              </a>
             </Link>
           </p>
         </div>

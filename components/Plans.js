@@ -1,14 +1,28 @@
 import { useStoreActions } from 'easy-peasy';
+import Link from 'next/link';
+import styled from '@emotion/styled';
 
 import Payment from './Payment';
+import Brand from '../public/logos/name.svg';
+
+const Logo = styled.a`
+  & svg {
+    margin: auto;
+    width: 60%;
+  }
+`;
 
 const Plans = ({ setPlan, plan, user }) => {
   const completeUserSignup = useStoreActions(actions => actions.user.completeUserSignup);
 
   return (
-    <div className="flex flex-col items-center pt-16">
-      <div className="text-center pb-6 text-5xl font-extrabold">
-        wrabit
+    <div className="flex flex-col items-center pt-16 text-gray-800">
+      <div className="pb-6">
+        <Link href="/">
+            <Logo>
+              <Brand />
+            </Logo>
+          </Link>
       </div>
 
       <div className="text-center mb-10 w-1/4">
@@ -17,13 +31,9 @@ const Plans = ({ setPlan, plan, user }) => {
 
       <div className="flex justify-center p-4 text-center w-4/5">
         <div className="w-full max-w-md mr-6 bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col justify-between items-center">
-          <div className="text-3xl">
-            Monthly Subscription
-          </div>
-
           <div className="my-6">
-            <div className="font-extrabold text-6xl">$6.99</div>
-            <div className="text-gray-600">per month</div>
+            <div className="font-extrabold text-6xl text-secondary">$6.99</div>
+            <div className="text-gray-600 block uppercase tracking-wide text-xs font-bold">per month</div>
           </div>
 
           <ul>
@@ -37,7 +47,7 @@ const Plans = ({ setPlan, plan, user }) => {
               ? <Payment user={user} plan="plan_FsvZtUpz9xw0Tx" onCompleted={completeUserSignup} />
               : (
                 <button
-                  className="text-blue-500 hover:text-blue-700 font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
+                  className="text-primary hover:text-primary-dark font-bold p-4 mt-6 rounded border-primary border-2 hover:border-primary-dark focus:outline-none focus:shadow-outline w-full"
                   type="button"
                   onClick={() => setPlan('monthly')}
                 >
@@ -48,17 +58,13 @@ const Plans = ({ setPlan, plan, user }) => {
         </div>
 
         <div className="w-full max-w-md ml-6 bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col justify-between items-center relative">
-          <div className="mx-auto rounded-full bg-blue-500 text-white absolute top-0 -mt-4 text-sm py-2 px-4">
+          <div className="mx-auto rounded-full bg-primary text-white absolute top-0 -mt-4 text-sm py-2 px-4">
             28% cheaper
           </div>
 
-          <div className="text-3xl">
-            Yearly Subscription
-          </div>
-
           <div className="my-6">
-            <div className="font-extrabold text-6xl">$4.99</div>
-            <div className="text-gray-600">per month</div>
+            <div className="font-extrabold text-6xl  text-secondary">$4.99</div>
+            <div className="text-gray-600 block uppercase tracking-wide text-xs font-bold">per month</div>
           </div>
 
           <ul>
@@ -73,7 +79,7 @@ const Plans = ({ setPlan, plan, user }) => {
               ? <Payment user={user} plan="plan_FtuSSAndZnWxET" onCompleted={completeUserSignup} />
               : (
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 mt-6 rounded border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
+                  className="bg-primary hover:bg-primary-dark text-white font-bold p-4 mt-6 rounded border-primary border-2 hover:border-primary-dark focus:outline-none focus:shadow-outline w-full"
                   type="button"
                   onClick={() => setPlan('yearly')}
                 >

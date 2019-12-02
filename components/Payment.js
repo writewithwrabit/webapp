@@ -70,7 +70,7 @@ const CardForm = ({ stripe, user, plan, onCompleted, trial = true }) => {
       </form>
   
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 rounded-b border-blue-500 border-2 hover:border-blue-700 focus:outline-none focus:shadow-outline w-full"
+        className="bg-primary hover:bg-primary-dark text-white font-bold p-4 rounded-b border-primary border-2 hover:border-primary-dark focus:outline-none focus:shadow-outline w-full"
         type="button"
         onClick={handleSubmit}
       >

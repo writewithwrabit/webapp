@@ -3,6 +3,16 @@ import firebase from '../firebase';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useStoreState } from 'easy-peasy';
+import styled from '@emotion/styled';
+
+import Brand from '../public/logos/name.svg';
+
+const Logo = styled.a`
+  & svg {
+    margin: auto;
+    width: 60%;
+  }
+`;
 
 const Login = () => {
   const router = useRouter();
@@ -27,9 +37,13 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center pt-16">
-      <div className="pb-10 text-5xl font-extrabold">
-        wrabit
+    <div className="flex flex-col justify-center items-center pt-16 text-gray-800">
+      <div className="pb-10">
+        <Link href="/">
+          <Logo>
+            <Brand />
+          </Logo>
+        </Link>
       </div>
 
       <div className="w-full max-w-md bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -69,17 +83,17 @@ const Login = () => {
           </div>
 
           <div className="flex items-center md:justify-between justify-center">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
+            <button className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
               Login
             </button>
 
-            <a className="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800 hidden md:block" href="#">
+            <a className="inline-block align-baseline text-sm text-primary hover:text-primary-dark hidden md:block" href="#">
               Forgot your password?
             </a>
           </div>
 
           <div className="text-center mt-3 md:hidden">
-            <a className="text-sm text-blue-500 hover:text-blue-800" href="#">
+            <a className="text-sm text-primary hover:text-primary-dark" href="#">
               Forgot your password?
             </a>
           </div>
@@ -90,7 +104,9 @@ const Login = () => {
       <p className="text-center text-sm">
         Don't have an account?&nbsp;
         <Link href="/signup">
-          <a>Sign Up</a>
+          <a className="text-primary hover:text-primary-dark">
+            Sign Up
+          </a>
         </Link>
       </p>
     </div>
