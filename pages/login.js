@@ -87,13 +87,13 @@ const Login = () => {
               Login
             </button>
 
-            <a className="inline-block align-baseline text-sm text-primary hover:text-primary-dark hidden md:block" href="#">
+            <a className="inline-block align-baseline text-sm hidden md:block" href="#">
               Forgot your password?
             </a>
           </div>
 
           <div className="text-center mt-3 md:hidden">
-            <a className="text-sm text-primary hover:text-primary-dark" href="#">
+            <a className="text-sm" href="#">
               Forgot your password?
             </a>
           </div>
@@ -104,7 +104,7 @@ const Login = () => {
       <p className="text-center text-sm">
         Don't have an account?&nbsp;
         <Link href="/signup">
-          <a className="text-primary hover:text-primary-dark">
+          <a>
             Sign Up
           </a>
         </Link>

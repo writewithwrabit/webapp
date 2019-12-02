@@ -13,11 +13,11 @@ body.popup-open {
 }
 
 a { 
-  @apply text-blue-500;
+  @apply text-primary;
 }
 
 a:hover {
-  @apply text-gray-800;
+  @apply text-primary-dark;
 }
 
 .nav a:hover {
