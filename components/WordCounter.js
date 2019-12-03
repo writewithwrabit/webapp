@@ -1,8 +1,14 @@
 import { useState } from 'react';
+import styled from '@emotion/styled';
+
+const StyledDiv = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const WordCounter = ({ wordsWritten, wordGoal, goalHit }) => {
   const storedState = localStorage.getItem('wCountType');
-  console.log(storedState);
   const [countType, setCountType] = useState(storedState || 'up');
 
   let classes = 'text-sm flex-col text-right font-extrabold leading-tight hidden sm:flex';
@@ -32,13 +38,13 @@ const WordCounter = ({ wordsWritten, wordGoal, goalHit }) => {
   );
 
   return (
-    <div className={classes} style={{ transition: 'color 0.2s'}} onClick={handleCounterToggle}>
+    <StyledDiv className={classes} style={{ transition: 'color 0.2s'}} onClick={handleCounterToggle}>
       {
         goalHit
           ? <span className="text-2xl">🎉</span>
           : <DisplayCount />
       }
-    </div>
+    </StyledDiv>
   );
 }
 
