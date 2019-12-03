@@ -9,6 +9,7 @@ import styled from '@emotion/styled';
 import ConfettiCanon from 'react-dom-confetti';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
+import WordCounter from './WordCounter';
 
 import GetEntry from '../queries/GetEntry';
 
@@ -93,11 +94,6 @@ const Editor = () => {
   const progressBarStyles = {
     width: `${percentWordsRemaining}%`,
   };
-
-  let wordsWrittenClasses = 'text-sm flex-col text-right font-extrabold leading-tight hidden sm:flex';
-  wordsWrittenClasses = wordsWritten > wordGoal
-    ? `${wordsWrittenClasses} text-green-600 hover:text-green-400`
-    : `${wordsWrittenClasses} hover:text-white`;
 
   const [blockSelectorState, setBlockSelectorState] = useState(false);
   const blockSelectorStyles = {
@@ -353,14 +349,7 @@ const Editor = () => {
             </span>
           </div>
 
-          <div className={wordsWrittenClasses} style={{ transition: 'color 0.2s'}}>
-            <span>
-              {wordsWritten}
-            </span>
-            <span>
-              words
-            </span>
-          </div>
+          <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
         </div>
 
         <div className="progress-bar sticky container mt-2 px-2">
