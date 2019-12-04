@@ -3,8 +3,8 @@ import { graphql, commitMutation } from 'react-relay';
 
 import firebase from '../firebase';
 import throttle from 'lodash/throttle';
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 
+import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const UPDATE_ENTRY = graphql`
@@ -36,7 +36,7 @@ const throttledSaveEntry = throttle(async (actions, payload) => {
     onCompleted: ({ updatedEntry }) => actions.savedEntry(updatedEntry),
     onError: error => {} /* Mutation errored */,
   });
-}, 10000);
+}, 2000);
 
 const editor = {
   entry: {},

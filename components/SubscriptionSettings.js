@@ -28,7 +28,7 @@ const CancelSubscriptionButton = ({ subscription, setSubscription }) => {
 
   return (
     <button
-      className={`${buttonClasses} bg-transparent hover:bg-red-500 text-red-700 hover:text-white border-red-500 hover:border-transparent`}
+      className={`${buttonClasses} bg-transparent hover:bg-secondary text-secondary hover:text-white border-secondary hover:border-transparent`}
       onClick={cancelSubscription}
     >
       Cancel
