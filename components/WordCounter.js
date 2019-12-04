@@ -40,8 +40,8 @@ const WordCounter = ({ wordsWritten, wordGoal, goalHit }) => {
   return (
     <StyledDiv className={classes} style={{ transition: 'color 0.2s'}} onClick={handleCounterToggle}>
       {
-        goalHit
-          ? <span className="text-2xl">🎉</span>
+        goalHit && countType === 'down'
+          ? <span className="text-2xl pb-1">🎉</span>
           : <DisplayCount />
       }
     </StyledDiv>
