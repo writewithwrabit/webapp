@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 875900dd200d91b0e66155f1e218bc10
+ * @relayHash bf593fe90c59e4e741b37777e3658e22
  */
 
 /* eslint-disable */
@@ -19,6 +19,7 @@ export type GetEntryQueryResponse = {|
     +content: string,
     +wordCount: number,
     +createdAt: string,
+    +goalHit: boolean,
   |}
 |};
 export type GetEntryQuery = {|
@@ -38,6 +39,7 @@ query GetEntryQuery(
     content
     wordCount
     createdAt
+    goalHit
   }
 }
 */
@@ -105,6 +107,13 @@ v1 = [
         "name": "createdAt",
         "args": null,
         "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "goalHit",
+        "args": null,
+        "storageKey": null
       }
     ]
   }
@@ -129,11 +138,11 @@ return {
     "operationKind": "query",
     "name": "GetEntryQuery",
     "id": null,
-    "text": "query GetEntryQuery(\n  $userID: ID!\n  $date: String!\n) {\n  dailyEntry(userID: $userID, date: $date) {\n    id\n    content\n    wordCount\n    createdAt\n  }\n}\n",
+    "text": "query GetEntryQuery(\n  $userID: ID!\n  $date: String!\n) {\n  dailyEntry(userID: $userID, date: $date) {\n    id\n    content\n    wordCount\n    createdAt\n    goalHit\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '923404f4cd857ba73373cf0e394d3d9d';
+(node/*: any*/).hash = '353aaf07d132009b7e7555267d55a826';
 module.exports = node;
