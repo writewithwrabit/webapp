@@ -1,4 +1,4 @@
-import { usePreloadedQuery } from 'react-relay/hooks';
+import { usePreloadedQuery, useLazyLoadQuery } from 'react-relay/hooks';
 import { useState, useRef, useEffect } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
@@ -12,6 +12,7 @@ import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from '
 import WordCounter from './WordCounter';
 
 import GetEntry from '../queries/GetEntry';
+import GetWordGoal from '../queries/GetWordGoal';
 
 const selectableBlockTypes = {
   paragraph: 'Paragraph',
@@ -87,7 +88,8 @@ const Editor = () => {
 
   const [value, setValue] = useState(initialValue); 
   
-  const { wordGoal } = useStoreState(state => state.user);
+  const { firebaseData } = useStoreState(state => state.user);
+  const { wordGoal } = useLazyLoadQuery(GetWordGoal, { userID: firebaseData.uid });
   const [wordsWritten, setWordsWritten] = useState(0);
   const [goalHit, setGoalHit] = useState(false);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);

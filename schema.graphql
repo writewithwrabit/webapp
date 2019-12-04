@@ -1,5 +1,5 @@
 # source: http://localhost:8080/query
-# timestamp: Sat Nov 30 2019 20:12:25 GMT-0800 (PST)
+# timestamp: Tue Dec 03 2019 17:17:24 GMT-0800 (PST)
 
 type Editor {
   id: ID!
@@ -84,6 +84,7 @@ type Query {
   entriesByUserID(userID: ID!, startDate: String, endDate: String): [Entry!]!
   dailyEntry(userID: ID!, date: String!): Entry!
   stats(global: Boolean!): Stats!
+  wordGoal(userID: ID!): Int!
 }
 
 input SignedUpUser {
