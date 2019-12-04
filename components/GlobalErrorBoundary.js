@@ -25,7 +25,7 @@ const errorFaces = [
 ];
 
 const StyledDiv = styled.div`
-  min-height: calc(100vh - 60px);
+  min-height: ${props => props.withLayout ? 'calc(100vh - 60px)' : '100vh'};
 `;
 
 class ErrorBoundary extends React.Component {
@@ -46,7 +46,7 @@ class ErrorBoundary extends React.Component {
 
     if (this.state.error) {
       return (
-        <StyledDiv className="flex flex-col justify-center items-center text-xl">
+        <StyledDiv className="flex flex-col justify-center items-center text-xl" withLayout={this.props.withLayout}>
           <img className="w-1/5 " src={src} alt={alt} />
 
           <div>

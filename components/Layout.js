@@ -1,5 +1,5 @@
 import Header from './Header';
-import LayoutErrorBoundary from './LayoutErrorBoundary';
+import LayoutErrorBoundary from './GlobalErrorBoundary';
 
 const withLayout = Page => {
   return () => (
@@ -7,7 +7,7 @@ const withLayout = Page => {
       <Header />
 
       <div className="container mx-auto h-full">
-        <LayoutErrorBoundary>
+        <LayoutErrorBoundary withLayout>
           <Page />
         </LayoutErrorBoundary>
       </div>
