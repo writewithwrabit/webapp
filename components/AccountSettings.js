@@ -3,6 +3,7 @@ import { useStoreState } from 'easy-peasy';
 
 import SectionPanel from '../components/SectionPanel';
 import SubscriptionSettings from '../components/SubscriptionSettings';
+import WordGoalSettings from './WordGoalSettings';
 
 const AccountSettings = () => {
   const storedUser = useStoreState(state => state.user);
@@ -65,20 +66,7 @@ const AccountSettings = () => {
           Writing
         </h2>
   
-        <div className="mb-4">
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="writing-goal">
-            Writing Goal
-          </label>
-  
-          <input
-            className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
-            id="writing-goal"
-            type="text"
-            placeholder="Writing Goal"
-            value={storedUser.wordGoal || ''}
-            readOnly
-          />
-        </div>
+        <WordGoalSettings />
       </SectionPanel>
   
       <SectionPanel>
