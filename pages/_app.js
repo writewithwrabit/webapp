@@ -12,6 +12,7 @@ Sentry.init({dsn: "https://b0529282a1ce4acd9e9f47d2e631ccd4@sentry.io/1511977"})
 
 import '../style.css';
 
+import GlobalLoader from '../components/GlobalLoader';
 const Auth = dynamic(() => import('../components/Auth'), { ssr: false });
 
 const environment = createRelayEnvironment();
@@ -36,7 +37,7 @@ class WrabitWebapp extends App {
         <RelayEnvironmentProvider environment={environment}>
           <StoreProvider store={store}>
             <Auth>
-              <Suspense fallback={'Loading...'}>
+              <Suspense fallback={<GlobalLoader />}>
                 <Component {...pageProps} />
               </Suspense>
             </Auth>

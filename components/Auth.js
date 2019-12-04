@@ -1,32 +1,8 @@
 import { useRouter } from 'next/router';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import styled from '@emotion/styled';
 import firebase from '../firebase';
 
-import Brand from '../public/logos/icon.svg';
-
-const Logo = styled.div`
-  @keyframes colorChange {
-    0% {
-      fill: #FA557D;
-    }
-    50% {
-      fill: #0A0A3C;
-    }
-    100% {
-      fill: #FA557D;
-    }
-  }
-
-  & svg {
-    margin: auto;
-    width: 60%;
-  }
-
-  & path {
-    animation: colorChange 3s infinite;
-  }
-`;
+import GlobalLoader from './GlobalLoader';
 
 const protectedRoutes = [
   '/write',
@@ -58,13 +34,7 @@ const Auth = ({ children }) => {
   // Display empty loading state while checking
   // that the user is properly authenticated
   if (!user.isAuthenticated && protectedRoutes.includes(router.pathname)) {
-    return (
-      <div className="flex justify-center items-center h-screen w-screen">
-        <Logo>
-          <Brand />
-        </Logo>
-      </div>
-    );
+    return <GlobalLoader />;
   }
 
   return (
