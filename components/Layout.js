@@ -1,12 +1,15 @@
 import Header from './Header';
+import LayoutErrorBoundary from './GlobalErrorBoundary';
 
 const withLayout = Page => {
   return () => (
-    <div>
+    <div className="min-h-screen">
       <Header />
 
-      <div className="container mx-auto min-h-screen">
-        <Page />
+      <div className="container mx-auto h-full">
+        <LayoutErrorBoundary withLayout>
+          <Page />
+        </LayoutErrorBoundary>
       </div>
     </div>
   );
