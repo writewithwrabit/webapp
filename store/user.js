@@ -20,6 +20,7 @@ const GET_USER_BY_FIREBASE_ID = graphql`
 `;
 
 const user = {
+  // TODO: Make this a userID --> relay is complaining about IDs
   id: null,
   wordGoal: 1000,
   firstName: null,

@@ -1,4 +1,4 @@
-import { usePreloadedQuery } from 'react-relay/hooks';
+import { usePreloadedQuery, useLazyLoadQuery } from 'react-relay/hooks';
 import { useState, useRef, useEffect } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
@@ -9,8 +9,10 @@ import styled from '@emotion/styled';
 import ConfettiCanon from 'react-dom-confetti';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
+import WordCounter from './WordCounter';
 
 import GetEntry from '../queries/GetEntry';
+import GetWordGoal from '../queries/GetWordGoal';
 
 const selectableBlockTypes = {
   paragraph: 'Paragraph',
@@ -86,18 +88,14 @@ const Editor = () => {
 
   const [value, setValue] = useState(initialValue); 
   
-  const { wordGoal } = useStoreState(state => state.user);
+  const { firebaseData } = useStoreState(state => state.user);
+  const { wordGoal } = useLazyLoadQuery(GetWordGoal, { userID: firebaseData.uid });
   const [wordsWritten, setWordsWritten] = useState(0);
   const [goalHit, setGoalHit] = useState(false);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
   const progressBarStyles = {
     width: `${percentWordsRemaining}%`,
   };
-
-  let wordsWrittenClasses = 'text-sm flex-col text-right font-extrabold leading-tight hidden sm:flex';
-  wordsWrittenClasses = wordsWritten > wordGoal
-    ? `${wordsWrittenClasses} text-green-600 hover:text-green-400`
-    : `${wordsWrittenClasses} hover:text-white`;
 
   const [blockSelectorState, setBlockSelectorState] = useState(false);
   const blockSelectorStyles = {
@@ -353,14 +351,7 @@ const Editor = () => {
             </span>
           </div>
 
-          <div className={wordsWrittenClasses} style={{ transition: 'color 0.2s'}}>
-            <span>
-              {wordsWritten}
-            </span>
-            <span>
-              words
-            </span>
-          </div>
+          <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
         </div>
 
         <div className="progress-bar sticky container mt-2 px-2">
