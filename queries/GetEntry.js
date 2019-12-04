@@ -7,6 +7,7 @@ const GetEntry = graphql`
       content
       wordCount
       createdAt
+      goalHit
     }
   }
 `;

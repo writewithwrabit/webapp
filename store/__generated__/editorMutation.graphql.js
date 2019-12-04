@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b95e0adc8792a63bd37b246d22843263
+ * @relayHash f54b22eb0fdfcbce39d0f29b9cfe4df6
  */
 
 /* eslint-disable */
@@ -25,6 +25,7 @@ export type editorMutationResponse = {|
     +id: string,
     +content: string,
     +wordCount: number,
+    +goalHit: boolean,
   |}
 |};
 export type editorMutation = {|
@@ -44,6 +45,7 @@ mutation editorMutation(
     id
     content
     wordCount
+    goalHit
   }
 }
 */
@@ -115,6 +117,13 @@ v1 = [
         "name": "wordCount",
         "args": null,
         "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "goalHit",
+        "args": null,
+        "storageKey": null
       }
     ]
   }
@@ -139,11 +148,11 @@ return {
     "operationKind": "mutation",
     "name": "editorMutation",
     "id": null,
-    "text": "mutation editorMutation(\n  $id: ID!\n  $input: ExistingEntry!\n  $date: String!\n) {\n  updateEntry(id: $id, input: $input, date: $date) {\n    id\n    content\n    wordCount\n  }\n}\n",
+    "text": "mutation editorMutation(\n  $id: ID!\n  $input: ExistingEntry!\n  $date: String!\n) {\n  updateEntry(id: $id, input: $input, date: $date) {\n    id\n    content\n    wordCount\n    goalHit\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'df1ef378946883b41f4342f481fdebd0';
+(node/*: any*/).hash = '0652b58f4986850ca6f923fa65b14eab';
 module.exports = node;

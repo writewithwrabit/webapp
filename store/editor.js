@@ -13,6 +13,7 @@ const UPDATE_ENTRY = graphql`
       id
       content
       wordCount
+      goalHit
     }
   }
 `;
