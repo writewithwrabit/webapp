@@ -22,7 +22,9 @@ class WrabitDocument extends Document {
       <Html>
         <Head>
           {/* TODO: Figure out SSR/next-seo doesn't work */}
-          <meta property="og:url" content="https://writewithwrabit.com" className="next-head"/>
+          <meta name="twitter:card" content="summary" className="next-head" />
+          <meta name="twitter:creator" content="@amorriscode" className="next-head" />
+          <meta property="og:url" content="https://writewithwrabit.com" className="next-head" />
           <meta property="og:type" content="website" className="next-head" />
           <meta property="og:title" content="Write With Wrabit" className="next-head" />
           <meta property="og:description" content="Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relationship with yourself." className="next-head" />
