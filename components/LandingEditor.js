@@ -1,18 +1,12 @@
-import { usePreloadedQuery, useLazyLoadQuery } from 'react-relay/hooks';
 import { useState, useRef, useEffect } from 'react';
 import { Editor as SlateEditor } from 'slate-react';
 import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
-import { useStoreActions, useStoreState } from 'easy-peasy';
-import { startOfDay } from 'date-fns';
 import styled from '@emotion/styled';
 import ConfettiCanon from 'react-dom-confetti';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
 import WordCounter from './WordCounter';
-
-import GetEntry from '../queries/GetEntry';
-import GetWordGoal from '../queries/GetWordGoal';
 
 const selectableBlockTypes = {
   paragraph: 'Paragraph',
@@ -68,30 +62,16 @@ const StyledConfettiCanon = styled(ConfettiCanon)`
 `;
 
 const Editor = () => {
-  const { '/write': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
-  const { dailyEntry } = usePreloadedQuery(GetEntry, preloadedQuery);
-
-  const date = startOfDay(new Date());
-
-  let jsonEntry;
-  try {
-    jsonEntry = JSON.parse(dailyEntry.content)
-  } catch(e) {
-    // TODO: Handle this error?
-  }
-
-  const saveEntry = useStoreActions(actions => actions.editor.saveEntry);
-  const initialValue = Value.fromJSON(jsonEntry || emptyDocument);
+  const initialValue = Value.fromJSON(emptyDocument);
 
   let editor = null;
   const blockSelectorDropdown = useRef();
 
   const [value, setValue] = useState(initialValue); 
   
-  const { firebaseData } = useStoreState(state => state.user);
-  const { wordGoal } = useLazyLoadQuery(GetWordGoal, { userID: firebaseData.uid });
+  const wordGoal = 50;
   const [wordsWritten, setWordsWritten] = useState(0);
-  const [goalHit, setGoalHit] = useState(dailyEntry.goalHit);
+  const [goalHit, setGoalHit] = useState(false);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
   const progressBarStyles = {
     width: `${percentWordsRemaining}%`,
@@ -113,16 +93,6 @@ const Editor = () => {
     setWordsWritten(wordCount);
     setGoalHit(wordCount > wordGoal)
     setValue(newValue);
-
-    const content = JSON.stringify(newValue.toJSON(newValue));
-
-    saveEntry({
-      ...dailyEntry,
-      content,
-      wordCount,
-      goalHit,
-      date,
-    });
   }
 
   const hasMark = type => value.activeMarks.some(mark => mark.type === type);
@@ -311,7 +281,7 @@ const Editor = () => {
     <div className="min-h-screen">
       <div className="shadow-xl">
         <div className="bg-secondary p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
-          <div >
+          <div>
             <span className="hidden lg:inline-block mx-4 inline-block relative">
               <span className="block-selector">
                 <div
@@ -354,7 +324,7 @@ const Editor = () => {
           <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
         </div>
 
-        <div className="progress-bar sticky p-2">
+        <div className="progress-bar bg-offwhite sticky p-2">
           <div className="progress bg-gray-800 h-2 max-w-full rounded-lg" style={progressBarStyles}></div>
           <StyledConfettiCanon active={goalHit} config={confettiConfig} />
         </div>
