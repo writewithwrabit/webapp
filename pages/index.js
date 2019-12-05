@@ -23,6 +23,52 @@ const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
 const heroTextTranslation = (x, y) => `translate3d(${x / 20}px, ${y / 20}px, 0)`;
 const sectionTextTranslation = (x, y) => `translate3d(${x / 20}px, ${y / 20}px, 0)`;
 const sectionHeaderTranslation = (x, y) => `translate3d(${x * 0.2}px, ${y * 0.2}px, 0)`;
+const key1Translation = (x, y) => `translate3d(${x * 0.8}px, ${y * 0.8}px, 0)`;
+
+// Styled Components
+const SectionOne = styled.section`
+  margin-top: 112px;
+  height: 500px;
+`;
+
+const GrowingCard = styled.div`
+  transition: transform 0.6s;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
+const AnimatedLink = styled.a`
+  position: relative;
+  text-decoration: none;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 4px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    visibility: hidden;
+    transition: all 0.4s ease-in-out 0s;
+  }
+
+  &:hover:before {
+    visibility: visible;
+    width: 100%;
+  }
+`;
+
+const Key1 = styled.div`
+  bottom: 45vh;
+  right: -20vw;
+  font-size: 6rem;
+`;
 
 const LandingPage = () => {
   useGoogleAnalytics();
@@ -44,43 +90,6 @@ const LandingPage = () => {
       config: { mass: 10, tension: 550, friction: 140 },
     }
   });
-  const SectionOne = styled.section`
-    margin-top: 112px;
-    height: 500px;
-  `;
-
-  const GrowingCard = styled.div`
-    transition: transform 0.6s;
-    &:hover {
-      transform: scale(1.2);
-    }
-  `;
-
-  const AnimatedLink = styled.a`
-    position: relative;
-    text-decoration: none;
-
-    &:hover {
-      color: #fff;
-    }
- 
-    &:before {
-      content: "";
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: #fff;
-      visibility: hidden;
-      transition: all 0.4s ease-in-out 0s;
-    }
-
-    &:hover:before {
-      visibility: visible;
-      width: 100%;
-    }
-  `;
 
   // React Spring scroll function
   const handleScroll = useCallback(() => {
@@ -197,7 +206,7 @@ const LandingPage = () => {
         </animated.div>
       </SectionOne>
 
-      <section className="px-24 pb-24 text-4xl">
+      <section className="px-24 pb-24 text-4xl text-gray-800">
         <p>
           Wrabit helps you build a daily writing habit, one small step at a time.
         </p>
@@ -224,8 +233,8 @@ const LandingPage = () => {
 
       <section className="text-2xl px-10 lg:p-0 flex flex-col justify-center items-center min-h-screen">
         <div className="p-10 mb-20 lg:w-3/5 text-center">
-          <p className="font-bold mb-4 text-4xl">
-            Building new habits is difficult.
+          <p className="font-bold mb-4 text-4xl text-gray-800">
+            Building habits is difficult.
           </p>
 
           <p>
@@ -281,7 +290,42 @@ const LandingPage = () => {
         </p>
       </section>
 
-      <footer className="container mx-auto relative"></footer>
+      <section
+        className="container text-4xl lg:text-6xl text-primary text-center flex flex-col justify-center items-center min-h-screen bg-secondary relative lg:p-20"
+        onMouseMove={({ clientX: x, clientY: y }) => setParallaxProps({ xy: calc(x, y) })}
+      >
+        <p className="z-10">
+          We encrypt everything.
+        </p>
+
+        <p className="z-0">
+          You never have to worry about hiding your diary again.
+        </p>
+
+        {/* <animated.div style={{ transform: parallaxProps.xy.interpolate(key1Translation) }}> */}
+          <Key1 className="absolute" >🔒</Key1>
+        {/* </animated.div> */}
+      </section>
+
+      <section className="text-4xl lg:text-6xl text-white text-center flex flex-col justify-center items-center py-40">
+        <h2 className="relative text-secondary">
+          Build your habit today.
+        </h2>
+
+        <button className="cta mt-16 text-3xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          <Link href="/signup">
+            <a className="text-white">
+              Start your writing journey
+            </a>
+          </Link>
+        </button>
+      </section>
+
+      <footer className="bg-gray-200 p-40 flex justify-center items-center">
+        <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge">
+          <Sqreen className="sqreen" />
+        </a>
+      </footer>
     </>
   );
 }

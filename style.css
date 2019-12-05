@@ -24,7 +24,12 @@ a:hover {
   @apply cursor-pointer;
 }
 
-.nav .nav-item > a {
+.nav .nav-item > a,
+.cta > a {
+  @apply text-white;
+}
+
+.cta:hover > a {
   @apply text-white;
 }
 
