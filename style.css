@@ -20,11 +20,6 @@ a:hover {
   @apply text-primary-dark;
 }
 
-.nav a:hover {
-  @apply cursor-pointer;
-}
-
-.nav .nav-item > a,
 .cta > a {
   @apply text-white;
 }

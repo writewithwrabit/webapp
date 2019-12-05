@@ -2,9 +2,17 @@ import { useTransition } from 'react';
 import { useRouter } from 'next/router';
 import { preloadQuery } from 'react-relay/hooks';
 import { useStoreActions } from 'easy-peasy';
+import styled from '@emotion/styled';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
+
+const NavLink = styled.a`
+  color: #0A0A3C;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const NavItem = ({ url, text, query, variables }) => {
   const router = useRouter();
@@ -37,14 +45,14 @@ const NavItem = ({ url, text, query, variables }) => {
 
   return (
     <span className={classNames}>
-      <a
+      <NavLink
         className="px-8"
         onClick={() => startTransition(() => router.push(url))}
         onMouseDown={preloadRoute}
         onMouseEnter={preloadCode}
       >
         {text}
-      </a>
+      </NavLink>
     </span>
   )
 }

@@ -119,8 +119,8 @@ const LandingPage = () => {
     <>
       <NextSeo {...SEO} />
 
-      <header className="mx-auto relative px-4 md:px-20">
-        <nav id="nav" className="py-6 md:py-10 flex justify-between items-center">
+      <header className="relative px-4 lg:px-20">
+        <nav id="nav" className="py-6 lg:py-10 flex justify-between items-center">
           <LogoName className="w-24 md:w-32" />
 
           <div className="font-bold">
