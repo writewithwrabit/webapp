@@ -64,7 +64,7 @@ const AnimatedLink = styled.a`
   }
 `;
 
-const Key1 = styled.div`
+const Key = styled.div`
   bottom: 45vh;
   right: -20vw;
   font-size: 6rem;
@@ -291,9 +291,13 @@ const LandingPage = () => {
       </section>
 
       <section
-        className="container text-4xl lg:text-6xl text-primary text-center flex flex-col justify-center items-center min-h-screen bg-secondary relative lg:p-20"
+        className="container text-4xl lg:text-6xl text-primary text-center flex flex-col justify-center items-center min-h-screen bg-secondary relative p-10 lg:p-20"
         onMouseMove={({ clientX: x, clientY: y }) => setParallaxProps({ xy: calc(x, y) })}
       >
+        <p className="text-6xl lg:hidden mb-4">
+          🔒
+        </p>
+
         <p className="z-10">
           We encrypt everything.
         </p>
@@ -302,9 +306,7 @@ const LandingPage = () => {
           You never have to worry about hiding your diary again.
         </p>
 
-        {/* <animated.div style={{ transform: parallaxProps.xy.interpolate(key1Translation) }}> */}
-          <Key1 className="absolute" >🔒</Key1>
-        {/* </animated.div> */}
+        <Key className="absolute" >🔒</Key>
       </section>
 
       <section className="text-4xl lg:text-6xl text-white text-center flex flex-col justify-center items-center py-40">
