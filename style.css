@@ -28,21 +28,6 @@ a:hover {
   @apply text-white;
 }
 
-.nav .nav-item.active a,
-.nav .nav-item a:hover {
-  @apply text-primary;
-}
-
-.nav .nav-item.active a {
-  @apply font-bold;
-}
-
-.nav-item:hover,
-.nav-item.active {
-  @apply border-b-4;
-  @apply border-primary;
-}
-
 .editor blockquote {
   @apply border-l-4;
   @apply border-gray-800;

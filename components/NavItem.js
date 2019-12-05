@@ -7,10 +7,50 @@ import styled from '@emotion/styled';
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
-const NavLink = styled.a`
-  color: #0A0A3C;
-  &:hover {
-    cursor: pointer;
+const StyledNavItem = styled.span`
+  font-weight: bold;
+
+  &.active {
+    color: #FA557D;
+
+    a {
+      color: #FA557D;
+
+      &:before {
+        transform: scaleX(1);
+        visibility: visible;
+      }
+    }
+  }
+
+  a {
+    color: #0A0A3C;
+    position: relative;
+    text-decoration: none;
+  
+    &:hover {
+      cursor: pointer;
+      color: #FA557D;
+    }
+  
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      bottom: -15px;
+      left: 0;
+      background-color: #FA557D;
+      visibility: hidden;
+      transform: scaleX(0);
+      transition: all 0.3s ease-in-out 0s;
+    }
+  
+    &:hover:before {
+      visibility: visible;
+      width: 100%;
+      transform: scaleX(1);
+    }
   }
 `;
 
@@ -44,16 +84,16 @@ const NavItem = ({ url, text, query, variables }) => {
   };
 
   return (
-    <span className={classNames}>
-      <NavLink
+    <StyledNavItem className={classNames}>
+      <a
         className="px-8"
         onClick={() => startTransition(() => router.push(url))}
         onMouseDown={preloadRoute}
         onMouseEnter={preloadCode}
       >
         {text}
-      </NavLink>
-    </span>
+      </a>
+    </StyledNavItem>
   )
 }
 
