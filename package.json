@@ -6,6 +6,7 @@
   "author": "Anthony Morris",
   "license": "MIT",
   "dependencies": {
+    "@camwiegert/typical": "^0.1.1",
     "@emotion/core": "^10.0.21",
     "@emotion/styled": "^10.0.17",
     "@sentry/browser": "^5.5.0",
@@ -32,6 +33,7 @@
     "react-relay": "^0.0.0-experimental-a1a40b68",
     "react-spring": "^8.0.27",
     "react-stripe-elements": "^5.0.1",
+    "react-typical": "^0.1.3",
     "react-with-direction": "^1.3.0",
     "slate": "^0.47.4",
     "slate-plain-serializer": "^0.7.6",

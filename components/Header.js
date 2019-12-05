@@ -1,12 +1,11 @@
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
-import styled from '@emotion/styled';
 
 import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
 import GetStats from '../queries/GetStats';
 
-import Brand from '../public/logos/name.svg';
+import LogoName from '../public/logos/name.svg';
 import NavItem from './NavItem';
 import NavMenu from './NavMenu';
 
@@ -31,29 +30,17 @@ const navItems = [
   },
 ];
 
-const Logo = styled.a`
-  & svg {
-    width: 21%;
-  }
-
-  & path {
-    fill: white;
-  }
-`;
-  
 const Header = () => {
   useGoogleAnalytics();
 
   const user = useStoreState(state => state.user);
 
   return (
-    <div className="border-b-4 border-primary py-4 mb-4 bg-secondary">
-      <div className="container mx-auto nav flex text-white items-center">
+    <header className="py-6 lg:py-10 mb-4">
+      <div className="px-4 lg:px-20 nav flex text-secondary items-center">
         <div className="w-1/3">
           <Link href="/">
-            <Logo>
-              <Brand />
-            </Logo>
+            <LogoName className="w-24 md:w-32" />
           </Link>
         </div>
 
@@ -85,19 +72,11 @@ const Header = () => {
 
         <div className="w-1/3  text-right">
           <span className="nav-item pb-4">
-            {
-              user.isAuthenticated
-                ? <NavMenu />
-                : (
-                  <Link href="/login">
-                    <a className="px-8">Login</a>
-                  </Link>
-                )
-            }
+            <NavMenu />
           </span>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
