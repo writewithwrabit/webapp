@@ -32,7 +32,7 @@ const WordCounter = ({ wordsWritten, wordGoal, goalHit }) => {
         }
       </span>
       <span>
-        words {countType === 'down' && 'reamining'}
+        {(window.innerWidth >= 1024 || countType === 'up') && 'words'} {countType === 'down' && 'reamining'}
       </span>
     </>
   );
