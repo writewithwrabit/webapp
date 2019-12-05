@@ -2,7 +2,7 @@ import { action, thunk } from 'easy-peasy';
 import { graphql, commitMutation } from 'react-relay';
 
 import firebase from '../firebase';
-import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
@@ -18,7 +18,7 @@ const UPDATE_ENTRY = graphql`
   }
 `;
 
-const throttledSaveEntry = throttle(async (actions, payload) => {
+const debouncedSaveEntry = debounce(async (actions, payload) => {
   const { id, content, wordCount, userID, goalHit, date } = payload;
 
   commitMutation(environment, {
@@ -36,7 +36,7 @@ const throttledSaveEntry = throttle(async (actions, payload) => {
     onCompleted: ({ updatedEntry }) => actions.savedEntry(updatedEntry),
     onError: error => {} /* Mutation errored */,
   });
-}, 2000);
+}, 500);
 
 const editor = {
   entry: {},
@@ -49,7 +49,7 @@ const editor = {
   saveEntry: thunk((actions, payload) => {
     const { id, content, wordCount, goalHit, date } = payload;
     const { uid: userID } = firebase.auth().currentUser;
-    throttledSaveEntry(actions, { id, content, wordCount, userID, goalHit, date });
+    debouncedSaveEntry(actions, { id, content, wordCount, userID, goalHit, date });
   }),
 };
 

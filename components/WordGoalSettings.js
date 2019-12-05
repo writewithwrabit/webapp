@@ -9,7 +9,7 @@ const environment = createRelayEnvironment();
 
 import UpdateUser from '../queries/UpdateUser';
 
-const throttledUpdateUser = debounce(async ({ id, wordGoal }, wordGoalSaved) => {
+const debouncedUpdateUser = debounce(async ({ id, wordGoal }, wordGoalSaved) => {
   commitMutation(environment, {
     mutation: UpdateUser,
     variables: {
@@ -53,7 +53,7 @@ const WordGoalSettings = () => {
 
     setWordGoal(value);
 
-    throttledUpdateUser({
+    debouncedUpdateUser({
       id,
       wordGoal: parseInt(value),
     }, wordGoalSaved);
