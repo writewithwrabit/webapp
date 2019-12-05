@@ -24,6 +24,7 @@ class WrabitDocument extends Document {
           {/* TODO: Figure out SSR/next-seo doesn't work */}
           <meta name="twitter:card" content="summary" className="next-head" />
           <meta name="twitter:creator" content="@amorriscode" className="next-head" />
+          <meta name="twitter:image:src" content="https://writewithwrabit.com/og.png" className="next-head" />
           <meta property="og:url" content="https://writewithwrabit.com" className="next-head" />
           <meta property="og:type" content="website" className="next-head" />
           <meta property="og:title" content="Write With Wrabit" className="next-head" />
