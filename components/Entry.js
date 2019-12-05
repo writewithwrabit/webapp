@@ -16,7 +16,7 @@ const Entry = ({ entry }) => {
       || e.target.parentNode.classList.contains('entry-details')
       || e.target.parentNode.classList.contains('entry');
 
-    const editorClicked = e.target.classList.contains('editor') || e.target.parentNode.classList.contains('editor');
+    const editorClicked = e.target.classList.contains('editor') || e.target.parentNode.classList.contains('editor') || e.target.getAttribute('data-slate-string');
 
     // Open the popup if it isn't open and we click an entry
     // Close the popup if it is open and you click on something other than the editor
