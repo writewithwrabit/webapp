@@ -8,7 +8,7 @@ import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import { store } from '../store/store';
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 
-Sentry.init({dsn: "https://b0529282a1ce4acd9e9f47d2e631ccd4@sentry.io/1511977"});
+Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 import '../style.css';
 

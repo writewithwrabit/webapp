@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "name": "webapp",
+  "build": {
+    "env": {
+      "API_ENDPOINT": "@prod-api-endpoint",
+      "STRIPE_KEY": "@prod-stripe-key",
+      "SENTRY_DSN": "@prod-sentry-dsn"
+    }
+  }
+}

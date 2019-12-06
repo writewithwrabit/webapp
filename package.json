@@ -14,6 +14,7 @@
     "@zeit/next-css": "^1.0.1",
     "date-fns": "^2.0.0-beta.4",
     "date-fns-tz": "^1.0.7",
+    "dotenv": "^8.2.0",
     "easy-peasy": "3.2.3",
     "firebase": "^6.3.1",
     "graphql": "^14.4.2",
@@ -44,7 +45,9 @@
     "build": "next build",
     "start": "next start",
     "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --exclude '**/schema/**' --schema ./schema.graphql",
-    "schema": "graphql get-schema dev"
+    "schema": "graphql get-schema dev",
+    "deploy": "now --local-config=now.stage.json",
+    "deploy:prod": "now --local-config=now.prod.json --prod"
   },
   "devDependencies": {
     "autoprefixer": "9.6.1",

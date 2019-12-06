@@ -19,10 +19,10 @@ const Plans = ({ setPlan, plan, user }) => {
     <div className="flex flex-col items-center pt-16 text-gray-800">
       <div className="pb-6">
         <Link href="/">
-            <Logo>
-              <Brand />
-            </Logo>
-          </Link>
+          <Logo>
+            <Brand />
+          </Logo>
+        </Link>
       </div>
 
       <div className="text-center mb-10 w-1/4">
