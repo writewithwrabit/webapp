@@ -239,7 +239,7 @@ const LandingPage = () => {
             </animated.p>
           </div>
 
-        <animated.h2 className="w-full font-bold p-10 text-6xl text-primary text-center tracking-wide" style={{ transform: parallaxProps.xy.interpolate(sectionHeaderTranslation) }}>
+        <animated.h2 className="w-full font-bold px-0 py-10 lg:px-10 text-6xl text-primary text-center tracking-wide" style={{ transform: parallaxProps.xy.interpolate(sectionHeaderTranslation) }}>
           express yourself
         </animated.h2>
       </section>
