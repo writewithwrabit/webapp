@@ -27,13 +27,14 @@ const sectionHeaderTranslation = (x, y) => `translate3d(${x * 0.2}px, ${y * 0.2}
 // Styled Components
 const SectionOne = styled.section`
   margin-top: 112px;
-  height: 500px;
+  height: ${props => props.isMobile ? 250 : 500}px;
 `;
 
 const StyledPhone = styled.div`
   &.iphone-x {
     margin: auto;
     width: 300px;
+    height: 600px;
   }
 
   &.marvel-device.iphone-x .notch { 
@@ -178,7 +179,7 @@ const LandingPage = () => {
         </LandingAnimation>
       </Hero>
 
-      <SectionOne className="relative">
+      <SectionOne className="relative" isMobile={window.innerWidth < 1024}>
         <animated.div className="hidden lg:block absolute" style={editorProps} >
           <div className="marvel-device macbook">
             <div className="top-bar"></div>
