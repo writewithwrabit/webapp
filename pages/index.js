@@ -86,7 +86,6 @@ const LandingPage = () => {
 
   const user = useStoreState(state => state.user);
 
-  const friction = window.innerWidth < 768 ? 260 : 140;
   const [parallaxProps, setParallaxProps] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }));
   const Hero = styled.section`
     height: calc(100vh - 224px);
@@ -95,13 +94,11 @@ const LandingPage = () => {
     }
   `;
 
-  const [editorProps, setEditorProps] = useSpring(() => {
-    return {
-      top: window.scrollY / 2 * -1,
-      left: window.innerWidth / 2 - (window.innerWidth >= 1024 ? 520 : 187),
-      config: { mass: 40, tension: 550, friction },
-    }
-  });
+  const [editorProps, setEditorProps] = useSpring(() => ({
+    top: window.scrollY / 2 * -1,
+    left: window.innerWidth / 2 - (window.innerWidth >= 1024 ? 520 : 187),
+    config: { mass: 40, tension: 550, friction: 260 },
+  }));
 
   // React Spring scroll function
   const handleScroll = useCallback(() => {
