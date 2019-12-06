@@ -46,7 +46,7 @@
     "start": "next start",
     "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --exclude '**/schema/**' --schema ./schema.graphql",
     "schema": "graphql get-schema dev",
-    "deploy": "now --local-config=now.stage.json",
+    "deploy": "NODE_ENV=stage now --local-config=now.stage.json",
     "deploy:prod": "now --local-config=now.prod.json --prod"
   },
   "devDependencies": {
