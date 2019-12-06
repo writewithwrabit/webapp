@@ -31,6 +31,17 @@ const SectionOne = styled.section`
   height: 500px;
 `;
 
+const StyledPhone = styled.div`
+  &.iphone-x {
+    margin: auto;
+    width: 300px;
+  }
+
+  &.marvel-device.iphone-x .notch { 
+    left: 75px;
+  }
+`;
+
 const GrowingCard = styled.div`
   transition: transform 0.6s;
   &:hover {
@@ -75,6 +86,7 @@ const LandingPage = () => {
 
   const user = useStoreState(state => state.user);
 
+  const friction = window.innerWidth < 768 ? 260 : 140;
   const [parallaxProps, setParallaxProps] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }));
   const Hero = styled.section`
     height: calc(100vh - 224px);
@@ -86,8 +98,8 @@ const LandingPage = () => {
   const [editorProps, setEditorProps] = useSpring(() => {
     return {
       top: window.scrollY / 2 * -1,
-      left: window.innerWidth / 2 - (window.innerWidth >= 1024 ? 520 : 213),
-      config: { mass: 10, tension: 550, friction: 140 },
+      left: window.innerWidth / 2 - (window.innerWidth >= 1024 ? 520 : 187),
+      config: { mass: 40, tension: 550, friction },
     }
   });
 
@@ -102,7 +114,7 @@ const LandingPage = () => {
   }, []);
 
   const handleResize = useCallback(() => {
-    const widthModifier = window.innerWidth >= 1024 ? 520 : 213;
+    const widthModifier = window.innerWidth >= 1024 ? 520 : 187;
     setEditorProps({ left: window.innerWidth / 2 - widthModifier });
   }, []);
 
@@ -150,14 +162,15 @@ const LandingPage = () => {
       >
         <animated.div style={{ transform: parallaxProps.xy.interpolate(heroTextTranslation) }}>
           <Typical
-            className="typical text-white text-6xl"
+            className="typical text-white text-5xl lg:text-6xl"
             steps={[
-              'write yourself to', 1000,
+              'write yourself to ', 1000,
               'write yourself to health', 1500,
               'write yourself to happiness', 1500,
               'write yourself to calm', 1500,
               'write yourself to gratitude', 1500,
-              'write yourself to confidence', 1500,
+              // Hide confidence on mobile because it is too long
+              window.innerWidth >= 768 && 'write yourself to confidence', window.innerWidth >= 768 && 1500,
               'write yourself to clarity', 1500,
             ]}
             loop={Infinity}
@@ -173,15 +186,15 @@ const LandingPage = () => {
             <div className="camera"></div>
             <div className="screen">
               <div className="w-3/4 mx-auto mt-10">
-                <LandingEditor />
+                <LandingEditor placeholder={`Hope you're having a great day, time to write!`} />
               </div>
             </div>
             <div className="bottom-bar"></div>
           </div>
         </animated.div>
 
-        <animated.div className="block lg:hidden absolute" style={editorProps} >
-          <div className="marvel-device iphone-x">
+        <animated.div className="block lg:hidden absolute flex w-full" style={editorProps} >
+          <StyledPhone className="marvel-device iphone-x">
             <div className="notch">
               <div className="camera"></div>
               <div className="speaker"></div>
@@ -199,14 +212,14 @@ const LandingPage = () => {
             <div className="inner-shadow"></div>
             <div className="screen">
               <div className="mx-auto mt-10">
-                <LandingEditor />
+                <LandingEditor placeholder={`How are you feeling today?`} />
               </div>
             </div>
-          </div>
+          </StyledPhone>
         </animated.div>
       </SectionOne>
 
-      <section className="px-24 pb-24 text-4xl text-gray-800">
+      <section className="px-12 lg:px-24 pb-24 text-4xl text-gray-800">
         <p>
           Wrabit helps you build a daily writing habit, one small step at a time.
         </p>
@@ -217,22 +230,22 @@ const LandingPage = () => {
       </section>
 
       <section
-        className="text-2xl px-10 lg:p-0 flex flex-col justify-center items-center min-h-screen bg-secondary"
+        className="text-2xl p-10 lg:p-0 flex flex-col justify-center items-center min-h-screen bg-secondary"
         onMouseMove={({ clientX: x, clientY: y }) => setParallaxProps({ xy: calc(x, y) })}
       >
-          <div className="lg:w-1/3 lg:mx-5 mb-5 lg:mb-0 px-10 py-5 rounded shadow-md text-center">
+          <div className="lg:w-1/3 lg:mx-5 mb-5 lg:mb-0 lg:px-10 py-5 rounded shadow-md text-center">
             <animated.p className="text-white text-4xl" style={{ transform: parallaxProps.xy.interpolate(sectionTextTranslation) }}>
               Wrabit's simplistic editor stays out of your way and let's you focus on the writing. With nobody watching, you can proudly express your unedited self.
             </animated.p>
           </div>
 
-        <animated.h2 className="w-full font-bold mb-4 p-10 text-6xl text-primary text-center tracking-wide" style={{ transform: parallaxProps.xy.interpolate(sectionHeaderTranslation) }}>
+        <animated.h2 className="w-full font-bold px-0 py-10 lg:px-10 text-6xl text-primary text-center tracking-wide" style={{ transform: parallaxProps.xy.interpolate(sectionHeaderTranslation) }}>
           express yourself
         </animated.h2>
       </section>
 
       <section className="text-2xl px-10 lg:p-0 flex flex-col justify-center items-center min-h-screen">
-        <div className="p-10 mb-20 lg:w-3/5 text-center">
+        <div className="py-10 lg:p-10 mb-20 lg:w-3/5 text-center">
           <p className="font-bold mb-4 text-4xl text-gray-800">
             Building habits is difficult.
           </p>
@@ -246,7 +259,7 @@ const LandingPage = () => {
         <div className="w-full flex flex-col lg:flex-row justify-around">
           <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-1/5 text-center relative">
             <h2 className="text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-10 -ml-16">
-              Set Your Goal
+              Set Goal
             </h2>
 
             <p className="text-white">
@@ -266,7 +279,7 @@ const LandingPage = () => {
 
           <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-1/5 text-center relative">
             <h2 className="text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-10 -ml-16">
-              Build The Habit
+              Build Habit
             </h2>
 
             <p className="text-white">
@@ -276,7 +289,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className="text-2xl lg:text-3xl px-10 lg:px-48 flex flex-col justify-center items-end min-h-screen bg-primary">
+      <section className="text-2xl lg:text-3xl py-20 px-10 lg:px-48 flex flex-col justify-center items-end min-h-screen bg-primary">
         <h2 className="text-secondary font-bold text-4xl lg:text-6xl text-right mb-4">
           A platform for good.
         </h2>
@@ -306,10 +319,10 @@ const LandingPage = () => {
           You never have to worry about hiding your diary again.
         </p>
 
-        <Key className="absolute" >🔒</Key>
+        <Key className="absolute hidden lg:block">🔒</Key>
       </section>
 
-      <section className="text-4xl lg:text-6xl text-white text-center flex flex-col justify-center items-center py-40">
+      <section className="text-4xl px-10 lg:text-6xl text-white text-center flex flex-col justify-center items-center py-40">
         <h2 className="relative text-secondary">
           Build your habit today.
         </h2>
