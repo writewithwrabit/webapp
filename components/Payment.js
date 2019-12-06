@@ -87,7 +87,7 @@ const CardForm = ({ stripe, user, plan, onCompleted, trial = true }) => {
 const InjectedCardForm = injectStripe(CardForm);
 
 const Payment = ({ user, plan, trial, onCompleted }) => (
-  <StripeProvider apiKey="pk_test_Q6g8knGR5TznI9H5jYRccN1700q0gmHaiy">
+  <StripeProvider apiKey={process.env.STRIPE_KEY}>
     <Elements>
       <InjectedCardForm
         user={user}

@@ -40,11 +40,9 @@ const Login = () => {
     <div className="flex flex-col justify-center items-center pt-16 text-gray-800">
       <div className="pb-10">
         <Link href="/">
-          <a>
-            <Logo>
-              <Brand />
-            </Logo>
-          </a>
+          <Logo>
+            <Brand />
+          </Logo>
         </Link>
       </div>
 
