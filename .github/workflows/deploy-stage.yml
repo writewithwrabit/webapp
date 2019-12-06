@@ -26,4 +26,4 @@ jobs:
       - name: Deploying on Zeit
         run: yarn deploy --token $ZEIT_TOKEN
         env:
-          ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }} # Passing github's secret to the worker
+          ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }} # Passing github's secret to the worker`

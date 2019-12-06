@@ -3,7 +3,7 @@
   "name": "webapp",
   "build": {
     "env": {
-      "API_ENDPOINT": "https://wrabit-webapp.appspot.com",
+      "API_ENDPOINT": "@stage-api-endpoint",
       "STRIPE_KEY": "@stage-stripe-key",
       "SENTRY_DSN": "@stage-sentry-dsn"
     }
