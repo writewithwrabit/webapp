@@ -6,7 +6,7 @@ export default {
     url: 'https://writewithwrabit.com',
     site_name: 'Wrabit',
     images: [{
-      url: 'https://writewithwrabit.com/static/og.png',
+      url: 'https://writewithwrabit.com/og.png',
       alt: 'Write With Wrabit',
     }]
   },
