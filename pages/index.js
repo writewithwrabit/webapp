@@ -186,7 +186,7 @@ const LandingPage = () => {
             <div className="camera"></div>
             <div className="screen">
               <div className="w-3/4 mx-auto mt-10">
-                <LandingEditor />
+                <LandingEditor placeholder={`Hope you're having a great day, time to write!`} />
               </div>
             </div>
             <div className="bottom-bar"></div>
@@ -212,7 +212,7 @@ const LandingPage = () => {
             <div className="inner-shadow"></div>
             <div className="screen">
               <div className="mx-auto mt-10">
-                <LandingEditor />
+                <LandingEditor placeholder={`How are you feeling today?`} />
               </div>
             </div>
           </StyledPhone>

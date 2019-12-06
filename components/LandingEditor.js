@@ -61,7 +61,7 @@ const StyledConfettiCanon = styled(ConfettiCanon)`
   right: 20px;
 `;
 
-const Editor = () => {
+const LandingEditor = ({ placeholder }) => {
   const initialValue = Value.fromJSON(emptyDocument);
 
   let editor = null;
@@ -332,7 +332,7 @@ const Editor = () => {
         <SlateEditor
           ref={(editorRef) => editor = editorRef}
           className="editor bg-offwhite px-8 pb-8 pt-4 min-h-screen"
-          placeholder={`Hope you're having a great day, time to write!`}
+          placeholder={placeholder}
           value={value}
           onChange={handleChange}
           autoFocus={true}
@@ -345,4 +345,4 @@ const Editor = () => {
   );
 };
 
-export default Editor;
+export default LandingEditor;
