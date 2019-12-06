@@ -20,7 +20,7 @@ import Sqreen from '../public/sqreen-mono-badge.svg';
 
 // React Spring caclulations
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
-const heroTextTranslation = (x, y) => `translate3d(0, ${y / 20}px, 0)`;
+const heroTextTranslation = (x, y) => `translate3d(${x / 20}px, ${y / 20}px, 0)`;
 const sectionTextTranslation = (x, y) => `translate3d(${x / 20}px, ${y / 20}px, 0)`;
 const sectionHeaderTranslation = (x, y) => `translate3d(${x * 0.2}px, ${y * 0.2}px, 0)`;
 const key1Translation = (x, y) => `translate3d(${x * 0.8}px, ${y * 0.8}px, 0)`;
