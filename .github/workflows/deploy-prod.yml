@@ -24,6 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1 # Get last commit pushed
       - name: Deploying on Zeit
-        run: yarn deploy:production --token $ZEIT_TOKEN
+        run: yarn deploy:prod --token $ZEIT_TOKEN
         env:
           ZEIT_TOKEN: ${{ secrets.ZEIT_TOKEN }} # Passing github's secret to the worker
