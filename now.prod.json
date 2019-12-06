@@ -3,6 +3,7 @@
   "name": "webapp",
   "build": {
     "env": {
+      "FIREBASE_ENV": "prod",
       "API_ENDPOINT": "@prod-api-endpoint",
       "STRIPE_KEY": "@prod-stripe-key",
       "SENTRY_DSN": "@prod-sentry-dsn"
