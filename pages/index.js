@@ -99,7 +99,7 @@ const LandingPage = () => {
     return {
       top: window.scrollY / 2 * -1,
       left: window.innerWidth / 2 - (window.innerWidth >= 1024 ? 520 : 187),
-      config: { mass: 10, tension: 550, friction },
+      config: { mass: 40, tension: 550, friction },
     }
   });
 
