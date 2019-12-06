@@ -5,7 +5,7 @@ const LandingAnimation = ({ element = 'div', className, children, style }) => {
   const isMobile = window.innerWidth <= 640;
   const NormElement = createElement(element, { className }, children);
   const AnimatedElement = animated[element];
-  console.log(Element, style);
+
   return (
     <>
       {

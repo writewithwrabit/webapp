@@ -17,7 +17,9 @@ const NoEntriesFound = () => (
     </div>
 
     <div>
-      <Link href="/write">Get started today!</Link>
+      <Link href="/write">
+        <a>Get started today!</a>
+      </Link>
     </div>
   </div>
 );
