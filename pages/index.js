@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
 import { FaLongArrowAltRight } from 'react-icons/fa';
@@ -13,28 +13,28 @@ import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
 import SEO from '../seo.config.js';
 
-import LogoIcon from '../public/logos/icon.svg';
 import LogoName from '../public/logos/name.svg';
-import LandingEditor from '../components/LandingEditor';
 import Sqreen from '../public/sqreen-mono-badge.svg';
+import LandingAnimation from '../components/LandingAnimation';
+import LandingEditor from '../components/LandingEditor';
 
 // React Spring caclulations
 const calc = (x, y) => [x - window.innerWidth / 2, y - window.innerHeight / 2];
 const heroTextTranslation = (x, y) => `translate3d(${x / 20}px, ${y / 20}px, 0)`;
 const sectionTextTranslation = (x, y) => `translate3d(${x / 20}px, ${y / 20}px, 0)`;
 const sectionHeaderTranslation = (x, y) => `translate3d(${x * 0.2}px, ${y * 0.2}px, 0)`;
-const key1Translation = (x, y) => `translate3d(${x * 0.8}px, ${y * 0.8}px, 0)`;
 
 // Styled Components
 const SectionOne = styled.section`
   margin-top: 112px;
-  height: 500px;
+  height: ${props => props.isMobile ? 250 : 500}px;
 `;
 
 const StyledPhone = styled.div`
   &.iphone-x {
     margin: auto;
     width: 300px;
+    height: 600px;
   }
 
   &.marvel-device.iphone-x .notch { 
@@ -86,7 +86,6 @@ const LandingPage = () => {
 
   const user = useStoreState(state => state.user);
 
-  const friction = window.innerWidth < 768 ? 260 : 140;
   const [parallaxProps, setParallaxProps] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }));
   const Hero = styled.section`
     height: calc(100vh - 224px);
@@ -95,13 +94,11 @@ const LandingPage = () => {
     }
   `;
 
-  const [editorProps, setEditorProps] = useSpring(() => {
-    return {
-      top: window.scrollY / 2 * -1,
-      left: window.innerWidth / 2 - (window.innerWidth >= 1024 ? 520 : 187),
-      config: { mass: 40, tension: 550, friction },
-    }
-  });
+  const [editorProps, setEditorProps] = useSpring(() => ({
+    top: window.scrollY / 2 * -1,
+    left: window.innerWidth / 2 - (window.innerWidth >= 1024 ? 520 : 187),
+    config: { mass: 40, tension: 550, friction: 260 },
+  }));
 
   // React Spring scroll function
   const handleScroll = useCallback(() => {
@@ -160,7 +157,7 @@ const LandingPage = () => {
         className="container mx-auto relative bg-secondary flex justify-center items-center rounded-lg shadow-md px-10"
         onMouseMove={({ clientX: x, clientY: y }) => setParallaxProps({ xy: calc(x, y) })}
       >
-        <animated.div style={{ transform: parallaxProps.xy.interpolate(heroTextTranslation) }}>
+        <LandingAnimation style={{ transform: parallaxProps.xy.interpolate(heroTextTranslation) }}>
           <Typical
             className="typical text-white text-5xl lg:text-6xl"
             steps={[
@@ -176,10 +173,10 @@ const LandingPage = () => {
             loop={Infinity}
             wrapper="p"
           />
-        </animated.div>
+        </LandingAnimation>
       </Hero>
 
-      <SectionOne className="relative">
+      <SectionOne className="relative" isMobile={window.innerWidth < 1024}>
         <animated.div className="hidden lg:block absolute" style={editorProps} >
           <div className="marvel-device macbook">
             <div className="top-bar"></div>
@@ -234,14 +231,18 @@ const LandingPage = () => {
         onMouseMove={({ clientX: x, clientY: y }) => setParallaxProps({ xy: calc(x, y) })}
       >
           <div className="lg:w-1/3 lg:mx-5 mb-5 lg:mb-0 lg:px-10 py-5 rounded shadow-md text-center">
-            <animated.p className="text-white text-4xl" style={{ transform: parallaxProps.xy.interpolate(sectionTextTranslation) }}>
+            <LandingAnimation className="text-white text-4xl" element={'p'} style={{ transform: parallaxProps.xy.interpolate(sectionTextTranslation) }}>
               Wrabit's simplistic editor stays out of your way and let's you focus on the writing. With nobody watching, you can proudly express your unedited self.
-            </animated.p>
+            </LandingAnimation>
           </div>
 
-        <animated.h2 className="w-full font-bold px-0 py-10 lg:px-10 text-6xl text-primary text-center tracking-wide" style={{ transform: parallaxProps.xy.interpolate(sectionHeaderTranslation) }}>
+        <LandingAnimation
+          className="w-full font-bold px-0 py-10 lg:px-10 text-6xl text-primary text-center tracking-wide"
+          style={{ transform: parallaxProps.xy.interpolate(sectionHeaderTranslation) }}
+          element='h2'
+        >
           express yourself
-        </animated.h2>
+        </LandingAnimation>
       </section>
 
       <section className="text-2xl px-10 lg:p-0 flex flex-col justify-center items-center min-h-screen">
@@ -305,7 +306,6 @@ const LandingPage = () => {
 
       <section
         className="container text-4xl lg:text-6xl text-primary text-center flex flex-col justify-center items-center min-h-screen bg-secondary relative p-10 lg:p-20"
-        onMouseMove={({ clientX: x, clientY: y }) => setParallaxProps({ xy: calc(x, y) })}
       >
         <p className="text-6xl lg:hidden mb-4">
           🔒
