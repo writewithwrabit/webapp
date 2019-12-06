@@ -3,8 +3,8 @@
   "name": "webapp",
   "build": {
     "env": {
-      "MONTHLY_SUBSCRIPTION_ID": "prod_GJSK82DbvGXQAC",
-      "YEARLY_SUBSCRIPTION_ID": "prod_GJSK7yO9j1lVFL",
+      "MONTHLY_PLAN_ID": "plan_GJSK4NSeMTNLO8",
+      "YEARLY_PLAN_ID": "plan_GJSKUcZmWa4lQZ",
       "FIREBASE_ENV": "prod",
       "API_ENDPOINT": "@prod-api-endpoint",
       "STRIPE_KEY": "@prod-stripe-key",
