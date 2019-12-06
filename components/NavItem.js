@@ -72,6 +72,10 @@ const NavItem = ({ url, text, query, variables }) => {
   }
 
   const preloadRoute = () => {
+    if (url === router.pathname) {
+      return;
+    }
+
     router.prefetch(url);
 
     const preloadedQuery = preloadQuery(

@@ -40,7 +40,9 @@ const Header = () => {
       <div className="px-4 lg:px-20 nav flex text-secondary items-center">
         <div className="w-1/3">
           <Link href="/">
-            <LogoName className="w-24 md:w-32" />
+            <a>
+              <LogoName className="w-24 md:w-32" />
+            </a>
           </Link>
         </div>
 

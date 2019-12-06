@@ -69,9 +69,11 @@ const SignupUser = ({ setUser, setStage }) => {
       <div className="mr-20 max-w-md px-20 hidden md:block">
         <div className="pb-8">
           <Link href="/">
-            <Logo>
-              <Brand />
-            </Logo>
+            <a>
+              <Logo>
+                <Brand />
+              </Logo>
+            </a>
           </Link>
         </div>
 
