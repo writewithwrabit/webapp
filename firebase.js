@@ -1,12 +1,10 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
-import { stage, prod } from './firebase.config';
+import firebaseConfig from './firebase.config';
 
-const config = process.env.NODE_ENV === 'production'
-  ? prod
-  : stage;
-console.log(config, process.env.NODE_ENV);
+const config = firebaseConfig[process.env.FIREBASE_ENV || 'stage'];
+
 export default !firebase.apps.length
   ? firebase.initializeApp(config)
   : firebase.app();

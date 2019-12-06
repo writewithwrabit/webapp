@@ -1,4 +1,4 @@
-export const stage = {
+const stage = {
   apiKey: "AIzaSyCyq9K36z_LF0yUhp9XaHJTDUdwBszVP0I",
   authDomain: "wrabit-stage.firebaseapp.com",
   databaseURL: "https://wrabit-stage.firebaseio.com",
@@ -9,7 +9,7 @@ export const stage = {
   measurementId: "G-ZRZDHVWFYV"
 };
 
-export const prod = {
+const prod = {
   apiKey: "AIzaSyD8oE6wim8fdgXW1kg4zFPdwVsqtUdN7Y4",
   authDomain: "wrabit-webapp.firebaseapp.com",
   databaseURL: "https://wrabit-webapp.firebaseio.com",
@@ -19,4 +19,7 @@ export const prod = {
   appId: "1:493631743586:web:98cc1a62b1fbad9f"
 };
 
-export default stage;
+export default {
+  prod,
+  stage
+};

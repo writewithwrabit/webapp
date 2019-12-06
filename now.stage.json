@@ -3,6 +3,7 @@
   "name": "webapp",
   "build": {
     "env": {
+      "FIREBASE_ENV": "stage",
       "API_ENDPOINT": "@stage-api-endpoint",
       "STRIPE_KEY": "@stage-stripe-key",
       "SENTRY_DSN": "@stage-sentry-dsn"
