@@ -44,7 +44,7 @@ const Plans = ({ setPlan, plan, user }) => {
 
           {
             plan === 'monthly'
-              ? <Payment user={user} plan="plan_FsvZtUpz9xw0Tx" onCompleted={completeUserSignup} />
+              ? <Payment user={user} plan={process.env.MONTHLY_SUBSCRIPTION_ID} onCompleted={completeUserSignup} />
               : (
                 <button
                   className="text-primary hover:text-primary-dark font-bold p-4 mt-6 rounded border-primary border-2 hover:border-primary-dark focus:outline-none focus:shadow-outline w-full"
@@ -76,7 +76,7 @@ const Plans = ({ setPlan, plan, user }) => {
 
           {
             plan === 'yearly'
-              ? <Payment user={user} plan="plan_FtuSSAndZnWxET" onCompleted={completeUserSignup} />
+              ? <Payment user={user} plan={process.env.YEARLY_SUBSCRIPTION_ID} onCompleted={completeUserSignup} />
               : (
                 <button
                   className="bg-primary hover:bg-primary-dark text-white font-bold p-4 mt-6 rounded border-primary border-2 hover:border-primary-dark focus:outline-none focus:shadow-outline w-full"
