@@ -232,7 +232,7 @@ const LandingPage = () => {
       >
           <div className="lg:w-1/3 lg:mx-5 mb-5 lg:mb-0 lg:px-10 py-5 rounded shadow-md text-center">
             <LandingAnimation className="text-white text-4xl" element={'p'} style={{ transform: parallaxProps.xy.interpolate(sectionTextTranslation) }}>
-              Wrabit's simplistic editor stays out of your way and let's you focus on the writing. With nobody watching, you can proudly express your unedited self.
+              Wrabit's simple editor stays out of your way and lets you focus on the writing. With nobody watching, you can proudly express your unedited self.
             </LandingAnimation>
           </div>
 
