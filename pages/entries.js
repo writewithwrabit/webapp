@@ -1,6 +1,5 @@
 import { useState, useRef, Suspense } from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
 import { format, startOfDay, endOfDay } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 import dynamic from 'next/dynamic';
