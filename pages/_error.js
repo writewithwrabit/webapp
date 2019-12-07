@@ -1,7 +1,8 @@
+import Link from 'next/link';
+
 import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
 
 const NotFound = ({ statusCode }) => {
-  console.log(statusCode);
   if (statusCode !== 404 && statusCode !== 200) {
     throw('Something went wrong...');
   }
@@ -12,6 +13,10 @@ const NotFound = ({ statusCode }) => {
 
       <div>
         That's odd, I couldn't find what you were looking for.
+      </div>
+
+      <div>
+        Why don't we <Link href="/"><a>head back to the homepage?</a></Link>
       </div>
     </div>
   );
