@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import Link from 'next/link';
 import { graphql, commitMutation } from 'react-relay';
 import styled from '@emotion/styled';
+import useForm from 'react-hook-form';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
@@ -25,18 +25,13 @@ const Logo = styled.a`
 
 
 const SignupUser = ({ setUser, setStage }) => {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const { register, handleSubmit, errors, setError } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    const { email, firstName, lastName, password, passwordConfirmation} = data;
 
-    // TODO: Form validation!
     if (password !== passwordConfirmation) {
-      console.log('Password does not match password confirmation!');
+      setError({ type: 'match', name: 'passwordConfirmation', message: 'Hmm... this doesn\'t seem to mtch your password' });
       return;
     }
 
@@ -103,20 +98,27 @@ const SignupUser = ({ setUser, setStage }) => {
             Create your Wrabit account now
           </div>
 
-          <form>
-            <div className="mb-4">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-6">
               <label className="hidden" htmlFor="email">
                 Email
               </label>
 
               <input
-                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+                className={`shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline ${errors.email && 'border-primary-dark'}`}
                 id="email"
-                placeholder="Email" 
+                placeholder="e.hemingway@hemingwayapp.com"
                 type="email"
-                value={email}
-                onChange={({ target }) => setEmail(target.value)} 
+                name="email"
+                ref={register({
+                  required: 'Your email will be used to login',
+                  pattern: {
+                    value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: 'The email you entered does not seem to be valid',
+                  },
+                })}
               />
+              <span className="tracking-wide text-primary-dark text-xs font-bold">{errors.email && errors.email.message}</span>
             </div>
 
             <div className="mb-4">
@@ -125,16 +127,17 @@ const SignupUser = ({ setUser, setStage }) => {
               </label>
 
               <input
-                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                className={`shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline ${errors.firstName && 'border-primary-dark'}`}
                 id="first-name"
                 type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={({ target }) => setFirstName(target.value)} 
+                placeholder="Ernest"
+                name="firstName"
+                ref={register({ required: 'Please let us know what to call you' })}
               />
+              <span className="tracking-wide text-primary-dark text-xs font-bold">{errors.firstName && errors.firstName.message}</span>
             </div>
 
-            <div className="mb-4">
+            <div className="mb-6">
               <label className="hidden" htmlFor="last-name">
                 Last Name
               </label>
@@ -143,9 +146,9 @@ const SignupUser = ({ setUser, setStage }) => {
                 className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
                 id="last-name"
                 type="text"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={({ target }) => setLastName(target.value)} 
+                placeholder="Hemingway"
+                name="lastName"
+                ref={register}
               />
             </div>
 
@@ -155,13 +158,14 @@ const SignupUser = ({ setUser, setStage }) => {
               </label>
 
               <input
-                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                className={`shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline ${errors.password && 'border-primary-dark'}`}
                 id="password"
                 type="password"
                 placeholder="Password"
-                value={password}
-                onChange={({ target }) => setPassword(target.value)}
+                name="password"
+                ref={register({ required: 'For your safety, this is required to login' })}
               />
+              <span className="tracking-wide text-primary-dark text-xs font-bold">{errors.password && errors.password.message}</span>
             </div>
 
             <div className="mb-6">
@@ -170,23 +174,22 @@ const SignupUser = ({ setUser, setStage }) => {
               </label>
 
               <input
-                className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+                className={`shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline  ${errors.passwordConfirmation && 'border-primary-dark'}`}
                 id="confirm-password"
                 type="password"
                 placeholder="Confirm Password"
-                value={passwordConfirmation}
-                onChange={({ target }) => setPasswordConfirmation(target.value)}
+                name="passwordConfirmation"
+                ref={register({ required: 'The confirmation password does not match your password' })}
               />
+              <span className="tracking-wide text-primary-dark text-xs font-bold">{errors.passwordConfirmation && errors.passwordConfirmation.message}</span>
             </div>
 
             <div className="flex items-center justify-center">
-              <button
+              <input
                 className="bg-primary w-full hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-                onClick={event => handleSubmit(event)}
-              >
-                Sign Up
-              </button>
+                type="submit"
+                value="Sign Up"
+              />
             </div>
           </form>
         </div>
