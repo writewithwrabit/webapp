@@ -76,8 +76,6 @@ const AnimatedLink = styled.a`
 `;
 
 const Key = styled.div`
-  bottom: 45vh;
-  right: -20vw;
   font-size: 6rem;
 `;
 
@@ -227,10 +225,10 @@ const LandingPage = () => {
       </section>
 
       <section
-        className="text-2xl p-10 lg:p-0 flex flex-col justify-center items-center min-h-screen bg-secondary"
+        className="text-2xl px-10 py-20 lg:px-0 flex flex-col justify-center items-center min-h-screen bg-secondary"
         onMouseMove={({ clientX: x, clientY: y }) => setParallaxProps({ xy: calc(x, y) })}
       >
-          <div className="lg:w-1/3 lg:mx-5 mb-5 lg:mb-0 lg:px-10 py-5 rounded shadow-md text-center">
+          <div className="lg:w-1/3 lg:mx-5 mb-5 lg:mb-0 py-5 text-center">
             <LandingAnimation className="text-white text-4xl" element={'p'} style={{ transform: parallaxProps.xy.interpolate(sectionTextTranslation) }}>
               Wrabit's simple editor stays out of your way and lets you focus on the writing. With nobody watching, you can proudly express your unedited self.
             </LandingAnimation>
@@ -245,7 +243,7 @@ const LandingPage = () => {
         </LandingAnimation>
       </section>
 
-      <section className="text-2xl px-10 lg:p-0 flex flex-col justify-center items-center min-h-screen">
+      <section className="text-2xl px-10 py-20 lg:px-0 flex flex-col justify-center items-center min-h-screen">
         <div className="py-10 lg:p-10 mb-20 lg:w-3/5 text-center">
           <p className="font-bold mb-4 text-4xl text-gray-800">
             Building habits is difficult.
@@ -259,7 +257,7 @@ const LandingPage = () => {
 
         <div className="w-full flex flex-col lg:flex-row justify-around">
           <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-1/5 text-center relative">
-            <h2 className="text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-10 -ml-16">
+            <h2 className="text-4xl md:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
               Set Goal
             </h2>
 
@@ -269,7 +267,7 @@ const LandingPage = () => {
           </GrowingCard>
 
           <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-1/5 text-center relative">
-            <h2 className="text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-10 -ml-16">
+            <h2 className="text-4xl md:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
               Start Small
             </h2>
 
@@ -279,7 +277,7 @@ const LandingPage = () => {
           </GrowingCard>
 
           <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-1/5 text-center relative">
-            <h2 className="text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-10 -ml-16">
+            <h2 className="text-4xl md:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
               Build Habit
             </h2>
 
@@ -305,21 +303,25 @@ const LandingPage = () => {
       </section>
 
       <section
-        className="container text-4xl lg:text-6xl text-primary text-center flex flex-col justify-center items-center min-h-screen bg-secondary relative p-10 lg:p-20"
+        className="text-primary text-center flex justify-center items-center min-h-screen relative"
       >
-        <p className="text-6xl lg:hidden mb-4">
+        <div className="w-full lg:w-2/3 bg-secondary min-h-screen p-10 lg:p-20 flex flex-col justify-center items-center ">
+          <Key className="lg:hidden mb-4">
+            🔒
+          </Key>
+
+          <p className="font-bold text-5xl lg:text-6xl mb-4">
+            We encrypt everything.
+          </p>
+
+          <p className="text-3xl lg:text-4xl">
+            You never have to worry about hiding your diary again.
+          </p>
+        </div>
+        
+        <Key className="w-1/3 min-h-screen p-10 lg:p-20 hidden lg:flex flex-col justify-center items-center">
           🔒
-        </p>
-
-        <p className="z-10">
-          We encrypt everything.
-        </p>
-
-        <p className="z-0">
-          You never have to worry about hiding your diary again.
-        </p>
-
-        <Key className="absolute hidden lg:block">🔒</Key>
+        </Key>
       </section>
 
       <section className="text-4xl px-10 lg:text-6xl text-white text-center flex flex-col justify-center items-center py-40">
@@ -336,7 +338,7 @@ const LandingPage = () => {
         </button>
       </section>
 
-      <footer className="bg-gray-200 p-20 flex flex-col justify-center items-center">
+      <footer className="bg-gray-200 p-20 flex flex-col justify-center items-center text-center">
         <div>
           Made with <span className="text-primary">&#9829;</span> in Vancouver, BC
         </div>
