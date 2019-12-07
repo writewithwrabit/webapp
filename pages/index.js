@@ -336,8 +336,12 @@ const LandingPage = () => {
         </button>
       </section>
 
-      <footer className="bg-gray-200 p-40 flex justify-center items-center">
-        <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge">
+      <footer className="bg-gray-200 p-20 flex flex-col justify-center items-center">
+        <div>
+          Made with <span className="text-primary">&#9829;</span> in Vancouver, BC
+        </div>
+
+        <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge" className="mt-4">
           <Sqreen className="sqreen" />
         </a>
       </footer>
