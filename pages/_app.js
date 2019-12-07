@@ -11,6 +11,7 @@ import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 import '../style.css';
+import 'react-day-picker/lib/style.css';
 
 import GlobalLoader from '../components/GlobalLoader';
 const Auth = dynamic(() => import('../components/Auth'), { ssr: false });
