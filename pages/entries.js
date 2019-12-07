@@ -143,22 +143,22 @@ const Entries = () => {
                 ? (
                   <div className="text-center">
                     <div>
-                      <span className="text-blue-700 font-bold">
+                      <span className="text-primary font-bold">
                         {formatFriendly(startDate)}
                       </span>
                       {' '}to{' '}
-                      <span className="text-blue-700 font-bold">
+                      <span className="text-primary font-bold">
                         {formatFriendly(endDate)}
                       </span>
                     </div>
 
-                    <button className="text-blue-500 hover:text-blue-700" onClick={handleResetClick}>
+                    <button className="text-primary hover:text-primary-dark" onClick={handleResetClick}>
                       Reset
                     </button>
                   </div>
                 )
                 : (
-                  <button className="text-blue-500 hover:text-blue-700" onClick={handleTodayClick}>
+                  <button className="text-primary hover:text-primary-dark" onClick={handleTodayClick}>
                     Show me today
                   </button>
                 )

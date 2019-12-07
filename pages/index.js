@@ -325,7 +325,7 @@ const LandingPage = () => {
       </section>
 
       <section className="text-4xl px-10 lg:text-6xl text-white text-center flex flex-col justify-center items-center py-40">
-        <h2 className="relative text-secondary">
+        <h2 className="text-secondary font-bold">
           Build your habit today.
         </h2>
 

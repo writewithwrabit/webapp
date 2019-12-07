@@ -6,6 +6,7 @@
 
 body {
   @apply bg-gray-100;
+  @apply text-gray-800;
   overflow-x: hidden;
 }
 
@@ -18,6 +19,7 @@ a {
 }
 
 a:hover {
+  cursor: pointer;
   @apply text-primary-dark;
 }
 
@@ -92,9 +94,17 @@ a:hover {
   @apply pl-6;
 }
 
+.DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+  @apply bg-primary !important;
+}
+
+.DayPicker:not(.DayPicker--interactionDisabled) .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
+  @apply bg-pink-100 !important;
+}
+
 .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
-  background-color: #f0f8ff !important;
-  color: #4a90e2;
+  @apply bg-pink-100 !important;
+  @apply text-secondary;
 }
 
 .DayPicker-Day {
@@ -111,8 +121,9 @@ a:hover {
   font-weight: 700;
 }
 
+.DayPicker-Day--today,
 .DayPicker-Day--entry.DayPicker-Day--today {
-  @apply text-primary;
+  @apply text-primary !important;
 }
 
 .popup {
