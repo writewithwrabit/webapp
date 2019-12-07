@@ -1,4 +1,5 @@
 import SectionPanel from '../components/SectionPanel';
+import ChatLink from '../components/ChatLink';
 
 const EditorSettings = () => (
   <div className="w-4/5">
@@ -8,7 +9,11 @@ const EditorSettings = () => (
       </h2>
 
       <p>
-        Soon you'll be able to customize your editor. Want to hide the tool bar? No problem. Want to show writing prompts? We got you covered. Is there anyting you'd like to see? Let us know in the chat on the bottom right hand corner of the screen!
+        Soon you'll be able to customize your editor. Want to hide the tool bar? No problem. Want to show writing prompts? We got you covered.
+      </p>
+
+      <p>
+        Is there anyting you'd like to see? <ChatLink>Let us know in the chat!</ChatLink>
       </p>
     </SectionPanel>
   </div>
