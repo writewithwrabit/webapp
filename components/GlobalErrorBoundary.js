@@ -50,8 +50,6 @@ class ErrorBoundary extends React.Component {
 
       Sentry.captureException(error);
     });
-
-    super.componentDidCatch(error, errorInfo);
   }
 
   render() {
