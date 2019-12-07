@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 const errorFaces = [
   {
@@ -39,6 +42,16 @@ class ErrorBoundary extends React.Component {
       error,
       errorInfo,
     });
+
+    Sentry.withScope(scope => {
+      Object.keys(errorInfo).forEach(key => {
+        scope.setExtra(key, errorInfo[key])
+      });
+
+      Sentry.captureException(error);
+    });
+
+    super.componentDidCatch(error, errorInfo);
   }
 
   render() {
