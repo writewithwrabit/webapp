@@ -33,6 +33,7 @@ class WrabitDocument extends Document {
           <meta property="og:image:alt" content="Write With Wrabit" className="next-head" />
           <meta property="og:site_name" content="Wrabit" className="next-head" />
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143384618-3"></script>
+          <script type="text/javascript" src="crisp.js"></script>
         </Head>
 
         <body>
