@@ -4,7 +4,6 @@ import { graphql, commitMutation } from 'react-relay';
 import { FaSpinner } from 'react-icons/fa';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
-
 const environment = createRelayEnvironment();
 
 const CREATE_SUBSCRIPTION = graphql`
