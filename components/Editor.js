@@ -354,7 +354,7 @@ const Editor = () => {
           <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
         </div>
 
-        <div className="progress-bar sticky p-2">
+        <div className="progress-bar sticky p-2 bg-offwhite">
           <div className="progress bg-gray-800 h-2 max-w-full rounded-lg" style={progressBarStyles}></div>
           <StyledConfettiCanon active={goalHit} config={confettiConfig} />
         </div>
