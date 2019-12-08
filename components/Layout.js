@@ -4,7 +4,7 @@ import LayoutErrorBoundary from './GlobalErrorBoundary';
 const withLayout = Page => {
   return () => (
     <div className="min-h-screen">
-      <Header />
+      <AppHeader />
 
       <div className="container mx-auto h-full">
         <LayoutErrorBoundary withLayout>
