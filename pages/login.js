@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useStoreState } from 'easy-peasy';
 import styled from '@emotion/styled';
+import useForm from 'react-hook-form';
+import { FaSpinner } from 'react-icons/fa';
 
 import Brand from '../public/logos/name.svg';
 
@@ -15,6 +17,8 @@ const Logo = styled.a`
 `;
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const { register, handleSubmit, errors, setError } = useForm();
   const router = useRouter();
   const user = useStoreState(state => state.user);
 
@@ -22,17 +26,17 @@ const Login = () => {
     router.push('/write');
   }
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const onSubmit = (data) => {
+    setLoading(true);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const { email, password } = data;
 
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        console.log(error.code, error.message);
+      .catch(() => {
+        setLoading(false);
+        setError('login', 'login', `We weren't able to log you in. Try again and if that doesn't work you could try resetting your password.`)
     });
   };
 
@@ -51,7 +55,7 @@ const Login = () => {
           Welcome back!
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label className="hidden" htmlFor="email">
               Email
@@ -61,30 +65,48 @@ const Login = () => {
               className="shadow-inner border rounded w-full py-2 px-3 text-gray-700  focus:outline-none focus:shadow-outline"
               id="username"
               placeholder="Email"
-              value={email}
               type="email"
-              onChange={({ target }) => setEmail(target.value)} 
+              name="email"
+              ref={register({
+                required: 'Please use your email to login',
+                pattern: {
+                  value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: `The email you entered doesn't seem to be valid`,
+                },
+              })}
             />
+            <span className="tracking-wide text-primary-dark text-xs font-bold">{errors.email && errors.email.message}</span>
           </div>
 
-          <div className="mb-6">
+          <div className="mb-8">
             <label className="hidden" htmlFor="password">
               Password
             </label>
 
             <input
-              className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 mb-3 focus:outline-none focus:shadow-outline"
+              className="shadow-inner border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
               id="password"
               type="password"
               placeholder="Password"
-              value={password}
-              onChange={({ target }) => setPassword(target.value)}
+              name="password"
+              ref={register({
+                required: 'Enter your password to validate yourself',
+              })}
             />
+            <span className="tracking-wide text-primary-dark text-xs font-bold">{errors.password && errors.password.message}</span>
+            <span className="tracking-wide text-primary-dark text-xs font-bold">{errors.login && errors.login.message}</span>
           </div>
 
           <div className="flex items-center md:justify-between justify-center">
-            <button className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleSubmit}>
-              Login
+            <button
+              className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+            >
+              {
+                loading
+                  ? <FaSpinner className="w-full icon-spin" />
+                  : 'Login'
+              }
             </button>
 
             <a className="inline-block align-baseline text-sm hidden md:block" href="#">
