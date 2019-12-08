@@ -120,7 +120,7 @@ const SignupUser = ({ setUser, setStage }) => {
                   required: 'Your email will be used to login',
                   pattern: {
                     value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: 'The email you entered does not seem to be valid',
+                    message: `The email you entered doesn't seem to be valid`,
                   },
                 })}
               />
