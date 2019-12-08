@@ -1,4 +1,4 @@
-import Header from './Header';
+import AppHeader from './AppHeader';
 import LayoutErrorBoundary from './GlobalErrorBoundary';
 
 const withLayout = Page => {

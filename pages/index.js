@@ -1,7 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import { useStoreState } from 'easy-peasy';
-import { FaLongArrowAltRight } from 'react-icons/fa';
 import { useSpring, animated } from 'react-spring'
 import { NextSeo } from 'next-seo';
 import Typical from 'react-typical'
@@ -13,7 +11,7 @@ import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
 import SEO from '../seo.config.js';
 
-import LogoName from '../public/logos/name.svg';
+import Header from '../components/Header';
 import Sqreen from '../public/sqreen-mono-badge.svg';
 import LandingAnimation from '../components/LandingAnimation';
 import LandingEditor from '../components/LandingEditor';
@@ -82,8 +80,6 @@ const Key = styled.div`
 const LandingPage = () => {
   useGoogleAnalytics();
 
-  const user = useStoreState(state => state.user);
-
   const [parallaxProps, setParallaxProps] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }));
   const Hero = styled.section`
     height: calc(100vh - 224px);
@@ -126,30 +122,7 @@ const LandingPage = () => {
     <>
       <NextSeo {...SEO} />
 
-      <header className="relative px-4 lg:px-20">
-        <nav id="nav" className="py-6 lg:py-10 flex justify-between items-center">
-          <LogoName className="w-24 md:w-32" />
-
-          <div className="font-bold">
-            {
-              user.isAuthenticated
-                ? (
-                  <Link href="/write">
-                    <a className="flex items-center">
-                      Go to editor
-                      <FaLongArrowAltRight className="ml-2" />
-                    </a>
-                  </Link>
-                )
-                : (
-                  <Link href="/login">
-                    <a>Login</a>
-                  </Link>
-                )
-            }
-            </div>
-        </nav>
-      </header>
+      <Header />
 
       <Hero
         className="container mx-auto relative bg-secondary flex justify-center items-center rounded-lg shadow-md px-10"
@@ -339,13 +312,17 @@ const LandingPage = () => {
       </section>
 
       <footer className="bg-gray-200 p-20 flex flex-col justify-center items-center text-center">
-        <div>
+        <div className="mb-4">
           Made with <span className="text-primary">&#9829;</span> in Vancouver, BC
         </div>
 
-        <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge" className="mt-4">
+        <a title="Realtime application protection" href="https://www.sqreen.com/?utm_source=badge" className="mb-4">
           <Sqreen className="sqreen" />
         </a>
+
+        <div>
+          <Link href="/privacy-policy"><a>Privacy Policy</a></Link> | <Link href="/terms-of-service"><a>Terms of Service</a></Link>
+        </div>
       </footer>
     </>
   );
