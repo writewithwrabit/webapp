@@ -34,6 +34,8 @@ class WrabitDocument extends Document {
           <meta property="og:site_name" content="Wrabit" className="next-head" />
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143384618-3"></script>
           <script type="text/javascript" src="crisp.js"></script>
+          <script type="text/javascript" src="fbpixel.js"></script>
+          <noscript><img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1343415379170030&ev=PageView&noscript=1"/></noscript>
           {/* Favicons */}
           <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-icon-57x57.png" />
           <link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-icon-60x60.png" />
