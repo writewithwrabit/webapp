@@ -52,7 +52,7 @@ const AnimatedLink = styled.a`
   text-decoration: none;
 
   &:hover {
-    color: #fff;
+    color: ${props => props.isPrimary ? '#FF1C53' : '#fff'};
   }
 
   &:before {
@@ -62,7 +62,7 @@ const AnimatedLink = styled.a`
     height: 4px;
     bottom: 0;
     left: 0;
-    background-color: #fff;
+    background-color: ${props => props.isPrimary ? '#FF1C53' : '#fff'};
     visibility: hidden;
     transition: all 0.4s ease-in-out 0s;
   }
@@ -80,7 +80,10 @@ const Key = styled.div`
 const LandingPage = () => {
   useGoogleAnalytics();
 
-  const [parallaxProps, setParallaxProps] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }));
+  const [parallaxProps, setParallaxProps] = useSpring(() => ({
+    xy: [0, 0],
+    config: { mass: 10, tension: 550, friction: 140 },
+  }));
   const Hero = styled.section`
     height: calc(100vh - 224px);
     @media (max-width: 640px) {
@@ -90,7 +93,8 @@ const LandingPage = () => {
 
   const [editorProps, setEditorProps] = useSpring(() => ({
     top: window.scrollY / 2 * -1,
-    left: window.innerWidth / 2 - (window.innerWidth >= 1024 ? 520 : 187),
+    left: '50%',
+    transform: 'translateX(-50%)',
     config: { mass: 40, tension: 550, friction: 260 },
   }));
 
@@ -104,17 +108,10 @@ const LandingPage = () => {
     setEditorProps({ top: heightModifier });
   }, []);
 
-  const handleResize = useCallback(() => {
-    const widthModifier = window.innerWidth >= 1024 ? 520 : 187;
-    setEditorProps({ left: window.innerWidth / 2 - widthModifier });
-  }, []);
-
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('scroll');
-      window.removeEventListener('resize');
     };
   }, []);
 
@@ -187,7 +184,7 @@ const LandingPage = () => {
         </animated.div>
       </SectionOne>
 
-      <section className="px-12 lg:px-24 pb-24 text-4xl text-gray-800">
+      <section className="px-12 lg:px-24 pb-24 text-4xl text-gray-800 text-center">
         <p>
           Wrabit helps you build a daily writing habit, one small step at a time.
         </p>
@@ -212,7 +209,11 @@ const LandingPage = () => {
           style={{ transform: parallaxProps.xy.interpolate(sectionHeaderTranslation) }}
           element='h2'
         >
-          express yourself
+          <Link href="/signup">
+            <AnimatedLink isPrimary>
+              express yourself
+            </AnimatedLink>
+          </Link>
         </LandingAnimation>
       </section>
 
@@ -229,8 +230,8 @@ const LandingPage = () => {
 
 
         <div className="w-full flex flex-col lg:flex-row justify-around">
-          <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-1/5 text-center relative">
-            <h2 className="text-4xl md:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
+          <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-3/12 text-center relative">
+            <h2 className="text-4xl lg:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
               Set Goal
             </h2>
 
@@ -239,8 +240,8 @@ const LandingPage = () => {
             </p>
           </GrowingCard>
 
-          <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-1/5 text-center relative">
-            <h2 className="text-4xl md:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
+          <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-3/12 text-center relative">
+            <h2 className="text-4xl lg:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
               Start Small
             </h2>
 
@@ -249,8 +250,8 @@ const LandingPage = () => {
             </p>
           </GrowingCard>
 
-          <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-1/5 text-center relative">
-            <h2 className="text-4xl md:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
+          <GrowingCard className="bg-secondary rounded-lg shadow-md p-10 mb-10 lg:w-3/12 text-center relative">
+            <h2 className="text-4xl lg:text-5xl text-primary font-extrabold tracking-wide absolute top-0 -mt-8 md:-mt-10 -ml-16">
               Build Habit
             </h2>
 
@@ -259,6 +260,14 @@ const LandingPage = () => {
             </p>
           </GrowingCard>
         </div>
+
+        <button className="cta mt-16 text-3xl bg-primary hover:bg-primary-dark text-white font-bold p-4 rounded focus:outline-none focus:shadow-outline">
+          <Link href="/signup">
+            <a className="text-white">
+              Start your writing journey
+            </a>
+          </Link>
+        </button>
       </section>
 
       <section className="text-2xl lg:text-3xl py-20 px-10 lg:px-48 flex flex-col justify-center items-end min-h-screen bg-primary">
@@ -302,7 +311,7 @@ const LandingPage = () => {
           Build your habit today.
         </h2>
 
-        <button className="cta mt-16 text-3xl bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <button className="cta mt-16 text-3xl bg-primary hover:bg-primary-dark text-white font-bold p-4 rounded focus:outline-none focus:shadow-outline">
           <Link href="/signup">
             <a className="text-white">
               Start your writing journey
