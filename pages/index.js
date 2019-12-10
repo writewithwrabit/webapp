@@ -276,7 +276,7 @@ const LandingPage = () => {
         </h2>
 
         <p className="lg:w-2/3 text-right text-secondary mb-4">
-          Nearly one in five of us struggle with mental health. Although journaling will not solve all of our struggles, it can positively effect our daily life. At Wrabit, we've had our fair share of difficulties too. That's why we donate portions of your membership fees to the <AnimatedLink className="text-white" href="https://www.bbrfoundation.org/">Brain and Behavior Research Foundation</AnimatedLink>.
+          Nearly one in five of us struggle with mental health. Although journaling will not solve all of our struggles, it can positively affect our daily life. At Wrabit, we've had our fair share of difficulties too. That's why we donate portions of your membership fees to the <AnimatedLink className="text-white" href="https://www.bbrfoundation.org/">Brain and Behavior Research Foundation</AnimatedLink>.
         </p>
 
         <p className="lg:w-2/3 text-right text-secondary font-bold">
