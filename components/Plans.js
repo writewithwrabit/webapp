@@ -25,7 +25,7 @@ const Plans = ({ setPlan, plan, user }) => {
         </Link>
       </div>
 
-      <div className="text-center mb-10 md:w-1/4">
+      <div className="text-center mb-10 md:w-1/4 px-4">
         Support mental health research while building your own writing habit for <span className="font-bold">less than a quarter a day</span>!
       </div>
 
