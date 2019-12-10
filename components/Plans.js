@@ -25,12 +25,12 @@ const Plans = ({ setPlan, plan, user }) => {
         </Link>
       </div>
 
-      <div className="text-center mb-10 w-1/4">
+      <div className="text-center mb-10 md:w-1/4">
         Support mental health research while building your own writing habit for <span className="font-bold">less than a quarter a day</span>!
       </div>
 
-      <div className="flex justify-center p-4 text-center w-4/5">
-        <div className="w-full max-w-md mr-6 bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-center p-4 text-center md:w-4/5">
+        <div className="w-full max-w-md md:mr-6 bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col justify-between items-center">
           <div className="my-6">
             <div className="font-extrabold text-6xl text-secondary">$6.99</div>
             <div className="text-gray-600 block uppercase tracking-wide text-xs font-bold">per month</div>
@@ -57,7 +57,7 @@ const Plans = ({ setPlan, plan, user }) => {
           }
         </div>
 
-        <div className="w-full max-w-md ml-6 bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col justify-between items-center relative">
+        <div className="w-full max-w-md md:ml-6 mt-8 md:mt-0 bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col justify-between items-center relative">
           <div className="mx-auto rounded-full bg-primary text-white absolute top-0 -mt-4 text-sm py-2 px-4">
             28% cheaper
           </div>
@@ -90,7 +90,7 @@ const Plans = ({ setPlan, plan, user }) => {
         </div>
       </div>
 
-      <div className="block uppercase tracking-wide text-gray-500 text-xs font-bold mt-4">
+      <div className="block uppercase tracking-wide text-gray-500 text-xs font-bold mt-4 mb-4">
         all prices in US dollars
       </div>
     </div>
