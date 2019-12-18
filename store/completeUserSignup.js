@@ -16,7 +16,7 @@ const UPDATE_USER = graphql`
   }
 `;
 
-export default thunk(async (actions, { user }) => {
+export default thunk(async (actions, user) => {
   const { id, email, password } = user;
 
   firebase

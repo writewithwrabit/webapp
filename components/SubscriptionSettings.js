@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useLazyLoadQuery } from 'react-relay/hooks';
 import { commitMutation } from 'react-relay';
-import { formatDistance, fromUnixTime } from 'date-fns';
+import { formatDistance, fromUnixTime, addDays } from 'date-fns';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import GET_USER_SUBSCRIPTION from '../queries/GetUserSubscription';
 import CANCEL_SUBSCRIPTION from '../queries/CancelSubscription';
@@ -43,7 +44,7 @@ const ResubscribeButton = ({ plan, user, setSubscription }) => {
     <>
     {
       showPayment
-        ? <Payment user={user} plan={plan} trial={false} onCompleted={({ subscription }) => setSubscription(subscription)} />
+        ? <Payment user={user} plan={plan} onCompleted={({ subscription }) => setSubscription(subscription)} />
         : (
           <button
             className={`${buttonClasses} bg-primary hover:bg-primary-dark text-white border-primary`}
@@ -57,15 +58,28 @@ const ResubscribeButton = ({ plan, user, setSubscription }) => {
   );
 }
 
+const NewSubscriptionButton = () => {
+  const router = useRouter();
+ 
+  return (
+    <button
+      className={`${buttonClasses} bg-primary hover:bg-primary-dark text-white border-primary`}
+      onClick={() => router.push('/subscribe')}
+    >
+      Pick your subscription
+    </button>
+  );
+}
+
 const SubscriptionSettings = ({ user }) => {
   const { userByFirebaseID } = useLazyLoadQuery(GET_USER_SUBSCRIPTION, {
     firebaseID: user.firebaseData.uid,
   });
   const { stripeID, StripeSubscription } = userByFirebaseID;
   const [subscription, setSubscription] = useState(StripeSubscription);
-  const { status } = subscription;
+  const { id, status } = subscription;
 
-  const isTrial = status === 'trialing';
+  const isTrial = status === 'trialing' || !id;
   const isCanceled = status === 'canceled';
   
   let periodText = 'Next Billing Date';
@@ -74,6 +88,15 @@ const SubscriptionSettings = ({ user }) => {
   } else if (isCanceled) {
     periodText = 'Subscription Ends'
   }
+
+  const planNicknameParts = subscription.plan.nickname.split(' ');
+  const planText = subscription.plan.nickname
+    ? `$${planNicknameParts[1]} per ${planNicknameParts[0].slice(0, -2).toLowerCase()}`
+    : 'No plan selected';
+
+  const trialEnd = !id
+    ? addDays(new Date(user.createdAt), 30)
+    : fromUnixTime(subscription.trialEnd);
 
   return (
     <div>
@@ -91,7 +114,7 @@ const SubscriptionSettings = ({ user }) => {
           Plan {isCanceled && <span className="text-xs font-semibold text-red-600">(Canceled)</span>}
         </div>
 
-        {subscription.plan.nickname}
+        {planText}
       </div>
 
       <div className="mb-8">
@@ -101,15 +124,17 @@ const SubscriptionSettings = ({ user }) => {
 
         {
           isTrial
-            ? formatDistance(new Date(), fromUnixTime(subscription.trialEnd))
+            ? formatDistance(new Date(), trialEnd)
             : formatDistance(new Date(), fromUnixTime(subscription.currentPeriodEnd))
         }
       </div>
 
       {
-        isCanceled
+        id
+         ? isCanceled
           ? <ResubscribeButton plan={subscription.plan.id} user={{ ...user, stripeId: stripeID }} setSubscription={setSubscription} />
           : <CancelSubscriptionButton subscription={subscription} setSubscription={setSubscription} />
+         : <NewSubscriptionButton />
       }
     </div>
   );

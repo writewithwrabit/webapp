@@ -33,7 +33,6 @@ const WordGoalSettings = () => {
 
   useEffect(() => {
     if (status) {
-      console.log(status);
       set({ opacity: 1 });
       set({ 
         opacity: 0,
