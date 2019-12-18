@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLazyLoadQuery } from 'react-relay/hooks';
 import { commitMutation } from 'react-relay';
-import { formatDistance, fromUnixTime } from 'date-fns';
+import { formatDistance, fromUnixTime, addDays } from 'date-fns';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -89,6 +89,15 @@ const SubscriptionSettings = ({ user }) => {
     periodText = 'Subscription Ends'
   }
 
+  const planNicknameParts = subscription.plan.nickname.split(' ');
+  const planText = subscription.plan.nickname
+    ? `$${planNicknameParts[1]} per ${planNicknameParts[0].slice(0, -2).toLowerCase()}`
+    : 'No plan selected';
+
+  const trialEnd = !id
+    ? addDays(new Date(user.createdAt), 30)
+    : fromUnixTime(subscription.trialEnd);
+
   return (
     <div>
       {
@@ -105,7 +114,7 @@ const SubscriptionSettings = ({ user }) => {
           Plan {isCanceled && <span className="text-xs font-semibold text-red-600">(Canceled)</span>}
         </div>
 
-        {subscription.plan.nickname || 'No plan selected'}
+        {planText}
       </div>
 
       <div className="mb-8">
@@ -115,7 +124,7 @@ const SubscriptionSettings = ({ user }) => {
 
         {
           isTrial
-            ? formatDistance(new Date(), fromUnixTime(subscription.trialEnd))
+            ? formatDistance(new Date(), trialEnd)
             : formatDistance(new Date(), fromUnixTime(subscription.currentPeriodEnd))
         }
       </div>

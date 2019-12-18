@@ -30,6 +30,7 @@ const user = {
   isAuthenticated: false,
   firebaseData: null,
   stripeId: null,
+  createdAt: null,
   signInUser: action((state, payload) => {
     state.isAuthenticated = true;
     state.firebaseData = payload;
@@ -38,17 +39,18 @@ const user = {
     state.isAuthenticated = false;
     state.firebaseData = null;
   }),
-  setUserData: action((state, { id, wordGoal, firstName, lastName, email, stripeID }) => {
+  setUserData: action((state, { id, wordGoal, firstName, lastName, email, stripeID, createdAt }) => {
     state.id = id;
     state.wordGoal = wordGoal;
     state.firstName = firstName;
     state.lastName = lastName;
     state.email = email;
     state.stripeId = stripeID;
+    state.createdAt = createdAt;
   }),
   getUserData: thunk(async (actions, { userID }) => {
     const { userByFirebaseID } = await fetchQuery(environment, GET_USER_BY_FIREBASE_ID, { firebaseID: userID }).toPromise();
-    const { id, wordGoal, firstName, lastName, email, stripeID } = userByFirebaseID;
+    const { id, wordGoal, firstName, lastName, email, stripeID, createdAt } = userByFirebaseID;
 
     actions.setUserData({
       id,
@@ -57,6 +59,7 @@ const user = {
       lastName,
       email,
       stripeID,
+      createdAt,
     })
   }),
   completeUserSignup,
