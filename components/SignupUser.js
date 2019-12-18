@@ -4,6 +4,7 @@ import { graphql, commitMutation } from 'react-relay';
 import styled from '@emotion/styled';
 import useForm from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
+import { useStoreActions } from 'easy-peasy';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
 const environment = createRelayEnvironment();
@@ -25,11 +26,12 @@ const Logo = styled.a`
   }
 `;
 
-const SignupUser = ({ setUser, setStage }) => {
+const SignupUser = () => {
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState('');
   const [passwordErrorCount, setPasswordErrorCount] = useState(0);
   const { register, handleSubmit, errors, watch } = useForm();
+  const completeUserSignup = useStoreActions(actions => actions.user.completeUserSignup);
 
   if (errors.password && errors.password.message !== passwordError) {
     setPasswordError(errors.password.message);
@@ -51,7 +53,7 @@ const SignupUser = ({ setUser, setStage }) => {
         }
       },
       onCompleted: ({ createUser }) => {
-        setUser({
+        completeUserSignup({
           id: createUser.id,
           stripeId: createUser.stripeID,
           email,
@@ -59,8 +61,6 @@ const SignupUser = ({ setUser, setStage }) => {
           lastName,
           password,
         });
-
-        setStage('plans');
       }
     });
   }
