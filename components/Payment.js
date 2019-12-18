@@ -23,7 +23,7 @@ const CREATE_SUBSCRIPTION = graphql`
   }
 `;
 
-const CardForm = ({ stripe, user, plan, onCompleted, trial = true }) => {
+const CardForm = ({ stripe, user, plan, onCompleted, trial = false }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {

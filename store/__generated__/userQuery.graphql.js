@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4a91ab43b6acf5d84a6a5b380abaf8aa
+ * @relayHash 1836088525a994a93ffe9ca29f0f2e08
  */
 
 /* eslint-disable */
@@ -20,6 +20,7 @@ export type userQueryResponse = {|
     +email: string,
     +wordGoal: number,
     +createdAt: string,
+    +stripeID: ?string,
   |}
 |};
 export type userQuery = {|
@@ -40,6 +41,7 @@ query userQuery(
     email
     wordGoal
     createdAt
+    stripeID
   }
 }
 */
@@ -110,6 +112,13 @@ v1 = [
         "name": "createdAt",
         "args": null,
         "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "stripeID",
+        "args": null,
+        "storageKey": null
       }
     ]
   }
@@ -134,11 +143,11 @@ return {
     "operationKind": "query",
     "name": "userQuery",
     "id": null,
-    "text": "query userQuery(\n  $firebaseID: String!\n) {\n  userByFirebaseID(firebaseID: $firebaseID) {\n    id\n    firstName\n    lastName\n    email\n    wordGoal\n    createdAt\n  }\n}\n",
+    "text": "query userQuery(\n  $firebaseID: String!\n) {\n  userByFirebaseID(firebaseID: $firebaseID) {\n    id\n    firstName\n    lastName\n    email\n    wordGoal\n    createdAt\n    stripeID\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'bf3bf6f8ffb9ae7733502e8032c3786a';
+(node/*: any*/).hash = 'b2af931bf4c11d135313353e88d6d82d';
 module.exports = node;

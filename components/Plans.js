@@ -1,6 +1,7 @@
-import { useStoreActions } from 'easy-peasy';
+import { useState } from 'react';
 import Link from 'next/link';
 import styled from '@emotion/styled';
+import { useRouter } from 'next/router';
 
 import Payment from './Payment';
 import Brand from '../public/logos/name.svg';
@@ -12,8 +13,11 @@ const Logo = styled.a`
   }
 `;
 
-const Plans = ({ setPlan, plan, user }) => {
-  const completeUserSignup = useStoreActions(actions => actions.user.completeUserSignup);
+const Plans = ({ user }) => {
+  const router = useRouter();
+  const [plan, setPlan] = useState('');
+
+  const handleCompleted = () => router.push('/settings');
 
   return (
     <div className="flex flex-col items-center pt-16 text-gray-800">
@@ -44,7 +48,7 @@ const Plans = ({ setPlan, plan, user }) => {
 
           {
             plan === 'monthly'
-              ? <Payment user={user} plan={process.env.MONTHLY_PLAN_ID} onCompleted={completeUserSignup} />
+              ? <Payment user={user} plan={process.env.MONTHLY_PLAN_ID} onCompleted={handleCompleted} />
               : (
                 <button
                   className="text-primary hover:text-primary-dark font-bold p-4 mt-6 rounded border-primary border-2 hover:border-primary-dark focus:outline-none focus:shadow-outline w-full"
@@ -76,7 +80,7 @@ const Plans = ({ setPlan, plan, user }) => {
 
           {
             plan === 'yearly'
-              ? <Payment user={user} plan={process.env.YEARLY_PLAN_ID} onCompleted={completeUserSignup} />
+              ? <Payment user={user} plan={process.env.YEARLY_PLAN_ID} onCompleted={handleCompleted} />
               : (
                 <button
                   className="bg-primary hover:bg-primary-dark text-white font-bold p-4 mt-6 rounded border-primary border-2 hover:border-primary-dark focus:outline-none focus:shadow-outline w-full"
