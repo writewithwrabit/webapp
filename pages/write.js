@@ -1,6 +1,9 @@
 import { Suspense } from 'react';
-import { startOfDay } from 'date-fns';
+import { startOfDay, addDays } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import dynamic from 'next/dynamic';
+
+const timezoneOffsetHours = new Date().getTimezoneOffset();
 
 import GetEntry from '../queries/GetEntry';
 
@@ -24,7 +27,10 @@ export default withLayout(
     query: GetEntry,
     variables: {
       userID: 'REPLACE_ME',
-      date: startOfDay(new Date()),
+      date: zonedTimeToUtc(
+        startOfDay(new Date()),
+        timezoneOffsetHours
+      ),
     }
   }),
 );
