@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
 
 import Payment from './Payment';
+import ChatLink from '../components/ChatLink';
 import Brand from '../public/logos/name.svg';
 
 const Logo = styled.a`
@@ -15,6 +16,7 @@ const Logo = styled.a`
 
 const Plans = ({ user }) => {
   const router = useRouter();
+  const { query } = router;
   const [plan, setPlan] = useState('');
 
   const handleCompleted = () => router.push('/settings');
@@ -29,9 +31,29 @@ const Plans = ({ user }) => {
         </Link>
       </div>
 
-      <div className="text-center mb-10 md:w-1/4 px-4">
-        Support mental health research while building your own writing habit for <span className="font-bold">less than a quarter a day</span>!
-      </div>
+      {
+        query.trialEnd
+        ? (
+          <div className="text-center mx-10 mb-10 md:w-1/2 px-4 bg-secondary p-6 rounded text-white">
+            <div className="font-bold">
+              Oh no, your trial has ended!
+            </div>
+
+            <div>
+              If you'd like to continue we ask that you subscribe to support the platform and mental health research.
+            </div>
+
+            <div>
+              On the fence? <ChatLink>Let us know and we can work something out.</ChatLink>
+            </div>
+          </div>
+        )
+        : (
+          <div className="text-center mb-10 md:w-1/4 px-4">
+            Support mental health research while building your own writing habit for <span className="font-bold">less than a quarter a day</span>!
+          </div>
+        )
+      }
 
       <div className="flex flex-col md:flex-row justify-center p-4 text-center md:w-4/5">
         <div className="w-full max-w-md md:mr-6 bg-white shadow-md rounded px-8 pt-6 pb-8 flex flex-col justify-between items-center">

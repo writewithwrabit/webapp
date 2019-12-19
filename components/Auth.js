@@ -34,7 +34,7 @@ const Auth = ({ children }) => {
     const needsPlan = user.createdAt && !user.subscription && isPast(addDays(new Date(user.createdAt), 30));
     const subscriptionEnded = user.subscrption && user.subscription.status === 'canceled' && isPast(fromUnixTime(user.subscription.currentPeriodEnd));
     if (router.pathname !== '/subscribe' && (needsPlan || subscriptionEnded)) {
-      router.push('/subscribe');
+      router.push('/subscribe?trialEnd=1');
     }
   });
 
