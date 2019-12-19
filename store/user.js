@@ -15,7 +15,19 @@ const GET_USER_BY_FIREBASE_ID = graphql`
       email
       wordGoal
       createdAt
-      stripeID,
+      stripeID
+      StripeSubscription {
+        id
+        currentPeriodEnd
+        trialEnd
+        cancelAt
+        status
+        plan {
+          id
+          nickname
+          product
+        }
+      }
     }
   }
 `;
@@ -31,6 +43,7 @@ const user = {
   firebaseData: null,
   stripeId: null,
   createdAt: null,
+  subscription: null,
   signInUser: action((state, payload) => {
     state.isAuthenticated = true;
     state.firebaseData = payload;
@@ -39,7 +52,16 @@ const user = {
     state.isAuthenticated = false;
     state.firebaseData = null;
   }),
-  setUserData: action((state, { id, wordGoal, firstName, lastName, email, stripeID, createdAt }) => {
+  setUserData: action((state, {
+    id,
+    wordGoal,
+    firstName,
+    lastName,
+    email,
+    stripeID,
+    createdAt,
+    subscription,
+  }) => {
     state.id = id;
     state.wordGoal = wordGoal;
     state.firstName = firstName;
@@ -47,10 +69,20 @@ const user = {
     state.email = email;
     state.stripeId = stripeID;
     state.createdAt = createdAt;
+    state.subscription = subscription;
   }),
   getUserData: thunk(async (actions, { userID }) => {
     const { userByFirebaseID } = await fetchQuery(environment, GET_USER_BY_FIREBASE_ID, { firebaseID: userID }).toPromise();
-    const { id, wordGoal, firstName, lastName, email, stripeID, createdAt } = userByFirebaseID;
+    const {
+      id,
+      wordGoal,
+      firstName,
+      lastName,
+      email,
+      stripeID,
+      createdAt,
+      StripeSubscription: subscription,
+    } = userByFirebaseID;
 
     actions.setUserData({
       id,
@@ -60,6 +92,7 @@ const user = {
       email,
       stripeID,
       createdAt,
+      subscription,
     })
   }),
   completeUserSignup,

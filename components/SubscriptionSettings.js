@@ -81,7 +81,7 @@ const SubscriptionSettings = ({ user }) => {
 
   const isTrial = status === 'trialing' || !id;
   const isCanceled = status === 'canceled';
-  
+
   let periodText = 'Next Billing Date';
   if (isTrial) {
     periodText = 'Trial Ends';

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import firebase from '../firebase';
+import { addDays, isPast, fromUnixTime, subDays } from 'date-fns';
 
 import GlobalLoader from './GlobalLoader';
 
@@ -28,6 +29,12 @@ const Auth = ({ children }) => {
     // Redirect to the login page if a user is not allowed
     if (!firebaseUser && protectedRoutes.includes(router.pathname)) {
       router.push('/login');
+    }
+
+    const needsPlan = user.createdAt && !user.subscription && isPast(addDays(new Date(user.createdAt), 30));
+    const subscriptionEnded = user.subscrption && user.subscription.status === 'canceled' && isPast(fromUnixTime(user.subscription.currentPeriodEnd));
+    if (router.pathname !== '/subscribe' && (needsPlan || subscriptionEnded)) {
+      router.push('/subscribe');
     }
   });
 
