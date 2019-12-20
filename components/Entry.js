@@ -1,5 +1,8 @@
 import { format } from 'date-fns'
 import { useState } from 'react';
+import { utcToZonedTime } from 'date-fns-tz';
+
+const timezoneOffset = new Date().getTimezoneOffset();
 
 import EntryPopup from '../components/EntryPopup';
 
@@ -32,7 +35,7 @@ const Entry = ({ entry }) => {
     >
       <div className="entry-details">
         <div className="entry-created-at font-bold pb-2">
-          {format(new Date(entry.createdAt), 'MMMM d, yyyy')}
+          {format(new Date(utcToZonedTime(entry.createdAt, timezoneOffset)), 'MMMM d, yyyy')}
         </div>
 
         <div className="entry-word-count">
