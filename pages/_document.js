@@ -52,6 +52,7 @@ class WrabitDocument extends Document {
           <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
           <link rel="manifest" href="favicons/manifest.json" />
           <meta name="msapplication-TileImage" content="favicons/ms-icon-144x144.png" />
+          <title>Wrabit</title>
         </Head>
 
         <body>
