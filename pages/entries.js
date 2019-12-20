@@ -1,7 +1,7 @@
 import { useState, useRef, Suspense } from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import { format, startOfDay, endOfDay } from 'date-fns';
-import { zonedTimeToUtc } from 'date-fns-tz';
+import { zonedTimeToUtc, utcToZonedTime } from 'date-fns-tz';
 import dynamic from 'next/dynamic';
 import { preloadQuery } from 'react-relay/hooks';
 import { useStoreState, useStoreActions } from 'easy-peasy';
@@ -21,7 +21,7 @@ const EntriesList = dynamic(
   { ssr: false }
 );
 
-const timezoneOffsetHours = new Date().getTimezoneOffset();
+const timezoneOffset = new Date().getTimezoneOffset();
 
 const formatFriendly = date => format(new Date(date), 'MMMM d, yyyy');
 
@@ -43,11 +43,11 @@ const Entries = () => {
       {
         userID: user.firebaseData.uid,
         startDate: startDate && format(
-          zonedTimeToUtc(startOfDay(startDate), timezoneOffsetHours),
+          zonedTimeToUtc(startOfDay(startDate), timezoneOffset),
           'yyyy-MM-dd HH:mm:ss.000'
         ),
         endDate: endDate && format(
-          zonedTimeToUtc(endOfDay(endDate), timezoneOffsetHours),
+          zonedTimeToUtc(endOfDay(endDate), timezoneOffset),
           'yyyy-MM-dd HH:mm:ss.000'
         ),
       },
@@ -70,7 +70,8 @@ const Entries = () => {
         // Loop through each entries createdAt date and
         // compare it to the date being rendered on the calendar
         for (let i = 0; i < userEntries.length; i++) {
-          const createdAt = new Date(userEntries[i].createdAt);
+          const createdAt = utcToZonedTime(new Date(userEntries[i].createdAt), timezoneOffset);
+          
           if (createdAt.getDate() === date.getDate() && createdAt.getMonth() === date.getMonth()) {
             return true;
           }
