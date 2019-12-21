@@ -4,6 +4,7 @@ import App from 'next/app';
 import dynamic from 'next/dynamic';
 import { StoreProvider } from 'easy-peasy';
 import { RelayEnvironmentProvider } from 'react-relay/hooks';
+import { DefaultSeo } from 'next-seo';
 
 import { store } from '../store/store';
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
@@ -12,6 +13,7 @@ Sentry.init({ dsn: process.env.SENTRY_DSN });
 
 import '../style.css';
 import 'react-day-picker/lib/style.css';
+import SEO from '../seo.config.js';
 
 import GlobalLoader from '../components/GlobalLoader';
 const Auth = dynamic(() => import('../components/Auth'), { ssr: false });
@@ -39,6 +41,7 @@ class WrabitWebapp extends App {
           <StoreProvider store={store}>
             <Auth>
               <Suspense fallback={<GlobalLoader />}>
+                <DefaultSeo {...SEO} />
                 <Component {...pageProps} />
               </Suspense>
             </Auth>
