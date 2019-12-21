@@ -37,16 +37,19 @@ class WrabitWebapp extends App {
     const { Component, pageProps } = this.props;
 
     return (
+      <>
+        <DefaultSeo {...SEO} />
+
         <RelayEnvironmentProvider environment={environment}>
           <StoreProvider store={store}>
             <Auth>
               <Suspense fallback={<GlobalLoader />}>
-                <DefaultSeo {...SEO} />
                 <Component {...pageProps} />
               </Suspense>
             </Auth>
           </StoreProvider>
         </RelayEnvironmentProvider>
+      </>
     );
   }
 }
