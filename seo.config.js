@@ -1,4 +1,5 @@
 export default {
+  title: 'Write With Wrabit',
   openGraph: {
     title: 'Write With Wrabit',
     type: 'website',
@@ -9,5 +10,9 @@ export default {
       url: 'https://writewithwrabit.com/og.png',
       alt: 'Write With Wrabit',
     }]
+  },
+  twitter: {
+    cardType: 'summary_large_image',
+    handle: '@amorriscode',
   },
 };

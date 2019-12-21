@@ -1,15 +1,12 @@
 import { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { useSpring, animated } from 'react-spring'
-import { NextSeo } from 'next-seo';
 import Typical from 'react-typical'
 import styled from '@emotion/styled';
 
 import '../styles/devices.min.css';
 
 import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
-
-import SEO from '../seo.config.js';
 
 import Header from '../components/Header';
 import Sqreen from '../public/sqreen-mono-badge.svg';
@@ -117,8 +114,6 @@ const LandingPage = () => {
 
   return (
     <>
-      <NextSeo {...SEO} />
-
       <Header />
 
       <Hero

@@ -21,21 +21,8 @@ class WrabitDocument extends Document {
     return (
       <Html>
         <Head>
-          {/* TODO: Figure out SSR/next-seo doesn't work */}
-          <meta name="twitter:card" content="summary" className="next-head" />
-          <meta name="twitter:creator" content="@amorriscode" className="next-head" />
-          <meta name="twitter:image:src" content="https://writewithwrabit.com/og.png" className="next-head" />
-          <meta property="og:url" content="https://writewithwrabit.com" className="next-head" />
-          <meta property="og:type" content="website" className="next-head" />
-          <meta property="og:title" content="Write With Wrabit" className="next-head" />
-          <meta property="og:description" content="Wrabit helps you build a daily writing habit, one small step at a time. Join a community of others as you develop a healthier relationship with yourself." className="next-head" />
-          <meta property="og:image" content="https://writewithwrabit.com/og.png" className="next-head" />
-          <meta property="og:image:alt" content="Write With Wrabit" className="next-head" />
-          <meta property="og:site_name" content="Wrabit" className="next-head" />
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143384618-3"></script>
           <script type="text/javascript" src="crisp.js"></script>
-          <script type="text/javascript" src="fbpixel.js"></script>
-          <noscript><img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1343415379170030&ev=PageView&noscript=1"/></noscript>
           {/* Favicons */}
           <link rel="apple-touch-icon" sizes="57x57" href="favicons/apple-icon-57x57.png" />
           <link rel="apple-touch-icon" sizes="60x60" href="favicons/apple-icon-60x60.png" />
@@ -52,7 +39,6 @@ class WrabitDocument extends Document {
           <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
           <link rel="manifest" href="favicons/manifest.json" />
           <meta name="msapplication-TileImage" content="favicons/ms-icon-144x144.png" />
-          <title>Wrabit</title>
         </Head>
 
         <body>
