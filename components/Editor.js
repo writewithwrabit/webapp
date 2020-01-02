@@ -111,7 +111,7 @@ const Editor = () => {
     const wordCount = splitWords.length && !splitWords[0] ? 0 : splitWords.length;
 
     setWordsWritten(wordCount);
-    setGoalHit(wordCount > wordGoal)
+    setGoalHit(dailyEntry.goalHit || wordCount > wordGoal)
     setValue(newValue);
 
     const content = JSON.stringify(newValue.toJSON(newValue));
