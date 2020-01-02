@@ -94,7 +94,7 @@ const Editor = () => {
   const [goalHit, setGoalHit] = useState(dailyEntry.goalHit);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
   const progressBarStyles = {
-    width: `${percentWordsRemaining}%`,
+    width: `${goalHit ? '100' : percentWordsRemaining}%`,
   };
 
   const [blockSelectorState, setBlockSelectorState] = useState(false);
