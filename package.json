@@ -10,7 +10,7 @@
     "@emotion/core": "^10.0.21",
     "@emotion/styled": "^10.0.17",
     "@sentry/browser": "^5.5.0",
-    "@svgr/webpack": "^4.3.3",
+    "@svgr/webpack": "^5.0.0",
     "@zeit/next-css": "^1.0.1",
     "date-fns": "^2.0.0-beta.4",
     "date-fns-tz": "^1.0.7",
