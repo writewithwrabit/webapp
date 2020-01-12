@@ -12,6 +12,10 @@ const Menu = styled.div`
   
   & a {
     color: #2d3748;
+
+    &:hover {
+      color: #FA557D;
+    }
   }
 `;
 
