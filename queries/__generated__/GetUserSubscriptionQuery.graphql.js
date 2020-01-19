@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 64cfc80752cd7a5362078190616acfb7
+ * @relayHash b04d8514425370ce4c86db76eb05b8d1
  */
 
 /* eslint-disable */
@@ -15,7 +15,7 @@ export type GetUserSubscriptionQueryVariables = {|
 export type GetUserSubscriptionQueryResponse = {|
   +userByFirebaseID: {|
     +stripeID: ?string,
-    +StripeSubscription: ?{|
+    +StripeSubscription: {|
       +id: string,
       +currentPeriodEnd: number,
       +trialEnd: number,
