@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8cf3431a2c714e19bbd1efb719b45d32
+ * @relayHash c4ad0fdf927aa2aef66eb5f1360fdf2b
  */
 
 /* eslint-disable */
@@ -21,7 +21,7 @@ export type userQueryResponse = {|
     +wordGoal: number,
     +createdAt: string,
     +stripeID: ?string,
-    +StripeSubscription: ?{|
+    +StripeSubscription: {|
       +id: string,
       +currentPeriodEnd: number,
       +trialEnd: number,

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash a2cbba047512ed84289bbe6e5b933ccf
+ * @relayHash 99f40d0fe2bf9956ea42b06ded5545d4
  */
 
 /* eslint-disable */
@@ -10,7 +10,8 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type GetWordGoalQueryVariables = {|
-  userID: string
+  userID: string,
+  date: string,
 |};
 export type GetWordGoalQueryResponse = {|
   +wordGoal: number
@@ -25,8 +26,9 @@ export type GetWordGoalQuery = {|
 /*
 query GetWordGoalQuery(
   $userID: ID!
+  $date: String!
 ) {
-  wordGoal(userID: $userID)
+  wordGoal(userID: $userID, date: $date)
 }
 */
 
@@ -37,6 +39,12 @@ var v0 = [
     "name": "userID",
     "type": "ID!",
     "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "date",
+    "type": "String!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -45,6 +53,11 @@ v1 = [
     "alias": null,
     "name": "wordGoal",
     "args": [
+      {
+        "kind": "Variable",
+        "name": "date",
+        "variableName": "date"
+      },
       {
         "kind": "Variable",
         "name": "userID",
@@ -74,11 +87,11 @@ return {
     "operationKind": "query",
     "name": "GetWordGoalQuery",
     "id": null,
-    "text": "query GetWordGoalQuery(\n  $userID: ID!\n) {\n  wordGoal(userID: $userID)\n}\n",
+    "text": "query GetWordGoalQuery(\n  $userID: ID!\n  $date: String!\n) {\n  wordGoal(userID: $userID, date: $date)\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '75033a29cc8a58c72077ccbee7b734b5';
+(node/*: any*/).hash = '73754ba833be22a547f26687899b24b2';
 module.exports = node;

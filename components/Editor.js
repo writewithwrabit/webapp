@@ -89,7 +89,7 @@ const Editor = () => {
   const [value, setValue] = useState(initialValue); 
   
   const { firebaseData } = useStoreState(state => state.user);
-  const { wordGoal } = useLazyLoadQuery(GetWordGoal, { userID: firebaseData.uid });
+  const { wordGoal } = useLazyLoadQuery(GetWordGoal, { userID: firebaseData.uid, date });
   const [wordsWritten, setWordsWritten] = useState(0);
   const [goalHit, setGoalHit] = useState(dailyEntry.goalHit);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
