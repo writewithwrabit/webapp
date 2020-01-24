@@ -5,10 +5,9 @@ import { Value } from 'slate';
 import Plain from 'slate-plain-serializer';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { startOfDay } from 'date-fns';
-import styled from '@emotion/styled';
-import ConfettiCanon from 'react-dom-confetti';
 
 import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
+import ProgressBar from './ProgressBar';
 import WordCounter from './WordCounter';
 
 import GetEntry from '../queries/GetEntry';
@@ -44,29 +43,6 @@ const emptyDocument = {
 
 const DEFAULT_NODE = 'paragraph';
 
-const confettiConfig = {
-  angle: '225',
-  spread: '47',
-  startVelocity: '75',
-  elementCount: '100',
-  dragFriction: '0.10',
-  duration: '6000',
-  stagger: '2',
-  width: '10px',
-  height: '10px',
-  colors: [
-    '#fa557d',
-    '#ff1c53',
-    '#0a0a3c',
-    '#28e6cd',
-  ],
-};
-
-const StyledConfettiCanon = styled(ConfettiCanon)`
-  position: absolute !important;
-  right: 20px;
-`;
-
 const Editor = () => {
   const { '/write': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
   const { dailyEntry } = usePreloadedQuery(GetEntry, preloadedQuery);
@@ -93,9 +69,6 @@ const Editor = () => {
   const [wordsWritten, setWordsWritten] = useState(0);
   const [goalHit, setGoalHit] = useState(dailyEntry.goalHit);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
-  const progressBarStyles = {
-    width: `${goalHit ? '100' : percentWordsRemaining}%`,
-  };
 
   const [blockSelectorState, setBlockSelectorState] = useState(false);
   const blockSelectorStyles = {
@@ -355,10 +328,7 @@ const Editor = () => {
             <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
           </div>
 
-          <div className="progress-bar p-2 bg-offwhite">
-            <div className="progress bg-gray-800 h-2 max-w-full rounded-lg" style={progressBarStyles}></div>
-            <StyledConfettiCanon active={goalHit} config={confettiConfig} />
-          </div>
+          <ProgressBar goalHit={goalHit} percentWordsRemaining={percentWordsRemaining} />
         </div>
 
         <SlateEditor
