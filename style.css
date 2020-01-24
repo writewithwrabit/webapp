@@ -36,10 +36,11 @@ a:hover {
   @apply border-gray-800;
   @apply pl-10;
   @apply pr-4;
-  @apply py-4;
+  @apply py-8;
   @apply bg-gray-100;
   @apply italic;
   @apply text-gray-800;
+  @apply text-xl;
 }
 
 .editor ul {
