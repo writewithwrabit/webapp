@@ -27,7 +27,7 @@ const Auth = ({ children }) => {
     }
 
     // Add email to crisp for context
-    if (firebaseUser.email && $crisp) {
+    if (firebaseUser && firebaseUser.email && $crisp) {
       $crisp.push(['set', 'user:email', firebaseUser.email]);
     }
 
