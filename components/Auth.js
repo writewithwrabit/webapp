@@ -26,6 +26,11 @@ const Auth = ({ children }) => {
       router.push(router.pathname);
     }
 
+    // Add email to crisp for context
+    if (firebaseUser.email && $crisp) {
+      $crisp.push(['set', 'user:email', firebaseUser.email]);
+    }
+
     // Redirect to the login page if a user is not allowed
     if (!firebaseUser && protectedRoutes.includes(router.pathname)) {
       router.push('/login');
