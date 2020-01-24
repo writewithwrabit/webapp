@@ -310,53 +310,55 @@ const Editor = () => {
   return (
     <div className="min-h-screen">
       <div className="shadow-xl">
-        <div className="bg-secondary p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
-          <div >
-            <span className="hidden lg:inline-block mx-4 inline-block relative">
-              <span className="block-selector">
-                <div
-                  className="cursor-pointer bg-gray-400 text-gray-800 font-bold py-1 px-4 w-40 sm:w-48 rounded-lg"
-                  onMouseDown={openBlockSelector}
-                >
-                  {selectedBlockType}
-                </div>
+        <div className="sticky top-0 z-10">
+          <div className="bg-secondary p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
+            <div>
+              <span className="hidden lg:inline-block mx-4 inline-block relative">
+                <span className="block-selector">
+                  <div
+                    className="cursor-pointer bg-gray-400 text-gray-800 font-bold py-1 px-4 w-40 sm:w-48 rounded-lg"
+                    onMouseDown={openBlockSelector}
+                  >
+                    {selectedBlockType}
+                  </div>
 
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800">
-                  <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                </div>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                  </div>
 
-                <div
-                  ref={blockSelectorDropdown}
-                  className="bg-gray-100 shadow-lg text-gray-800 py-4 w-48 rounded-lg absolute top-0 z-10"
-                  style={blockSelectorStyles}
-                >
-                  {renderBlockTypeOption('paragraph', 'Paragraph')}
-                  {renderBlockTypeOption('heading-one', 'Heading 1')}
-                  {renderBlockTypeOption('heading-two', 'Heading 2')}
-                  {renderBlockTypeOption('heading-three', 'Heading 3')}
-                </div>
+                  <div
+                    ref={blockSelectorDropdown}
+                    className="bg-gray-100 shadow-lg text-gray-800 py-4 w-48 rounded-lg absolute top-0 z-10"
+                    style={blockSelectorStyles}
+                  >
+                    {renderBlockTypeOption('paragraph', 'Paragraph')}
+                    {renderBlockTypeOption('heading-one', 'Heading 1')}
+                    {renderBlockTypeOption('heading-two', 'Heading 2')}
+                    {renderBlockTypeOption('heading-three', 'Heading 3')}
+                  </div>
+                </span>
               </span>
-            </span>
 
-            <span className="mx-4">
-              {renderMarkButton('bold')}
-              {renderMarkButton('italic')}
-              {renderMarkButton('underlined')}
-            </span>
+              <span className="mx-4">
+                {renderMarkButton('bold')}
+                {renderMarkButton('italic')}
+                {renderMarkButton('underlined')}
+              </span>
 
-            <span className="mx-4">
-              {renderBlockButton('block-quote')}
-              {renderBlockButton('numbered-list')}
-              {renderBlockButton('bulleted-list')}
-            </span>
+              <span className="mx-4">
+                {renderBlockButton('block-quote')}
+                {renderBlockButton('numbered-list')}
+                {renderBlockButton('bulleted-list')}
+              </span>
+            </div>
+
+            <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
           </div>
 
-          <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
-        </div>
-
-        <div className="progress-bar sticky p-2 bg-offwhite">
-          <div className="progress bg-gray-800 h-2 max-w-full rounded-lg" style={progressBarStyles}></div>
-          <StyledConfettiCanon active={goalHit} config={confettiConfig} />
+          <div className="progress-bar p-2 bg-offwhite">
+            <div className="progress bg-gray-800 h-2 max-w-full rounded-lg" style={progressBarStyles}></div>
+            <StyledConfettiCanon active={goalHit} config={confettiConfig} />
+          </div>
         </div>
 
         <SlateEditor
