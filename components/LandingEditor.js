@@ -1,189 +1,24 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
-import { createEditor, Node, Editor, Transforms } from 'slate';
-import { Slate, Editable, withReact, useSlate } from 'slate-react';
+import { createEditor, Node } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 
-import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
+import EditorLeaf from './EditorLeaf';
+import EditorElement from './EditorElement';
+import { BlockButton, BlockTypeOption } from './EditorBlocks';
+import MarkButton from './EditorMarks';
 import ProgressBar from './ProgressBar';
 import WordCounter from './WordCounter';
-
-const selectableBlockTypes = {
-  paragraph: 'Paragraph',
-  'heading-one': 'Heading 1',
-  'heading-two': 'Heading 2',
-  'heading-three': 'Heading 3',
-};
-
-const icons = {
-  bold: FaBold,
-  italic: FaItalic,
-  underlined: FaUnderline,
-  'block-quote': FaQuoteLeft,
-  'numbered-list': FaListOl,
-  'bulleted-list': FaListUl,
-}
 
 const emptyDocument = [{
   type: 'paragraph',
   children: [{ text: '' }],
 }];
 
-const LIST_TYPES = ['numbered-list', 'bulleted-list']
-
-const Leaf = ({ attributes, children, leaf }) => {
-  if (leaf.bold) {
-    children = <strong>{children}</strong>;
-  }
-
-  if (leaf.italic) {
-    children = <em>{children}</em>;
-  }
-
-  if (leaf.underlined) {
-    children = <u>{children}</u>;
-  }
-
-  return <span {...attributes}>{children}</span>;
-}
-
-const Element = ({ attributes, children, element }) => {
-  switch (element.type) {
-    case 'block-quote':
-      return <blockquote {...attributes}>{children}</blockquote>;
-    case 'bulleted-list':
-      return <ul {...attributes}>{children}</ul>;
-    case 'heading-one':
-      return <h1 {...attributes}>{children}</h1>;
-    case 'heading-two':
-      return <h2 {...attributes}>{children}</h2>;
-    case 'heading-three':
-      return <h3 {...attributes}>{children}</h3>;
-    case 'list-item':
-      return <li {...attributes}>{children}</li>;
-    case 'numbered-list':
-      return <ol {...attributes}>{children}</ol>;
-    default:
-      return <p {...attributes}>{children}</p>;
-  }
-}
-
-const isBlockActive = (editor, format) => {
-  const [match] = Editor.nodes(editor, {
-    match: n => n.type === format,
-  });
-
-  return !!match;
-}
-
-const BlockButton = ({ format }) => {
-  const editor = useSlate();
-
-  const className = isBlockActive(editor, format) 
-    ? 'mx-2 text-white' 
-    : 'mx-2 hover:text-white';
-  
-    const IconComponent = icons[format];
-
-  return (
-    <button
-      className={className}
-      onMouseDown={event => {
-        event.preventDefault();
-        toggleBlock(editor, format);
-      }}
-    >
-      <IconComponent />
-    </button>
-  );
-}
-
-const toggleBlock = (editor, format) => {
-  const isActive = isBlockActive(editor, format);
-  const isList = LIST_TYPES.includes(format);
-
-  Transforms.unwrapNodes(editor, {
-    match: n => LIST_TYPES.includes(n.type),
-    split: true,
-  });
-
-  Transforms.setNodes(editor, {
-    type: isActive ? 'paragraph' : isList ? 'list-item' : format,
-  });
-
-  if (!isActive && isList) {
-    const block = { type: format, children: [] };
-    Transforms.wrapNodes(editor, block);
-  }
-}
-
-const BlockTypeOption = ({
-  format,
-  displayName,
-  setBlockType,
-  setBlockSelectorState,
-}) => {
-  const editor = useSlate();
-  const isActive = isBlockActive(editor, format);
-
-  if (isActive) {
-    setBlockType(selectableBlockTypes[format]);
-  }
-
-  return (
-    <div
-      className="blocktype-option cursor-pointer hover:bg-gray-300 py-2 px-4"
-      onMouseDown={event => {
-        event.preventDefault();
-        toggleBlock(editor, format);
-        setBlockSelectorState(false)
-      }}
-    >
-      {displayName}
-    </div>
-  );
-}
-
-const isMarkActive = (editor, format) => {
-  const marks = Editor.marks(editor);
-  return marks ? marks[format] === true : false;
-}
-
-const toggleMark = (editor, format) => {
-  const isActive = isMarkActive(editor, format);
-
-  if (isActive) {
-    Editor.removeMark(editor, format);
-  } else {
-    Editor.addMark(editor, format, true);
-  }
-}
-
-const MarkButton = ({ format }) => {
-  const editor = useSlate();
-
-  const className = isMarkActive(editor, format) 
-    ? 'mx-2 text-white' 
-    : 'mx-2 hover:text-white';
-
-  const IconComponent = icons[format];
-
-  return (
-    <button
-    className={className}
-      onMouseDown={event => {
-        event.preventDefault();
-        toggleMark(editor, format);
-      }}
-    >
-      <IconComponent />
-    </button>
-  );
-}
-
 const LandingEditor = () => {
   // Editor methods
   const editor = useMemo(() => withReact(createEditor()), []);
-  const renderLeaf = useCallback(props => <Leaf {...props} />, []);
-  const renderElement = useCallback(props => <Element {...props} />, []);
+  const renderLeaf = useCallback(props => <EditorLeaf {...props} />, []);
+  const renderElement = useCallback(props => <EditorElement {...props} />, []);
 
   const blockSelectorDropdown = useRef();
 
@@ -245,7 +80,7 @@ const LandingEditor = () => {
           value={value}
           onChange={handleChange}
         >
-          <div className="sticky top-0 z-10">
+          <div>
             <div className="bg-secondary p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
               <div>
                 <span className="hidden lg:inline-block mx-4 inline-block relative">
