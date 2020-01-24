@@ -1,68 +1,55 @@
 import { usePreloadedQuery, useLazyLoadQuery } from 'react-relay/hooks';
-import { useState, useRef, useEffect } from 'react';
-import { Editor as SlateEditor } from 'slate-react';
-import { Value } from 'slate';
-import Plain from 'slate-plain-serializer';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { createEditor, Node } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { startOfDay } from 'date-fns';
 
-import { FaBold, FaItalic, FaUnderline, FaQuoteLeft, FaListOl, FaListUl } from 'react-icons/fa';
+import slateConverter from '../lib/slateConverter';
+
+import EditorLeaf from './EditorLeaf';
+import EditorElement from './EditorElement';
+import { BlockButton, BlockTypeOption } from './EditorBlocks';
+import MarkButton from './EditorMarks';
 import ProgressBar from './ProgressBar';
 import WordCounter from './WordCounter';
 
 import GetEntry from '../queries/GetEntry';
 import GetWordGoal from '../queries/GetWordGoal';
 
-const selectableBlockTypes = {
-  paragraph: 'Paragraph',
-  'heading-one': 'Heading 1',
-  'heading-two': 'Heading 2',
-  'heading-three': 'Heading 3',
-};
+const emptyDocument = [{
+  type: 'paragraph',
+  children: [{ text: '' }],
+}];
 
-const icons = {
-  bold: FaBold,
-  italic: FaItalic,
-  underlined: FaUnderline,
-  'block-quote': FaQuoteLeft,
-  'numbered-list': FaListOl,
-  'bulleted-list': FaListUl,
-}
-
-const emptyDocument = {
-  document: {
-    nodes: [
-      {
-        object: 'block',
-        type: 'paragraph',
-        nodes: [],
-      },
-    ],
-  },
-};
-
-const DEFAULT_NODE = 'paragraph';
-
-const Editor = () => {
+const EditorContainer = () => {
   const { '/write': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
   const { dailyEntry } = usePreloadedQuery(GetEntry, preloadedQuery);
+
+  // Editor methods
+  const editor = useMemo(() => withReact(createEditor()), []);
+  const renderLeaf = useCallback(props => <EditorLeaf {...props} />, []);
+  const renderElement = useCallback(props => <EditorElement {...props} />, []);
 
   const date = startOfDay(new Date());
 
   let jsonEntry;
   try {
-    jsonEntry = JSON.parse(dailyEntry.content)
+    jsonEntry = JSON.parse(dailyEntry.content);
+
+    // Convert to new Slate version
+    if (!Array.isArray(jsonEntry)) {
+      jsonEntry = slateConverter(jsonEntry);
+    }
   } catch(e) {
     // TODO: Handle this error?
   }
 
   const saveEntry = useStoreActions(actions => actions.editor.saveEntry);
-  const initialValue = Value.fromJSON(jsonEntry || emptyDocument);
 
-  let editor = null;
   const blockSelectorDropdown = useRef();
 
-  const [value, setValue] = useState(initialValue); 
+  const [value, setValue] = useState(jsonEntry || emptyDocument); 
   
   const { firebaseData } = useStoreState(state => state.user);
   const { wordGoal } = useLazyLoadQuery(GetWordGoal, { userID: firebaseData.uid, date });
@@ -74,20 +61,20 @@ const Editor = () => {
   const blockSelectorStyles = {
     display: blockSelectorState ? 'block' : 'none',
   };
-  const [selectedBlockType, setBlockType] = useState('paragraph');
+  const [selectedBlockType, setBlockType] = useState('Paragraph');
 
-  const handleChange = ({ value: newValue }) => {
-    const serializedWords = Plain.serialize(value);
-    const splitWords = serializedWords.split(' ');
+  const handleChange = (newValue) => {
+    const words = newValue
+      .flatMap(n => Node.string(n).split(' '));
 
     // Don't force the user to hit space before you count the first word
-    const wordCount = splitWords.length && !splitWords[0] ? 0 : splitWords.length;
+    const wordCount = words.length && !words[0] ? 0 : words.length;
 
     setWordsWritten(wordCount);
     setGoalHit(dailyEntry.goalHit || wordCount > wordGoal)
     setValue(newValue);
 
-    const content = JSON.stringify(newValue.toJSON(newValue));
+    const content = JSON.stringify(newValue);
 
     saveEntry({
       ...dailyEntry,
@@ -96,163 +83,6 @@ const Editor = () => {
       goalHit,
       date,
     });
-  }
-
-  const hasMark = type => value.activeMarks.some(mark => mark.type === type);
-
-  const onClickMark = (event, type) => {
-    event.preventDefault();
-    editor.toggleMark(type);
-  }
-
-  const renderMarkButton = (type) => {
-    const isActive = hasMark(type);
-    const className = isActive 
-      ? 'mx-2 text-white' 
-      : 'mx-2 hover:text-white';
-    const IconComponent = icons[type];
-
-    if (!IconComponent) {
-      return;
-    }
-    
-    return (
-      <button
-        className={className}
-        onMouseDown={event => onClickMark(event, type)}
-      >
-        <IconComponent />
-      </button>
-    );
-  }
-
-  const renderMark = (props, editor, next) => {
-    const { children, mark, attributes } = props;
-
-    switch (mark.type) {
-      case 'bold':
-        return <strong {...attributes}>{children}</strong>;
-      case 'code':
-        return <code {...attributes}>{children}</code>;
-      case 'italic':
-        return <em {...attributes}>{children}</em>;
-      case 'underlined':
-        return <u {...attributes}>{children}</u>;
-      default:
-        return next();
-    }
-  }
-
-  const hasBlock = type => value.blocks.some(block => block.type === type);
-
-  const onClickBlock = (event, type) => {
-    event.preventDefault();
-
-    const { document } = value;
-
-    // Handle everything but list buttons.
-    if (type !== 'bulleted-list' && type !== 'numbered-list') {
-      const isActive = hasBlock(type);
-      const isList = hasBlock('list-item');
-
-      if (isList) {
-        editor
-          .setBlocks(isActive ? DEFAULT_NODE : type)
-          .unwrapBlock('bulleted-list')
-          .unwrapBlock('numbered-list');
-      } else {
-        editor.setBlocks(isActive ? DEFAULT_NODE : type);
-      }
-    } else {
-      // Handle the extra wrapping required for list buttons.
-      const isList = hasBlock('list-item');
-      const isType = value.blocks.some(block => !!document.getClosest(block.key, parent => parent.type === type));
-
-      if (isList && isType) {
-        editor
-          .setBlocks(DEFAULT_NODE)
-          .unwrapBlock('bulleted-list')
-          .unwrapBlock('numbered-list');
-      } else if (isList) {
-        editor
-          .unwrapBlock(
-            type === 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
-          )
-          .wrapBlock(type);
-      } else {
-        editor.setBlocks('list-item').wrapBlock(type);
-      }
-    }
-  }
-
-  const renderBlockButton = (type) => {
-    let isActive = hasBlock(type);
-    const className = isActive 
-      ? 'mx-2 text-white' 
-      : 'mx-2 hover:text-white';
-    const IconComponent = icons[type];
-
-    if (!IconComponent) {
-      return;
-    }
-
-    if (['numbered-list', 'bulleted-list'].includes(type)) {
-      const { document, blocks } = value;
-
-      if (blocks.size > 0) {
-        const parent = document.getParent(blocks.first().key);
-        isActive = hasBlock('list-item') && parent && parent.type === type;
-      }
-    }
-
-    return (
-      <button
-        className={className}
-        onMouseDown={event => onClickBlock(event, type)}
-      >
-        <IconComponent />
-      </button>
-    );
-  }
-
-  const renderBlock = (props, editor, next) => {
-    const { attributes, children, node, isSelected } = props;
-
-    if (isSelected && Object.keys(selectableBlockTypes).includes(node.type)) {
-      setBlockType(selectableBlockTypes[node.type]);
-    }
-
-    switch (node.type) {
-      case 'block-quote':
-        return <blockquote {...attributes}>{children}</blockquote>;
-      case 'bulleted-list':
-        return <ul {...attributes}>{children}</ul>;
-      case 'heading-one':
-        return <h1 {...attributes}>{children}</h1>;
-      case 'heading-two':
-        return <h2 {...attributes}>{children}</h2>;
-      case 'heading-three':
-        return <h3 {...attributes}>{children}</h3>;
-      case 'list-item':
-        return <li {...attributes}>{children}</li>;
-      case 'numbered-list':
-        return <ol {...attributes}>{children}</ol>;
-      default:
-        return next();
-    }
-  }
-
-  const onClickBlockSelector = async (e, blockType) => {
-    await onClickBlock(e, blockType);
-    setBlockSelectorState(!blockSelectorState);
-  }
-
-  const renderBlockTypeOption = (blockType, displayName) => {
-    return (
-      <div className="blocktype-option cursor-pointer hover:bg-gray-300 py-2 px-4" onMouseDown={(e) => onClickBlockSelector(e, blockType)}>
-        {displayName}
-      </div>
-    );
   }
 
   const openBlockSelector = e => {
@@ -283,68 +113,72 @@ const Editor = () => {
   return (
     <div className="min-h-screen">
       <div className="shadow-xl">
-        <div className="sticky top-0 z-10">
-          <div className="bg-secondary p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
-            <div>
-              <span className="hidden lg:inline-block mx-4 inline-block relative">
-                <span className="block-selector">
-                  <div
-                    className="cursor-pointer bg-gray-400 text-gray-800 font-bold py-1 px-4 w-40 sm:w-48 rounded-lg"
-                    onMouseDown={openBlockSelector}
-                  >
-                    {selectedBlockType}
-                  </div>
-
-                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800">
-                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                  </div>
-
-                  <div
-                    ref={blockSelectorDropdown}
-                    className="bg-gray-100 shadow-lg text-gray-800 py-4 w-48 rounded-lg absolute top-0 z-10"
-                    style={blockSelectorStyles}
-                  >
-                    {renderBlockTypeOption('paragraph', 'Paragraph')}
-                    {renderBlockTypeOption('heading-one', 'Heading 1')}
-                    {renderBlockTypeOption('heading-two', 'Heading 2')}
-                    {renderBlockTypeOption('heading-three', 'Heading 3')}
-                  </div>
-                </span>
-              </span>
-
-              <span className="mx-4">
-                {renderMarkButton('bold')}
-                {renderMarkButton('italic')}
-                {renderMarkButton('underlined')}
-              </span>
-
-              <span className="mx-4">
-                {renderBlockButton('block-quote')}
-                {renderBlockButton('numbered-list')}
-                {renderBlockButton('bulleted-list')}
-              </span>
-            </div>
-
-            <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
-          </div>
-
-          <ProgressBar goalHit={goalHit} percentWordsRemaining={percentWordsRemaining} />
-        </div>
-
-        <SlateEditor
-          ref={(editorRef) => editor = editorRef}
-          className="editor bg-offwhite px-8 pb-8 pt-4 min-h-screen"
-          placeholder={`Hope you're having a great day, time to write!`}
+        <Slate
+          editor={editor}
           value={value}
           onChange={handleChange}
-          autoFocus={true}
-          autoCorrect={true}
-          renderMark={renderMark}
-          renderBlock={renderBlock}
-        />
+        >
+          <div className="sticky top-0 z-10">
+            <div className="bg-secondary p-4 rounded-t-lg text-gray-500 flex justify-center sm:justify-between items-center">
+              <div>
+                <span className="hidden lg:inline-block mx-4 inline-block relative">
+                  <span className="block-selector">
+                    <div
+                      className="cursor-pointer bg-gray-400 text-gray-800 font-bold py-1 px-4 w-40 sm:w-48 rounded-lg"
+                      onMouseDown={openBlockSelector}
+                    >
+                      {selectedBlockType}
+                    </div>
+
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-800">
+                      <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
+
+                    <div
+                      ref={blockSelectorDropdown}
+                      className="bg-gray-100 shadow-lg text-gray-800 py-4 w-48 rounded-lg absolute top-0 z-10"
+                      style={blockSelectorStyles}
+                    >
+                      <BlockTypeOption format="paragraph" displayName="Paragraph" setBlockType={setBlockType} setBlockSelectorState={setBlockSelectorState} />
+                      <BlockTypeOption format="heading-one" displayName="Heading 1" setBlockType={setBlockType} setBlockSelectorState={setBlockSelectorState} />
+                      <BlockTypeOption format="heading-two" displayName="Heading 2" setBlockType={setBlockType} setBlockSelectorState={setBlockSelectorState} />
+                      <BlockTypeOption format="heading-three" displayName="Heading 3" setBlockType={setBlockType} setBlockSelectorState={setBlockSelectorState} />
+                    </div>
+                  </span>
+                </span>
+
+                <span className="mx-4">
+                  <MarkButton format="bold" />
+                  <MarkButton format="italic" />
+                  <MarkButton format="underlined" />
+                </span>
+
+                <span className="mx-4">
+                  <BlockButton format="block-quote" />
+                  <BlockButton format="numbered-list" />
+                  <BlockButton format="bulleted-list" />
+                </span>
+              </div>
+
+              <WordCounter wordsWritten={wordsWritten} wordGoal={wordGoal} goalHit={goalHit} />
+            </div>
+
+            <ProgressBar goalHit={goalHit} percentWordsRemaining={percentWordsRemaining} />
+          </div>
+
+
+          <Editable
+            className="editor bg-offwhite px-8 pb-8 pt-4 min-h-screen"
+            placeholder={`Hope you're having a great day, time to write!`}
+            renderLeaf={renderLeaf}
+            renderElement={renderElement}
+            autoFocus
+            spellCheck
+          />
+        </Slate>
       </div>
     </div>
   );
 };
 
-export default Editor;
+export default EditorContainer;
