@@ -14,7 +14,7 @@ const emptyDocument = [{
   children: [{ text: '' }],
 }];
 
-const LandingEditor = () => {
+const LandingEditor = ({ placeholder }) => {
   // Editor methods
   const editor = useMemo(() => withReact(createEditor()), []);
   const renderLeaf = useCallback(props => <EditorLeaf {...props} />, []);
@@ -39,8 +39,8 @@ const LandingEditor = () => {
     const words = newValue
       .flatMap(n => Node.string(n).split(' '));
 
-      // Don't force the user to hit space before you count the first word
-      const wordCount = words.length && !words[0] ? 0 : words.length;
+    // Don't force the user to hit space before you count the first word
+    const wordCount = words.length && !words[0] ? 0 : words.length;
 
     setWordsWritten(wordCount);
     setGoalHit(wordCount > wordGoal)
@@ -109,13 +109,13 @@ const LandingEditor = () => {
                   </span>
                 </span>
 
-                <span className="mx-4">
+                <span className="mx-2">
                   <MarkButton format="bold" />
                   <MarkButton format="italic" />
                   <MarkButton format="underlined" />
                 </span>
 
-                <span className="mx-4">
+                <span className="mx-2">
                   <BlockButton format="block-quote" />
                   <BlockButton format="numbered-list" />
                   <BlockButton format="bulleted-list" />
@@ -131,10 +131,9 @@ const LandingEditor = () => {
 
           <Editable
             className="editor bg-offwhite px-8 pb-8 pt-4 min-h-screen"
-            placeholder={`Hope you're having a great day, time to write!`}
+            placeholder={placeholder}
             renderLeaf={renderLeaf}
             renderElement={renderElement}
-            autoFocus
             spellCheck
           />
         </Slate>

@@ -67,8 +67,8 @@ const EditorContainer = () => {
     const words = newValue
       .flatMap(n => Node.string(n).split(' '));
 
-      // Don't force the user to hit space before you count the first word
-      const wordCount = words.length && !words[0] ? 0 : words.length;
+    // Don't force the user to hit space before you count the first word
+    const wordCount = words.length && !words[0] ? 0 : words.length;
 
     setWordsWritten(wordCount);
     setGoalHit(dailyEntry.goalHit || wordCount > wordGoal)
