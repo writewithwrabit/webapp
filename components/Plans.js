@@ -65,7 +65,7 @@ const Plans = ({ user }) => {
           <ul>
             <li>30 day free trial</li>
             <li>Billed monthly</li>
-            <li>We donate $1 for every 14 day streak</li>
+            <li>We donate $1 for every 7 day streak</li>
           </ul>
 
           {
