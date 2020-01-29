@@ -94,7 +94,6 @@ const Plans = ({ user }) => {
           </div>
 
           <ul>
-            <li>50% more social impact</li>
             <li>30 day free trial</li>
             <li>Billed yearly</li>
             <li>We donate $1 for every 7 day streak</li>
