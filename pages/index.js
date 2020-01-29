@@ -39,8 +39,11 @@ const StyledPhone = styled.div`
 
 const GrowingCard = styled.div`
   transition: transform 0.6s;
-  &:hover {
-    transform: scale(1.2);
+
+  @media (min-width: 1024px) {
+    &:hover {
+      transform: scale(1.2);
+    }
   }
 `;
 

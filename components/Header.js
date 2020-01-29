@@ -16,7 +16,13 @@ const Header = () => {
           </a>
         </Link>
 
-        <div className="font-bold">
+        <div className="font-bold flex items-center">
+          <Link href="/pricing">
+            <a className="hidden lg:block mx-4">
+              Pricing
+            </a>
+          </Link>
+
           {
             user.isAuthenticated
               ? (
@@ -28,9 +34,21 @@ const Header = () => {
                 </Link>
               )
               : (
-                <Link href="/login">
-                  <a>Login</a>
-                </Link>
+                <>
+                  <Link href="/login">
+                    <a className="hidden lg:block mx-4">
+                      Login
+                    </a>
+                  </Link>
+
+                  <button className="cta bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-4">
+                    <Link href="/signup">
+                      <a className="text-white">
+                        Start writing
+                      </a>
+                    </Link>
+                  </button>
+                </>
               )
           }
           </div>
