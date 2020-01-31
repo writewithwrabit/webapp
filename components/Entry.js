@@ -30,16 +30,17 @@ const date = startOfDay(new Date());
 const Entry = ({ entry }) => {
   const [display, setDisplay] = useState(false);
   const localEntryDate = new Date(utcToZonedTime(entry.createdAt, timezoneOffset));
-  let classes = 'bg-white md:ml-5 mb-5 px-10 py-5 rounded shadow-md flex justify-between items-center border-green-500';
+  let classes = 'entry bg-white md:ml-5 mb-5 px-10 py-5 rounded shadow-md flex justify-between items-center border-green-500';
 
   if (entry.goalHit) {
     classes = `${classes} border`;
   }
 
   const toggleDisplay = e => {
-    const entryContainerClicked = e.target.classList.contains('entry')
+    console.log(e.target.parentNode.classList, e.target.classList);
+    const entryContainerClicked = (e.target.classList.contains('entry')
       || e.target.parentNode.classList.contains('entry-details')
-      || e.target.parentNode.classList.contains('entry');
+      || e.target.parentNode.classList.contains('entry')) && !e.target.classList.contains('delete-entry');
 
     const editorClicked = e.target.classList.contains('editor') || e.target.parentNode.classList.contains('editor') || e.target.getAttribute('data-slate-string');
 

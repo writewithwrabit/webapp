@@ -22,7 +22,7 @@ const DeleteEntryButton = ({ entryID }) => {
 
   return (
     <button
-      className={`hidden font-semibold py-2 px-4 border rounded bg-primary hover:bg-primary-dark text-white border-primary`}
+      className="delete-entry hidden font-semibold py-2 px-4 border rounded bg-primary hover:bg-primary-dark text-white border-primary"
       onClick={deleteEntry}
     >
       Delete
