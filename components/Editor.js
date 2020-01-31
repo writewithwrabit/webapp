@@ -22,6 +22,8 @@ const emptyDocument = [{
   children: [{ text: '' }],
 }];
 
+const date = startOfDay(new Date());
+
 const EditorContainer = () => {
   const { '/write': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
   const { dailyEntry } = usePreloadedQuery(GetEntry, preloadedQuery);
@@ -30,8 +32,6 @@ const EditorContainer = () => {
   const editor = useMemo(() => withReact(createEditor()), []);
   const renderLeaf = useCallback(props => <EditorLeaf {...props} />, []);
   const renderElement = useCallback(props => <EditorElement {...props} />, []);
-
-  const date = startOfDay(new Date());
 
   let jsonEntry;
   try {
@@ -54,7 +54,7 @@ const EditorContainer = () => {
   const { firebaseData } = useStoreState(state => state.user);
   const { wordGoal } = useLazyLoadQuery(GetWordGoal, { userID: firebaseData.uid, date });
   const [wordsWritten, setWordsWritten] = useState(0);
-  const [goalHit, setGoalHit] = useState(dailyEntry.goalHit);
+  const [goalHit, setGoalHit] = useState(dailyEntry.goalHit || false);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
 
   const [blockSelectorState, setBlockSelectorState] = useState(false);
@@ -63,7 +63,7 @@ const EditorContainer = () => {
   };
   const [selectedBlockType, setBlockType] = useState('Paragraph');
 
-  const handleChange = (newValue) => {
+  const handleChange = newValue => {
     const words = newValue
       .flatMap(n => Node.string(n).split(' '));
 

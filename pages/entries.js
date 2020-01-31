@@ -168,7 +168,7 @@ const Entries = () => {
         </div>
 
         <Suspense fallback={<EntriesListFallback />}>
-          <EntriesList startDate={startDate} endDate={endDate} setUserEntries={setUserEntries} />
+          <EntriesList startDate={startDate} endDate={endDate} setUserEntries={setUserEntries} userEntries={userEntries} />
         </Suspense>
       </div>
     </div>

@@ -1,13 +1,35 @@
 import { format } from 'date-fns'
 import { useState } from 'react';
 import { utcToZonedTime } from 'date-fns-tz';
+import styled from '@emotion/styled';
+import { startOfDay, isEqual } from 'date-fns';
 
 const timezoneOffset = new Date().getTimezoneOffset();
 
 import EntryPopup from '../components/EntryPopup';
+import DeleteEntryButton from '../components/DeleteEntryButton';
+
+const StyledEntry = styled.div`
+  cursor: pointer;
+
+  &:hover {
+    margin-left: 0.5rem;
+
+    & button {
+      display: block;
+    }
+
+    & .goal-hit {
+      display: none;
+    }
+  }
+`;
+
+const date = startOfDay(new Date());
 
 const Entry = ({ entry }) => {
   const [display, setDisplay] = useState(false);
+  const localEntryDate = new Date(utcToZonedTime(entry.createdAt, timezoneOffset));
   let classes = 'entry bg-white md:ml-5 mb-5 px-10 py-5 rounded shadow-md flex justify-between items-center border-green-500';
 
   if (entry.goalHit) {
@@ -15,9 +37,10 @@ const Entry = ({ entry }) => {
   }
 
   const toggleDisplay = e => {
-    const entryContainerClicked = e.target.classList.contains('entry')
+    console.log(e.target.parentNode.classList, e.target.classList);
+    const entryContainerClicked = (e.target.classList.contains('entry')
       || e.target.parentNode.classList.contains('entry-details')
-      || e.target.parentNode.classList.contains('entry');
+      || e.target.parentNode.classList.contains('entry')) && !e.target.classList.contains('delete-entry');
 
     const editorClicked = e.target.classList.contains('editor') || e.target.parentNode.classList.contains('editor') || e.target.getAttribute('data-slate-string');
 
@@ -29,13 +52,13 @@ const Entry = ({ entry }) => {
   };
 
   return (
-    <div
+    <StyledEntry
       onClick={toggleDisplay}
       className={classes}
     >
       <div className="entry-details">
         <div className="entry-created-at font-bold pb-2">
-          {format(new Date(utcToZonedTime(entry.createdAt, timezoneOffset)), 'MMMM d, yyyy')}
+          {format(localEntryDate, 'MMMM d, yyyy')}
         </div>
 
         <div className="entry-word-count">
@@ -48,12 +71,19 @@ const Entry = ({ entry }) => {
       {
         entry.goalHit
           && (
-            <div className="text-4xl">
+            <div className="goal-hit text-4xl">
               🎉
             </div>
           )
       }
-    </div>
+
+      {
+        // Don't allow the daily entry to be deleted
+        // they can just go write in it
+        !isEqual(localEntryDate, date) &&
+        <DeleteEntryButton entryID={entry.id} />
+      }
+    </StyledEntry>
   );
 };
 

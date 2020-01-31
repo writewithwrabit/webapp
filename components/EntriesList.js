@@ -24,11 +24,14 @@ const NoEntriesFound = () => (
   </div>
 );
 
-const EntriesList = ({ setUserEntries }) => {
+const EntriesList = ({ userEntries, setUserEntries }) => {
   const { '/entries': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
-  const { entriesByUserID } = usePreloadedQuery(GetEntries, preloadedQuery);
+  let { entriesByUserID } = usePreloadedQuery(GetEntries, preloadedQuery);
+  entriesByUserID = entriesByUserID.filter(Boolean);
 
-  setUserEntries(entriesByUserID);
+  if (userEntries.length !== entriesByUserID.length) {
+    setUserEntries(entriesByUserID);
+  }
 
   return (
     <div className="w-full flex-grow">
