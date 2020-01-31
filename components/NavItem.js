@@ -1,7 +1,7 @@
 import { useTransition } from 'react';
 import { useRouter } from 'next/router';
 import { preloadQuery } from 'react-relay/hooks';
-import { useStoreActions } from 'easy-peasy';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import styled from '@emotion/styled';
 
 import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
@@ -57,6 +57,7 @@ const StyledNavItem = styled.span`
 const NavItem = ({ url, text, query, variables }) => {
   const router = useRouter();
   const setPreloadedQuery = useStoreActions(actions => actions.pages.setPreloadedQuery);
+  const { uid: userID } = useStoreState(state => state.user).firebaseData;
   const [startTransition, isPending] = useTransition({
     timeoutMs: 3000
   });
@@ -77,6 +78,10 @@ const NavItem = ({ url, text, query, variables }) => {
     }
 
     router.prefetch(url);
+
+    if (variables.userID) {
+      variables.userID = userID;
+    }
 
     const preloadedQuery = preloadQuery(
       environment,
