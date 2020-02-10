@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { startOfDay, addDays } from 'date-fns';
+import { startOfDay } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
 import dynamic from 'next/dynamic';
 
@@ -32,5 +32,5 @@ export default withLayout(
         timezoneOffsetHours
       ),
     }
-  }),
+  })
 );

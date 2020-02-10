@@ -1,5 +1,5 @@
 # source: http://localhost:8080/query
-# timestamp: Sun Jan 19 2020 09:30:52 GMT-0800 (PST)
+# timestamp: Fri Jan 31 2020 11:12:31 GMT-0800 (Pacific Standard Time)
 
 type Editor {
   id: ID!
@@ -34,6 +34,7 @@ type Mutation {
   completeUserSignup(input: SignedUpUser!): User!
   createEntry(input: NewEntry!): Entry!
   updateEntry(id: ID!, input: ExistingEntry!, date: String!): Entry!
+  deleteEntry(id: ID!): Entry!
   createEditor(input: NewEditor!): Editor!
   createSubscription(input: NewSubscription!): StripeSubscription!
   cancelSubscription(id: ID!): String!

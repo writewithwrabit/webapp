@@ -1,8 +1,14 @@
 import Link from 'next/link';
 import { useStoreState } from 'easy-peasy';
+import { startOfDay } from 'date-fns';
+import { zonedTimeToUtc } from 'date-fns-tz';
 
 import useGoogleAnalytics from '../hooks/useGoogleAnalytics';
 
+const timezoneOffsetHours = new Date().getTimezoneOffset();
+
+import GetEntries from '../queries/GetEntries';
+import GetEntry from '../queries/GetEntry';
 import GetStats from '../queries/GetStats';
 
 import LogoName from '../public/logos/name.svg';
@@ -13,14 +19,24 @@ const navItems = [
   {
     url: '/entries',
     text: 'Entries',
-    query: GetStats,
-    variables: { global: false },
+    query: GetEntries,
+    variables: {
+      userID: 'REPLACE_ME',
+      startDate: null,
+      endDate: null,
+    },
   },
   {
     url: '/write',
     text: 'Write',
-    query: GetStats,
-    variables: { global: false },
+    query: GetEntry,
+    variables: { 
+      userID: 'REPLACE_ME',
+      date: zonedTimeToUtc(
+        startOfDay(new Date()),
+        timezoneOffsetHours
+      ),
+    },
   },
   {
     url: '/stats',
