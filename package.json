@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "index.js",
   "repository": "https://github.com/writewithwrabit/webapp",
-  "author": "Anthony Morris",
+  "author": "Anthony Morris <anthony@amorrissound.com>",
   "license": "MIT",
   "dependencies": {
     "@camwiegert/typical": "^0.1.1",
