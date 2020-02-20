@@ -46,8 +46,8 @@
     "start": "next start",
     "relay": "relay-compiler --src ./ --exclude '**/.next/**' '**/node_modules/**' '**/test/**'  '**/__generated__/**' --exclude '**/schema/**' --schema ./schema.graphql",
     "schema": "graphql get-schema dev",
-    "deploy": "now --local-config=now.stage.json",
-    "deploy:prod": "now --local-config=now.prod.json --prod"
+    "deploy": "now --local-config=now.stage.json --confirm",
+    "deploy:prod": "now --local-config=now.prod.json --prod --confirm"
   },
   "devDependencies": {
     "autoprefixer": "9.7.4",
