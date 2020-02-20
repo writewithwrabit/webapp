@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "autoprefixer": "9.7.4",
-    "babel-plugin-relay": "7.1.0",
+    "babel-plugin-relay": "9.0.0",
     "cssnano": "4.1.10",
     "graphql-cli": "3.0.14",
     "postcss-easy-import": "3.0.0",
