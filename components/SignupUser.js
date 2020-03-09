@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { graphql, commitMutation } from 'react-relay';
 import styled from '@emotion/styled';
-import useForm from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
 import { useStoreActions } from 'easy-peasy';
 
