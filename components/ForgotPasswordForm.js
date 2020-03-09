@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import firebase from '../firebase';
-import useForm from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
 
 const ForgotPasswordForm = ({ setForm }) => {
