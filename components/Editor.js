@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import { usePreloadedQuery, useLazyLoadQuery } from 'react-relay/hooks';
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { createEditor, Node } from 'slate';
@@ -71,8 +72,13 @@ const EditorContainer = () => {
     const wordCount = words.length && !words[0] ? 0 : words.length;
 
     setWordsWritten(wordCount);
-    setGoalHit(dailyEntry.goalHit || wordCount > wordGoal)
-    setValue(newValue);
+    setGoalHit(dailyEntry.goalHit || wordCount > wordGoal);
+
+    // Concurrenct Mode + Slate don't play well together
+    // https://github.com/ianstormtaylor/slate/issues/3334
+    ReactDOM.unstable_discreteUpdates(() => {
+      setValue(newValue);
+    });
 
     const content = JSON.stringify(newValue);
 
