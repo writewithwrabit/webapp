@@ -17,7 +17,7 @@
     "dotenv": "^8.2.0",
     "easy-peasy": "3.3.0",
     "firebase": "^7.0.0",
-    "graphql": "^14.4.2",
+    "graphql": "^15.0.0",
     "graphql-tag": "^2.10.1",
     "immutable": "^4.0.0-rc.12",
     "isomorphic-unfetch": "^3.0.0",
