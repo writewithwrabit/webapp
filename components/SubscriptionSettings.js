@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import GET_USER_SUBSCRIPTION from '../queries/GetUserSubscription';
 import CANCEL_SUBSCRIPTION from '../queries/CancelSubscription';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 
 const environment = createRelayEnvironment();
 

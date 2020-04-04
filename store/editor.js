@@ -4,7 +4,7 @@ import { graphql, commitMutation } from 'react-relay';
 import firebase from '../firebase';
 import debounce from 'lodash/debounce';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const UPDATE_ENTRY = graphql`

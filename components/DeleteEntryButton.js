@@ -1,6 +1,6 @@
 import { commitMutation } from 'react-relay';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 import DeleteEntry from '../queries/DeleteEntry';

@@ -4,7 +4,7 @@ import { preloadQuery } from 'react-relay/hooks';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import styled from '@emotion/styled';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const StyledNavItem = styled.span`

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
 import { useStoreActions } from 'easy-peasy';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const CREATE_USER = graphql`

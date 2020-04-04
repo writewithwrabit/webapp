@@ -2,7 +2,7 @@ import { action, thunk } from 'easy-peasy';
 import { graphql, fetchQuery } from 'react-relay/hooks';
 
 import completeUserSignup from './completeUserSignup';
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 
 const environment = createRelayEnvironment();
 

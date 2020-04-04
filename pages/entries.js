@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import { preloadQuery } from 'react-relay/hooks';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 import GetEntries from '../queries/GetEntries';

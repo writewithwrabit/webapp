@@ -7,7 +7,7 @@ import { RelayEnvironmentProvider } from 'react-relay/hooks';
 import { DefaultSeo } from 'next-seo';
 
 import { store } from '../store/store';
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 
 Sentry.init({ dsn: process.env.SENTRY_DSN });
 

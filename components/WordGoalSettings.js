@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import { commitMutation } from 'react-relay';
 import { useSpring, animated } from 'react-spring';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 import UpdateUser from '../queries/UpdateUser';
