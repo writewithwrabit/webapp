@@ -1,7 +1,7 @@
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { preloadQuery } from 'react-relay/hooks';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const withPreloadedQuery = (Component, { key, query, variables }) => {

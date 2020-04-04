@@ -4,7 +4,7 @@ import { preloadQuery } from 'react-relay/hooks';
 import { useStoreActions } from 'easy-peasy';
 
 import GET_STATS from '../queries/GetStats';
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 const StatsLink = () => {

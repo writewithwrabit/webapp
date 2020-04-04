@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash f54b22eb0fdfcbce39d0f29b9cfe4df6
+ * @relayHash 4f4044210028c628feb5c98b6a29e9f2
  */
 
 /* eslint-disable */
@@ -9,42 +9,38 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type ExistingEntry = {|
+export type EntriesListQueryVariables = {|
   userID: string,
-  wordCount: number,
-  content: string,
-  goalHit: boolean,
+  startDate?: ?string,
+  endDate?: ?string,
 |};
-export type editorMutationVariables = {|
-  id: string,
-  input: ExistingEntry,
-  date: string,
-|};
-export type editorMutationResponse = {|
-  +updateEntry: {|
+export type EntriesListQueryResponse = {|
+  +entriesByUserID: $ReadOnlyArray<{|
     +id: string,
-    +content: string,
     +wordCount: number,
+    +createdAt: string,
+    +content: string,
     +goalHit: boolean,
-  |}
+  |}>
 |};
-export type editorMutation = {|
-  variables: editorMutationVariables,
-  response: editorMutationResponse,
+export type EntriesListQuery = {|
+  variables: EntriesListQueryVariables,
+  response: EntriesListQueryResponse,
 |};
 */
 
 
 /*
-mutation editorMutation(
-  $id: ID!
-  $input: ExistingEntry!
-  $date: String!
+query EntriesListQuery(
+  $userID: ID!
+  $startDate: String
+  $endDate: String
 ) {
-  updateEntry(id: $id, input: $input, date: $date) {
+  entriesByUserID(userID: $userID, startDate: $startDate, endDate: $endDate) {
     id
-    content
     wordCount
+    createdAt
+    content
     goalHit
   }
 }
@@ -54,20 +50,20 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "id",
+    "name": "userID",
     "type": "ID!",
     "defaultValue": null
   },
   {
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "ExistingEntry!",
+    "name": "startDate",
+    "type": "String",
     "defaultValue": null
   },
   {
     "kind": "LocalArgument",
-    "name": "date",
-    "type": "String!",
+    "name": "endDate",
+    "type": "String",
     "defaultValue": null
   }
 ],
@@ -75,27 +71,27 @@ v1 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "updateEntry",
+    "name": "entriesByUserID",
     "storageKey": null,
     "args": [
       {
         "kind": "Variable",
-        "name": "date",
-        "variableName": "date"
+        "name": "endDate",
+        "variableName": "endDate"
       },
       {
         "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
+        "name": "startDate",
+        "variableName": "startDate"
       },
       {
         "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
+        "name": "userID",
+        "variableName": "userID"
       }
     ],
     "concreteType": "Entry",
-    "plural": false,
+    "plural": true,
     "selections": [
       {
         "kind": "ScalarField",
@@ -107,14 +103,21 @@ v1 = [
       {
         "kind": "ScalarField",
         "alias": null,
-        "name": "content",
+        "name": "wordCount",
         "args": null,
         "storageKey": null
       },
       {
         "kind": "ScalarField",
         "alias": null,
-        "name": "wordCount",
+        "name": "createdAt",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "content",
         "args": null,
         "storageKey": null
       },
@@ -132,28 +135,28 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "editorMutation",
-    "type": "Mutation",
+    "name": "EntriesListQuery",
+    "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "operation": {
     "kind": "Operation",
-    "name": "editorMutation",
+    "name": "EntriesListQuery",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "editorMutation",
+    "operationKind": "query",
+    "name": "EntriesListQuery",
     "id": null,
-    "text": "mutation editorMutation(\n  $id: ID!\n  $input: ExistingEntry!\n  $date: String!\n) {\n  updateEntry(id: $id, input: $input, date: $date) {\n    id\n    content\n    wordCount\n    goalHit\n  }\n}\n",
+    "text": "query EntriesListQuery(\n  $userID: ID!\n  $startDate: String\n  $endDate: String\n) {\n  entriesByUserID(userID: $userID, startDate: $startDate, endDate: $endDate) {\n    id\n    wordCount\n    createdAt\n    content\n    goalHit\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '0652b58f4986850ca6f923fa65b14eab';
+(node/*: any*/).hash = 'de915b5b277c3cdb9263f1980574bfe5';
 
 module.exports = node;

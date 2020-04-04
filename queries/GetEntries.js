@@ -1,4 +1,4 @@
-import { graphql } from 'react-relay/hooks';
+import { graphql } from 'relay-runtime';
 
 const GetEntries = graphql`
   query GetEntriesQuery($userID: ID!, $startDate: String, $endDate: String) {

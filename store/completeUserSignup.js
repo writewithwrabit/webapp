@@ -3,7 +3,7 @@ import { graphql, commitMutation } from 'react-relay';
 import Router from 'next/router';
 
 import firebase from '../firebase';
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 
 const environment = createRelayEnvironment();
 

@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react';
+import { useState } from 'react';
 
 import withLayout from '../components/Layout';
 import PageHeader from '../components/PageHeader';
@@ -25,9 +25,7 @@ const Settings = () => {
       <div className="flex">
         <SettingsMenu selected={settingsOption} selectOption={setSettingsOption} />
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <Component />
-        </Suspense>
+        <Component />
       </div>
     </div>
   );

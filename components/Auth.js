@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import firebase from '../firebase';
-import { addDays, isPast, fromUnixTime, subDays } from 'date-fns';
+import { addDays, isPast, fromUnixTime } from 'date-fns';
 
 import GlobalLoader from './GlobalLoader';
 

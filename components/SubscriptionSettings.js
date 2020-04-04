@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useLazyLoadQuery } from 'react-relay/hooks';
-import { commitMutation } from 'react-relay';
+import { QueryRenderer, commitMutation } from 'react-relay';
 import { formatDistance, fromUnixTime, addDays } from 'date-fns';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -8,8 +7,7 @@ import { useRouter } from 'next/router';
 import GET_USER_SUBSCRIPTION from '../queries/GetUserSubscription';
 import CANCEL_SUBSCRIPTION from '../queries/CancelSubscription';
 
-import createRelayEnvironment from '../lib/relay/createRelayEnvironment';
-
+import createRelayEnvironment from '../lib/createRelayEnvironment';
 const environment = createRelayEnvironment();
 
 import Payment from '../components/Payment';
@@ -72,10 +70,7 @@ const NewSubscriptionButton = () => {
 }
 
 const SubscriptionSettings = ({ user }) => {
-  const { userByFirebaseID } = useLazyLoadQuery(GET_USER_SUBSCRIPTION, {
-    firebaseID: user.firebaseData.uid,
-  });
-  const { stripeID, StripeSubscription } = userByFirebaseID;
+  const { stripeID, StripeSubscription } = user;
   const [subscription, setSubscription] = useState(StripeSubscription);
   const { id, status } = subscription;
 
@@ -140,4 +135,27 @@ const SubscriptionSettings = ({ user }) => {
   );
 }
 
-export default SubscriptionSettings;
+const SubscriptionContainer = ({ user }) => {
+  const render = ({ error, props }) => {
+    if (error) {
+      throw Error(error);
+    } else if (props) {
+      return <SubscriptionSettings user={props.userByFirebaseID} />;
+    }
+  
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <QueryRenderer
+      environment={environment}
+      query={GET_USER_SUBSCRIPTION}
+      variables={{
+        firebaseID: user.firebaseData.uid,
+      }}
+      render={render}
+    />
+  );
+}
+
+export default SubscriptionContainer;

@@ -1,7 +1,7 @@
 import { graphql } from 'relay-runtime';
 
-const GetEntry = graphql`
-  query GetEntryQuery($userID: ID!, $date: String!) {
+const WritePageQuery = graphql`
+  query WritePageQuery($userID: ID!, $date: String!) {
     dailyEntry(userID: $userID, date: $date) {
       id
       content
@@ -9,7 +9,8 @@ const GetEntry = graphql`
       createdAt
       goalHit
     }
+    wordGoal(userID: $userID, date: $date)
   }
 `;
 
-export default GetEntry;
+export default WritePageQuery;
