@@ -1,9 +1,7 @@
-import ReactDOM from 'react-dom';
-import { usePreloadedQuery, useLazyLoadQuery } from 'react-relay/hooks';
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { createEditor, Node } from 'slate';
 import { Slate, Editable, withReact } from 'slate-react';
-import { useStoreActions, useStoreState } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 import { startOfDay } from 'date-fns';
 
 import slateConverter from '../lib/slateConverter';
@@ -15,9 +13,6 @@ import MarkButton from './EditorMarks';
 import ProgressBar from './ProgressBar';
 import WordCounter from './WordCounter';
 
-import GetEntry from '../queries/GetEntry';
-import GetWordGoal from '../queries/GetWordGoal';
-
 const emptyDocument = [{
   type: 'paragraph',
   children: [{ text: '' }],
@@ -25,10 +20,7 @@ const emptyDocument = [{
 
 const date = startOfDay(new Date());
 
-const EditorContainer = () => {
-  const { '/write': preloadedQuery } = useStoreState(state => state.pages.preloadedQueries);
-  const { dailyEntry } = usePreloadedQuery(GetEntry, preloadedQuery);
-
+const EditorContainer = ({ dailyEntry, wordGoal }) => {
   // Editor methods
   const editor = useMemo(() => withReact(createEditor()), []);
   const renderLeaf = useCallback(props => <EditorLeaf {...props} />, []);
@@ -50,10 +42,8 @@ const EditorContainer = () => {
 
   const blockSelectorDropdown = useRef();
 
-  const [value, setValue] = useState(jsonEntry || emptyDocument); 
+  const [value, setValue] = useState(jsonEntry || emptyDocument);
   
-  const { firebaseData } = useStoreState(state => state.user);
-  const { wordGoal } = useLazyLoadQuery(GetWordGoal, { userID: firebaseData.uid, date });
   const [wordsWritten, setWordsWritten] = useState(0);
   const [goalHit, setGoalHit] = useState(dailyEntry.goalHit || false);
   const percentWordsRemaining = ((wordsWritten / wordGoal) * 100).toFixed(2);
@@ -73,12 +63,7 @@ const EditorContainer = () => {
 
     setWordsWritten(wordCount);
     setGoalHit(dailyEntry.goalHit || wordCount > wordGoal);
-
-    // Concurrenct Mode + Slate don't play well together
-    // https://github.com/ianstormtaylor/slate/issues/3334
-    ReactDOM.unstable_discreteUpdates(() => {
-      setValue(newValue);
-    });
+    setValue(newValue);
 
     const content = JSON.stringify(newValue);
 
@@ -171,7 +156,6 @@ const EditorContainer = () => {
 
             <ProgressBar goalHit={goalHit} percentWordsRemaining={percentWordsRemaining} />
           </div>
-
 
           <Editable
             className="editor bg-offwhite px-8 pb-8 pt-4 min-h-screen"

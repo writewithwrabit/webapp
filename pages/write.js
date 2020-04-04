@@ -1,36 +1,60 @@
-import { Suspense } from 'react';
+import { QueryRenderer, graphql } from 'react-relay';
 import { startOfDay } from 'date-fns';
 import { zonedTimeToUtc } from 'date-fns-tz';
-import dynamic from 'next/dynamic';
+import { useStoreState } from 'easy-peasy';
+
+import createRelayEnvironment from '../lib/createRelayEnvironment';
+const environment = createRelayEnvironment();
 
 const timezoneOffsetHours = new Date().getTimezoneOffset();
 
-import GetEntry from '../queries/GetEntry';
-
 import withLayout from '../components/Layout';
-import withPreloadedQuery from '../components/PreloadedQuery';
 import EditorFallback from '../components/EditorFallback';
-const Editor = dynamic(
-  () => import('../components/Editor'),
-  { ssr: false }
-);
+import Editor from '../components/Editor';
 
-const Write = () => (
-  <Suspense fallback={<EditorFallback />}>
-    <Editor />
-  </Suspense>
-);
+const render = ({ error, props }) => {
+  if (error) {
+    throw Error(error);
+  } else if (props) {
+    return (
+      <Editor
+        dailyEntry={props.dailyEntry}
+        wordGoal={props.wordGoal}
+      />
+    );
+  }
 
-export default withLayout(
-  withPreloadedQuery(Write, {
-    key: '/write',
-    query: GetEntry,
-    variables: {
-      userID: 'REPLACE_ME',
-      date: zonedTimeToUtc(
-        startOfDay(new Date()),
-        timezoneOffsetHours
-      ),
-    }
-  })
-);
+  return <EditorFallback />;
+}
+
+const Write = () => {
+  const { uid: userID } = useStoreState(state => state.user).firebaseData;
+
+  return (
+    <QueryRenderer
+      environment={environment}
+      query={graphql`
+        query writeQuery($userID: ID!, $date: String!) {
+          dailyEntry(userID: $userID, date: $date) {
+            id
+            content
+            wordCount
+            createdAt
+            goalHit
+          }
+          wordGoal(userID: $userID, date: $date)
+        }
+      `}
+      variables={{
+        userID,
+        date: zonedTimeToUtc(
+          startOfDay(new Date()),
+          timezoneOffsetHours
+        ),
+      }}
+      render={render}
+    />
+  );
+};
+
+export default withLayout(Write);

@@ -1,38 +1,14 @@
-import { useState, useTransition } from 'react';
 import styled from '@emotion/styled';
-import { preloadQuery } from 'react-relay/hooks';
-
-import GET_STATS from '../queries/GetStats';
-import createRelayEnvironment from '../lib/createRelayEnvironment';
-const environment = createRelayEnvironment();
 
 const StyledSpan = styled.span`
   cursor: pointer;
 `;
 
 const StatsPill = ({ children, selected, name, onClick }) => {
-  const [preloadedQuery, setPreloadedQuery] = useState(null);
-  const [startTransition, isPending] = useTransition({
-    timeoutMs: 3000
-  });
-
-  const preloadData = (global) => {
-    const preloadedQuery = preloadQuery(
-      environment,
-      GET_STATS,
-      { global },
-    );
-  
-    setPreloadedQuery(preloadedQuery);
-  };
-
   return (
     <StyledSpan
-      onClick={() => startTransition(() => {
-        onClick({ selected: name, preloadedQuery });
-      })}
+      onClick={() => onClick(name)}
       className={'rounded-full p-2 w-1/2 text-center ' + (selected === name ? 'bg-primary font-bold text-white shadow-md' : '')}
-      onMouseEnter={() => preloadData(name === 'community')}
     >
       {children}
     </StyledSpan>

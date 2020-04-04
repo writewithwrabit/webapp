@@ -1,11 +1,5 @@
-import { useTransition } from 'react';
 import { useRouter } from 'next/router';
-import { preloadQuery } from 'react-relay/hooks';
-import { useStoreActions, useStoreState } from 'easy-peasy';
 import styled from '@emotion/styled';
-
-import createRelayEnvironment from '../lib/createRelayEnvironment';
-const environment = createRelayEnvironment();
 
 const StyledNavItem = styled.span`
   font-weight: bold;
@@ -56,11 +50,6 @@ const StyledNavItem = styled.span`
 
 const NavItem = ({ url, text, query, variables }) => {
   const router = useRouter();
-  const setPreloadedQuery = useStoreActions(actions => actions.pages.setPreloadedQuery);
-  const { uid: userID } = useStoreState(state => state.user).firebaseData;
-  const [startTransition, isPending] = useTransition({
-    timeoutMs: 3000
-  });
 
   let classNames = 'nav-item pb-4';
 
@@ -72,32 +61,11 @@ const NavItem = ({ url, text, query, variables }) => {
     router.prefetch(url);
   }
 
-  const preloadRoute = () => {
-    if (url === router.pathname) {
-      return;
-    }
-
-    router.prefetch(url);
-
-    if (variables.userID) {
-      variables.userID = userID;
-    }
-
-    const preloadedQuery = preloadQuery(
-      environment,
-      query,
-      variables,
-    );
-
-    setPreloadedQuery({ key: url, preloadedQuery });
-  };
-
   return (
     <StyledNavItem className={classNames}>
       <a
         className="px-8"
-        onClick={() => startTransition(() => router.push(url))}
-        onMouseDown={preloadRoute}
+        onClick={() => router.push(url)}
         onMouseEnter={preloadCode}
       >
         {text}

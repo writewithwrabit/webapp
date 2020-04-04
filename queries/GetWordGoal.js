@@ -1,4 +1,4 @@
-import { graphql } from 'react-relay/hooks';
+import { graphql } from 'relay-runtime';
 
 const GetWordGoal = graphql`
   query GetWordGoalQuery($userID: ID!, $date: String!) {

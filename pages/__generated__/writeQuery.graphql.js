@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash f54b22eb0fdfcbce39d0f29b9cfe4df6
+ * @relayHash cdf542ac44624a2a1af2cccd199e0e7f
  */
 
 /* eslint-disable */
@@ -9,44 +9,40 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type ExistingEntry = {|
+export type writeQueryVariables = {|
   userID: string,
-  wordCount: number,
-  content: string,
-  goalHit: boolean,
-|};
-export type editorMutationVariables = {|
-  id: string,
-  input: ExistingEntry,
   date: string,
 |};
-export type editorMutationResponse = {|
-  +updateEntry: {|
+export type writeQueryResponse = {|
+  +dailyEntry: {|
     +id: string,
     +content: string,
     +wordCount: number,
+    +createdAt: string,
     +goalHit: boolean,
-  |}
+  |},
+  +wordGoal: number,
 |};
-export type editorMutation = {|
-  variables: editorMutationVariables,
-  response: editorMutationResponse,
+export type writeQuery = {|
+  variables: writeQueryVariables,
+  response: writeQueryResponse,
 |};
 */
 
 
 /*
-mutation editorMutation(
-  $id: ID!
-  $input: ExistingEntry!
+query writeQuery(
+  $userID: ID!
   $date: String!
 ) {
-  updateEntry(id: $id, input: $input, date: $date) {
+  dailyEntry(userID: $userID, date: $date) {
     id
     content
     wordCount
+    createdAt
     goalHit
   }
+  wordGoal(userID: $userID, date: $date)
 }
 */
 
@@ -54,14 +50,8 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "id",
+    "name": "userID",
     "type": "ID!",
-    "defaultValue": null
-  },
-  {
-    "kind": "LocalArgument",
-    "name": "input",
-    "type": "ExistingEntry!",
     "defaultValue": null
   },
   {
@@ -73,27 +63,23 @@ var v0 = [
 ],
 v1 = [
   {
+    "kind": "Variable",
+    "name": "date",
+    "variableName": "date"
+  },
+  {
+    "kind": "Variable",
+    "name": "userID",
+    "variableName": "userID"
+  }
+],
+v2 = [
+  {
     "kind": "LinkedField",
     "alias": null,
-    "name": "updateEntry",
+    "name": "dailyEntry",
     "storageKey": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "date",
-        "variableName": "date"
-      },
-      {
-        "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
-      },
-      {
-        "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
-      }
-    ],
+    "args": (v1/*: any*/),
     "concreteType": "Entry",
     "plural": false,
     "selections": [
@@ -121,39 +107,53 @@ v1 = [
       {
         "kind": "ScalarField",
         "alias": null,
+        "name": "createdAt",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
         "name": "goalHit",
         "args": null,
         "storageKey": null
       }
     ]
+  },
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "wordGoal",
+    "args": (v1/*: any*/),
+    "storageKey": null
   }
 ];
 return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "editorMutation",
-    "type": "Mutation",
+    "name": "writeQuery",
+    "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "operation": {
     "kind": "Operation",
-    "name": "editorMutation",
+    "name": "writeQuery",
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "editorMutation",
+    "operationKind": "query",
+    "name": "writeQuery",
     "id": null,
-    "text": "mutation editorMutation(\n  $id: ID!\n  $input: ExistingEntry!\n  $date: String!\n) {\n  updateEntry(id: $id, input: $input, date: $date) {\n    id\n    content\n    wordCount\n    goalHit\n  }\n}\n",
+    "text": "query writeQuery(\n  $userID: ID!\n  $date: String!\n) {\n  dailyEntry(userID: $userID, date: $date) {\n    id\n    content\n    wordCount\n    createdAt\n    goalHit\n  }\n  wordGoal(userID: $userID, date: $date)\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '0652b58f4986850ca6f923fa65b14eab';
+(node/*: any*/).hash = 'b753b305136c6c19cdb94bbc3949fc94';
 
 module.exports = node;

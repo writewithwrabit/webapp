@@ -1,4 +1,4 @@
-import { graphql } from 'react-relay/hooks';
+import { graphql } from 'relay-runtime';
 
 const GetUser = graphql`
   query GetUserQuery($firebaseID: String) {

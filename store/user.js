@@ -1,5 +1,5 @@
 import { action, thunk } from 'easy-peasy';
-import { graphql, fetchQuery } from 'react-relay/hooks';
+import { graphql, fetchQuery } from 'relay-runtime';
 
 import completeUserSignup from './completeUserSignup';
 import createRelayEnvironment from '../lib/createRelayEnvironment';
@@ -72,7 +72,7 @@ const user = {
     state.subscription = subscription;
   }),
   getUserData: thunk(async (actions, { userID }) => {
-    const { userByFirebaseID } = await fetchQuery(environment, GET_USER_BY_FIREBASE_ID, { firebaseID: userID }).toPromise();
+    const { userByFirebaseID } = await fetchQuery(environment, GET_USER_BY_FIREBASE_ID, { firebaseID: userID });
     const {
       id,
       wordGoal,
