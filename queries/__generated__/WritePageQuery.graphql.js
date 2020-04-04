@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash cdf542ac44624a2a1af2cccd199e0e7f
+ * @relayHash ea699917a29c00555dfb8c7157dcd73a
  */
 
 /* eslint-disable */
@@ -9,11 +9,11 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type writeQueryVariables = {|
+export type WritePageQueryVariables = {|
   userID: string,
   date: string,
 |};
-export type writeQueryResponse = {|
+export type WritePageQueryResponse = {|
   +dailyEntry: {|
     +id: string,
     +content: string,
@@ -23,15 +23,15 @@ export type writeQueryResponse = {|
   |},
   +wordGoal: number,
 |};
-export type writeQuery = {|
-  variables: writeQueryVariables,
-  response: writeQueryResponse,
+export type WritePageQuery = {|
+  variables: WritePageQueryVariables,
+  response: WritePageQueryResponse,
 |};
 */
 
 
 /*
-query writeQuery(
+query WritePageQuery(
   $userID: ID!
   $date: String!
 ) {
@@ -132,7 +132,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "writeQuery",
+    "name": "WritePageQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -140,20 +140,20 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "writeQuery",
+    "name": "WritePageQuery",
     "argumentDefinitions": (v0/*: any*/),
     "selections": (v2/*: any*/)
   },
   "params": {
     "operationKind": "query",
-    "name": "writeQuery",
+    "name": "WritePageQuery",
     "id": null,
-    "text": "query writeQuery(\n  $userID: ID!\n  $date: String!\n) {\n  dailyEntry(userID: $userID, date: $date) {\n    id\n    content\n    wordCount\n    createdAt\n    goalHit\n  }\n  wordGoal(userID: $userID, date: $date)\n}\n",
+    "text": "query WritePageQuery(\n  $userID: ID!\n  $date: String!\n) {\n  dailyEntry(userID: $userID, date: $date) {\n    id\n    content\n    wordCount\n    createdAt\n    goalHit\n  }\n  wordGoal(userID: $userID, date: $date)\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'b753b305136c6c19cdb94bbc3949fc94';
+(node/*: any*/).hash = '8fec0e718de6cc104641351fa1d46808';
 
 module.exports = node;

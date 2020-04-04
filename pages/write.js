@@ -8,6 +8,8 @@ const environment = createRelayEnvironment();
 
 const timezoneOffsetHours = new Date().getTimezoneOffset();
 
+import WritePageQuery from '../queries/WritePageQuery.js';
+
 import withLayout from '../components/Layout';
 import EditorFallback from '../components/EditorFallback';
 import Editor from '../components/Editor';
@@ -33,18 +35,7 @@ const Write = () => {
   return (
     <QueryRenderer
       environment={environment}
-      query={graphql`
-        query writeQuery($userID: ID!, $date: String!) {
-          dailyEntry(userID: $userID, date: $date) {
-            id
-            content
-            wordCount
-            createdAt
-            goalHit
-          }
-          wordGoal(userID: $userID, date: $date)
-        }
-      `}
+      query={WritePageQuery}
       variables={{
         userID,
         date: zonedTimeToUtc(
