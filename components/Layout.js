@@ -6,7 +6,7 @@ const withLayout = Page => {
     <div className="min-h-screen">
       <AppHeader />
 
-      <div className="container mx-auto h-full">
+      <div className="px-5 container mx-auto h-full">
         <LayoutErrorBoundary withLayout>
           <Page />
         </LayoutErrorBoundary>
