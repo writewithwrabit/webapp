@@ -135,6 +135,7 @@ const Entries = () => {
           userID={user.firebaseData.uid}
           startDate={startDate}
           endDate={endDate}
+          userEntries={userEntries}
           setUserEntries={setUserEntries}
         />
       </div>

@@ -37,7 +37,6 @@ const Entry = ({ entry }) => {
   }
 
   const toggleDisplay = e => {
-    console.log(e.target.parentNode.classList, e.target.classList);
     const entryContainerClicked = (e.target.classList.contains('entry')
       || e.target.parentNode.classList.contains('entry-details')
       || e.target.parentNode.classList.contains('entry')) && !e.target.classList.contains('delete-entry');

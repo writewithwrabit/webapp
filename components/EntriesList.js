@@ -29,13 +29,17 @@ const NoEntriesFound = () => (
   </div>
 );
 
-const EntriesList = ({ userID, startDate, endDate, setUserEntries }) => {
+const EntriesList = ({ userID, startDate, endDate, userEntries, setUserEntries }) => {
   const renderEntries = ({ error, props }) => {
     if (error) {
       throw Error(error);
     } else if (props) {
-      const { entriesByUserID } = props;
-      setUserEntries(entriesByUserID);
+      let { entriesByUserID } = props;
+      entriesByUserID = entriesByUserID.filter(Boolean);
+
+      if (userEntries.length !== entriesByUserID.length) {
+        setUserEntries(entriesByUserID);
+      }
 
       return (
         <div className="w-full flex-grow">
