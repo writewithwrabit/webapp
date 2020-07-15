@@ -57,6 +57,6 @@
     "graphql-cli": "4.0.0",
     "postcss-easy-import": "3.0.0",
     "relay-compiler": "9.0.0",
-    "tailwindcss": "1.4.6"
+    "tailwindcss": "1.5.1"
   }
 }
