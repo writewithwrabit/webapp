@@ -8303,10 +8303,10 @@ react-dom@^16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-hook-form@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-5.0.0.tgz#bdbad4e53cdeda341b0a32b01c8ecc0c4d66da54"
-  integrity sha512-+d6p7Z+lhxhMC87UyPK3MTHYCJu45kBZhT7E1z1cIVCZkgfHUTnwnAQEL+bSZ/b4ASZagFwmfu1h1Bs6oPn+5w==
+react-hook-form@^6.0.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.2.0.tgz#867457525066e519db26d9c8b074fe0b075e41a1"
+  integrity sha512-MZcVbTvif1wl8eJWGwdDebgFyrjma0R6m/eCY636WCAR6gDD/0i8XO0mvTF4DrelTf5e7L5OXJqT562PDGIzGg==
 
 react-icons@^3.7.0:
   version "3.7.0"
