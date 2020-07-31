@@ -56,7 +56,7 @@
     "cssnano": "4.1.10",
     "graphql-cli": "4.0.0",
     "postcss-easy-import": "3.0.0",
-    "relay-compiler": "9.0.0",
+    "relay-compiler": "9.1.0",
     "tailwindcss": "1.6.0"
   }
 }
