@@ -1,4 +1,4 @@
-# Wrabit Webapp
+# Wrabit Webapp 🐇
 
 Wrabit is a platform for building a daily writing habit. The more you write, the more we donate to mental health research.
 
